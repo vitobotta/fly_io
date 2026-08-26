@@ -1,0 +1,20 @@
+{
+  "surface": "machines_rest",
+  "stability": "stable",
+  "base_url": "https://api.machines.dev",
+  "contract_url": "https://docs.machines.dev/openapi.json",
+  "retrieved_at": "2026-08-26T20:30:19Z",
+  "etag": "\"222e4-Y2JlbkeX2XlDU7gTxh4WI2j04MM\"",
+  "last_modified": "Thu, 20 Aug 2026 16:50:52 GMT",
+  "sha256": "9e6a180c40a38bf20b72a8577a8cd93866f47882627b608af753cc4c22f7758f",
+  "openapi": "3.0.1",
+  "api_version": "1.0",
+  "paths": 68,
+  "operations": 98,
+  "unique_operation_ids": 97,
+  "schemas": 173,
+  "notes": [
+    "Machines_update_metadata is shared by PUT and PATCH on the metadata collection.",
+    "The contract declares no security scheme; official Fly docs define Bearer authentication."
+  ]
+}

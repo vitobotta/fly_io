@@ -1,0 +1,6130 @@
+{
+  "generated_from": {
+    "contract_url": "https://docs.machines.dev/openapi.json",
+    "retrieved_at": "2026-08-26T20:30:19Z",
+    "etag": "\"222e4-Y2JlbkeX2XlDU7gTxh4WI2j04MM\"",
+    "last_modified": "Thu, 20 Aug 2026 16:50:52 GMT",
+    "sha256": "9e6a180c40a38bf20b72a8577a8cd93866f47882627b608af753cc4c22f7758f"
+  },
+  "counts": {
+    "paths": 68,
+    "operations": 98,
+    "unique_operation_ids": 97,
+    "schemas": 173,
+    "tags": {
+      "Apps": 8,
+      "Machines": 29,
+      "Organizations": 2,
+      "Platform": 2,
+      "Postgres Clusters": 22,
+      "Secrets": 14,
+      "TLS Certificates": 8,
+      "Tokens": 5,
+      "Volumes": 8
+    }
+  },
+  "operations": [
+    {
+      "identity": "GET /v1/apps Apps_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Apps_list",
+      "method": "get",
+      "path": "/v1/apps",
+      "tags": [
+        "Apps"
+      ],
+      "summary": "List Apps",
+      "parameters": [
+        {
+          "name": "org_slug",
+          "in": "query",
+          "description": "The org slug, or 'personal', to filter apps",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "org_slug"
+        },
+        {
+          "name": "app_role",
+          "in": "query",
+          "description": "Filter apps by role",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_role"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListAppsResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "apps",
+      "ruby_method": "list",
+      "public_ruby_method": "FlyIO::Client#apps.list"
+    },
+    {
+      "identity": "POST /v1/apps Apps_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Apps_create",
+      "method": "post",
+      "path": "/v1/apps",
+      "tags": [
+        "Apps"
+      ],
+      "summary": "Create App",
+      "parameters": [],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/CreateAppRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created",
+          "content": {}
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Rejected by validation. status is name_taken when the app name is already in use.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "apps",
+      "ruby_method": "create",
+      "public_ruby_method": "FlyIO::Client#apps.create"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name} Apps_show",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Apps_show",
+      "method": "get",
+      "path": "/v1/apps/{app_name}",
+      "tags": [
+        "Apps"
+      ],
+      "summary": "Get App",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/App"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "apps",
+      "ruby_method": "get",
+      "public_ruby_method": "FlyIO::Client#apps.get"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name} Apps_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Apps_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}",
+      "tags": [
+        "Apps"
+      ],
+      "summary": "Destroy App",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "202": {
+          "description": "Accepted",
+          "content": {}
+        }
+      },
+      "ruby_resource": "apps",
+      "ruby_method": "destroy",
+      "public_ruby_method": "FlyIO::Client#apps.destroy"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/certificates App_Certificates_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_Certificates_list",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/certificates",
+      "tags": [
+        "TLS Certificates"
+      ],
+      "summary": "List certificates for app",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "filter",
+          "in": "query",
+          "description": "Hostname filter (substring match)",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "filter"
+        },
+        {
+          "name": "cursor",
+          "in": "query",
+          "description": "Pagination cursor from previous response",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "cursor"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "Number of results per page (default 25, max 500)",
+          "schema": {
+            "type": "integer"
+          },
+          "ruby_name": "limit"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listCertificatesResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "certificates",
+      "ruby_method": "list",
+      "public_ruby_method": "FlyIO::Client#certificates.list"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/certificates/acme App_Certificates_acme_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_Certificates_acme_create",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/certificates/acme",
+      "tags": [
+        "TLS Certificates"
+      ],
+      "summary": "Request ACME certificate",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/createAcmeCertificateRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertificateDetail"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "certificates",
+      "ruby_method": "request_acme",
+      "public_ruby_method": "FlyIO::Client#certificates.request_acme"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/certificates/custom App_Certificates_custom_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_Certificates_custom_create",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/certificates/custom",
+      "tags": [
+        "TLS Certificates"
+      ],
+      "summary": "Upload custom certificate",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/createCustomCertificateRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertificateDetail"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "certificates",
+      "ruby_method": "upload_custom",
+      "public_ruby_method": "FlyIO::Client#certificates.upload_custom"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/certificates/{hostname} App_Certificates_show",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_Certificates_show",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/certificates/{hostname}",
+      "tags": [
+        "TLS Certificates"
+      ],
+      "summary": "Get certificate details",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "hostname",
+          "in": "path",
+          "description": "Certificate Hostname",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "hostname"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertificateDetail"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "certificates",
+      "ruby_method": "get",
+      "public_ruby_method": "FlyIO::Client#certificates.get"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/certificates/{hostname} App_Certificates_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_Certificates_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/certificates/{hostname}",
+      "tags": [
+        "TLS Certificates"
+      ],
+      "summary": "Remove certificate",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "hostname",
+          "in": "path",
+          "description": "Certificate Hostname",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "hostname"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        }
+      },
+      "ruby_resource": "certificates",
+      "ruby_method": "remove",
+      "public_ruby_method": "FlyIO::Client#certificates.remove"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/certificates/{hostname}/acme App_Certificates_acme_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_Certificates_acme_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/certificates/{hostname}/acme",
+      "tags": [
+        "TLS Certificates"
+      ],
+      "summary": "Remove ACME certificates",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "hostname",
+          "in": "path",
+          "description": "Certificate Hostname",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "hostname"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertificateDetail"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "certificates",
+      "ruby_method": "remove_acme",
+      "public_ruby_method": "FlyIO::Client#certificates.remove_acme"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/certificates/{hostname}/check App_Certificates_check",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_Certificates_check",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/certificates/{hostname}/check",
+      "tags": [
+        "TLS Certificates"
+      ],
+      "summary": "Check DNS and re-validate certificate",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "hostname",
+          "in": "path",
+          "description": "Certificate Hostname",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "hostname"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertificateCheckResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "certificates",
+      "ruby_method": "check",
+      "public_ruby_method": "FlyIO::Client#certificates.check"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/certificates/{hostname}/custom App_Certificates_custom_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_Certificates_custom_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/certificates/{hostname}/custom",
+      "tags": [
+        "TLS Certificates"
+      ],
+      "summary": "Remove custom certificate",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "hostname",
+          "in": "path",
+          "description": "Certificate Hostname",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "hostname"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/destroyCustomCertificateResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "certificates",
+      "ruby_method": "remove_custom",
+      "public_ruby_method": "FlyIO::Client#certificates.remove_custom"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/deploy_token App_create_deploy_token",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_create_deploy_token",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/deploy_token",
+      "tags": [
+        "Apps"
+      ],
+      "summary": "Create App deploy token",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/CreateAppDeployTokenRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAppResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "apps",
+      "ruby_method": "create_deploy_token",
+      "public_ruby_method": "FlyIO::Client#apps.create_deploy_token"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/ip_assignments App_IPAssignments_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_IPAssignments_list",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/ip_assignments",
+      "tags": [
+        "Apps"
+      ],
+      "summary": "List IP assignments for app",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listIPAssignmentsResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "apps",
+      "ruby_method": "list_ip_assignments",
+      "public_ruby_method": "FlyIO::Client#apps.list_ip_assignments"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/ip_assignments App_IPAssignments_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_IPAssignments_create",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/ip_assignments",
+      "tags": [
+        "Apps"
+      ],
+      "summary": "Assign new IP address to app",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/assignIPRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IPAssignment"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "apps",
+      "ruby_method": "create_ip_assignment",
+      "public_ruby_method": "FlyIO::Client#apps.create_ip_assignment"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/ip_assignments/{ip} App_IPAssignments_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "App_IPAssignments_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/ip_assignments/{ip}",
+      "tags": [
+        "Apps"
+      ],
+      "summary": "Remove IP assignment from app",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "ip",
+          "in": "path",
+          "description": "IP address",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "ip"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        }
+      },
+      "ruby_resource": "apps",
+      "ruby_method": "delete_ip_assignment",
+      "public_ruby_method": "FlyIO::Client#apps.delete_ip_assignment"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines Machines_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_list",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "List Machines",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "include_deleted",
+          "in": "query",
+          "description": "Include deleted machines",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "include_deleted"
+        },
+        {
+          "name": "include_leases",
+          "in": "query",
+          "description": "Include machine leases",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "include_leases"
+        },
+        {
+          "name": "region",
+          "in": "query",
+          "description": "Region filter",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "region"
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "description": "comma separated list of states to filter (created, started, stopped, suspended)",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "state"
+        },
+        {
+          "name": "summary",
+          "in": "query",
+          "description": "Only return summary info about machines (omit config, checks, events, host_status, nonce, etc.)",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "summary"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Machine"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "list",
+      "public_ruby_method": "FlyIO::Client#machines.list"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines Machines_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_create",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Create Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/CreateMachineRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Machine"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "create",
+      "public_ruby_method": "FlyIO::Client#machines.create"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines/{machine_id} Machines_show",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_show",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Get Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "include_leases",
+          "in": "query",
+          "description": "Include machine lease",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "include_leases"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Machine"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "get",
+      "public_ruby_method": "FlyIO::Client#machines.get"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id} Machines_update",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_update",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Update Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/UpdateMachineRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Machine"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "update",
+      "public_ruby_method": "FlyIO::Client#machines.update"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/machines/{machine_id} Machines_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Destroy Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "force",
+          "in": "query",
+          "description": "Force kill the machine if it's running",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "force"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "destroy",
+      "public_ruby_method": "FlyIO::Client#machines.destroy"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/cordon Machines_cordon",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_cordon",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/cordon",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Cordon Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "cordon",
+      "public_ruby_method": "FlyIO::Client#machines.cordon"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines/{machine_id}/events Machines_list_events",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_list_events",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/events",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "List Events",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "The number of events to fetch (max of 50). If omitted, this is set to 20 by default.",
+          "schema": {
+            "type": "integer"
+          },
+          "ruby_name": "limit"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MachineEvent"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "events",
+      "public_ruby_method": "FlyIO::Client#machines.events"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/exec Machines_exec",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_exec",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/exec",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Execute Command",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/MachineExecRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "stdout, stderr, exit code, and exit signal are returned",
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "$ref": "#/components/schemas/flydv1.ExecResponse"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/flydv1.ExecResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "execute",
+      "public_ruby_method": "FlyIO::Client#machines.execute"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines/{machine_id}/lease Machines_show_lease",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_show_lease",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/lease",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Get Lease",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lease"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "lease",
+      "public_ruby_method": "FlyIO::Client#machines.lease"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/lease Machines_create_lease",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_create_lease",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/lease",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Create Lease",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "fly-machine-lease-nonce",
+          "in": "header",
+          "description": "Existing lease nonce to refresh by ttl, empty or non-existent to create a new lease",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "fly_machine_lease_nonce"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/CreateLeaseRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lease"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "create_lease",
+      "public_ruby_method": "FlyIO::Client#machines.create_lease"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/machines/{machine_id}/lease Machines_release_lease",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_release_lease",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/lease",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Release Lease",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "fly-machine-lease-nonce",
+          "in": "header",
+          "description": "Existing lease nonce",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "fly_machine_lease_nonce"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "release_lease",
+      "public_ruby_method": "FlyIO::Client#machines.release_lease"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines/{machine_id}/memory Machines_get_memory",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_get_memory",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/memory",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Get Machine Memory",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/main.memoryResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "memory",
+      "public_ruby_method": "FlyIO::Client#machines.memory"
+    },
+    {
+      "identity": "PUT /v1/apps/{app_name}/machines/{machine_id}/memory Machines_set_memory_limit",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_set_memory_limit",
+      "method": "put",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/memory",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Set Machine Memory Limit",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/main.setMemoryLimitRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/main.memoryResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "set_memory_limit",
+      "public_ruby_method": "FlyIO::Client#machines.set_memory_limit"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/memory/reclaim Machines_reclaim_memory",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_reclaim_memory",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/memory/reclaim",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Reclaim Machine Memory",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/main.reclaimMemoryRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/main.reclaimMemoryResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "reclaim_memory",
+      "public_ruby_method": "FlyIO::Client#machines.reclaim_memory"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines/{machine_id}/metadata Machines_show_metadata",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_show_metadata",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/metadata",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Get Metadata",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "metadata",
+      "public_ruby_method": "FlyIO::Client#machines.metadata"
+    },
+    {
+      "identity": "PUT /v1/apps/{app_name}/machines/{machine_id}/metadata Machines_update_metadata",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_update_metadata",
+      "method": "put",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/metadata",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Update Metadata (set/remove multiple keys)",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/updateMetadataRequest"
+        }
+      },
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        },
+        "412": {
+          "description": "Precondition Failed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "replace_metadata",
+      "public_ruby_method": "FlyIO::Client#machines.replace_metadata"
+    },
+    {
+      "identity": "PATCH /v1/apps/{app_name}/machines/{machine_id}/metadata Machines_update_metadata",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_update_metadata",
+      "method": "patch",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/metadata",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Update Metadata (set/remove multiple keys)",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/updateMetadataRequest"
+        }
+      },
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        },
+        "412": {
+          "description": "Precondition Failed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "update_metadata",
+      "public_ruby_method": "FlyIO::Client#machines.update_metadata"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines/{machine_id}/metadata/{key} Machines_get_metadata_key",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_get_metadata_key",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/metadata/{key}",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Get Metadata Value",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "key",
+          "in": "path",
+          "description": "Metadata Key",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "key"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/metadataValueResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "get_metadata",
+      "public_ruby_method": "FlyIO::Client#machines.get_metadata"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/metadata/{key} Machines_upsert_metadata",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_upsert_metadata",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/metadata/{key}",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Upsert Metadata Key",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "key",
+          "in": "path",
+          "description": "Metadata Key",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "key"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/upsertMetadataKeyRequest"
+        }
+      },
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "set_metadata",
+      "public_ruby_method": "FlyIO::Client#machines.set_metadata"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/machines/{machine_id}/metadata/{key} Machines_delete_metadata",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_delete_metadata",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/metadata/{key}",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Delete Metadata",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "key",
+          "in": "path",
+          "description": "Metadata Key",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "key"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "delete_metadata",
+      "public_ruby_method": "FlyIO::Client#machines.delete_metadata"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines/{machine_id}/ps Machines_list_processes",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_list_processes",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/ps",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "List Processes",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "sort_by",
+          "in": "query",
+          "description": "Sort by",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "sort_by"
+        },
+        {
+          "name": "order",
+          "in": "query",
+          "description": "Order",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "order"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ProcessStat"
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "processes",
+      "public_ruby_method": "FlyIO::Client#machines.processes"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/restart Machines_restart",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_restart",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/restart",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Restart Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "timeout",
+          "in": "query",
+          "description": "Restart timeout as a Go duration string or number of seconds",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "timeout"
+        },
+        {
+          "name": "signal",
+          "in": "query",
+          "description": "Unix signal name",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "SIGHUP",
+              "SIGINT",
+              "SIGQUIT",
+              "SIGKILL",
+              "SIGUSR1",
+              "SIGUSR2",
+              "SIGTERM"
+            ]
+          },
+          "ruby_name": "signal"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "restart",
+      "public_ruby_method": "FlyIO::Client#machines.restart"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/signal Machines_signal",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_signal",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/signal",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Signal Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/SignalRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "signal",
+      "public_ruby_method": "FlyIO::Client#machines.signal"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/start Machines_start",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_start",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/start",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Start Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "start",
+      "public_ruby_method": "FlyIO::Client#machines.start"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/stop Machines_stop",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_stop",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/stop",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Stop Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": {
+        "required": false,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/StopRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "stop",
+      "public_ruby_method": "FlyIO::Client#machines.stop"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/suspend Machines_suspend",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_suspend",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/suspend",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Suspend Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "suspend",
+      "public_ruby_method": "FlyIO::Client#machines.suspend"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/machines/{machine_id}/uncordon Machines_uncordon",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_uncordon",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/uncordon",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Uncordon Machine",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "uncordon",
+      "public_ruby_method": "FlyIO::Client#machines.uncordon"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines/{machine_id}/versions Machines_list_versions",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_list_versions",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/versions",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "List Versions",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MachineVersion"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "versions",
+      "public_ruby_method": "FlyIO::Client#machines.versions"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/machines/{machine_id}/wait Machines_wait",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_wait",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/machines/{machine_id}/wait",
+      "tags": [
+        "Machines"
+      ],
+      "summary": "Wait for State",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "machine_id",
+          "in": "path",
+          "description": "Machine ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "machine_id"
+        },
+        {
+          "name": "version",
+          "in": "query",
+          "description": "26-character Machine version ID",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "version"
+        },
+        {
+          "name": "instance_id",
+          "in": "query",
+          "description": "26-character Machine version ID (deprecated; use version)",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "instance_id"
+        },
+        {
+          "name": "from_event_id",
+          "in": "query",
+          "description": "26-character Machine event ID to start waiting after",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "from_event_id"
+        },
+        {
+          "name": "timeout",
+          "in": "query",
+          "description": "wait timeout. default 60s",
+          "schema": {
+            "type": "integer"
+          },
+          "ruby_name": "timeout"
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "description": "desired state(s), supports repeated or comma-separated values",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "started",
+              "stopped",
+              "suspended",
+              "destroyed",
+              "failed",
+              "settled"
+            ]
+          },
+          "ruby_name": "state"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WaitMachineResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "machines",
+      "ruby_method": "wait",
+      "public_ruby_method": "FlyIO::Client#machines.wait"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/secretkeys Secretkeys_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secretkeys_list",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/secretkeys",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "List secret keys belonging to an app",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "min_version",
+          "in": "query",
+          "description": "Minimum secrets version to return. Returned when setting a new secret",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "min_version"
+        },
+        {
+          "name": "types",
+          "in": "query",
+          "description": "Comma-seperated list of secret keys to list",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "types"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SecretKeys"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "list_keys",
+      "public_ruby_method": "FlyIO::Client#secrets.list_keys"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/secretkeys/{secret_name} Secretkey_get",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secretkey_get",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/secretkeys/{secret_name}",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Get an app's secret key",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "Secret key name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        },
+        {
+          "name": "min_version",
+          "in": "query",
+          "description": "Minimum secrets version to return. Returned when setting a new secret",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "min_version"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SecretKey"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "get_key",
+      "public_ruby_method": "FlyIO::Client#secrets.get_key"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/secretkeys/{secret_name} Secretkey_set",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secretkey_set",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/secretkeys/{secret_name}",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Create or update a secret key",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "Secret key name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/SetSecretkeyRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetSecretkeyResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "set_key",
+      "public_ruby_method": "FlyIO::Client#secrets.set_key"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/secretkeys/{secret_name} Secretkey_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secretkey_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/secretkeys/{secret_name}",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Delete an app's secret key",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "Secret key name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSecretkeyResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "delete_key",
+      "public_ruby_method": "FlyIO::Client#secrets.delete_key"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/secretkeys/{secret_name}/decrypt Secretkey_decrypt",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secretkey_decrypt",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/secretkeys/{secret_name}/decrypt",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Decrypt with a secret key",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "Secret key name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        },
+        {
+          "name": "min_version",
+          "in": "query",
+          "description": "Minimum secrets version to return. Returned when setting a new secret",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "min_version"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/DecryptSecretkeyRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecryptSecretkeyResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "decrypt_key",
+      "public_ruby_method": "FlyIO::Client#secrets.decrypt_key"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/secretkeys/{secret_name}/encrypt Secretkey_encrypt",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secretkey_encrypt",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/secretkeys/{secret_name}/encrypt",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Encrypt with a secret key",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "Secret key name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        },
+        {
+          "name": "min_version",
+          "in": "query",
+          "description": "Minimum secrets version to return. Returned when setting a new secret",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "min_version"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/EncryptSecretkeyRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EncryptSecretkeyResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "encrypt_key",
+      "public_ruby_method": "FlyIO::Client#secrets.encrypt_key"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/secretkeys/{secret_name}/generate Secretkey_generate",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secretkey_generate",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/secretkeys/{secret_name}/generate",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Generate a random secret key",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "Secret key name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/SetSecretkeyRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetSecretkeyResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "generate_key",
+      "public_ruby_method": "FlyIO::Client#secrets.generate_key"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/secretkeys/{secret_name}/sign Secretkey_sign",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secretkey_sign",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/secretkeys/{secret_name}/sign",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Sign with a secret key",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "Secret key name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        },
+        {
+          "name": "min_version",
+          "in": "query",
+          "description": "Minimum secrets version to return. Returned when setting a new secret",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "min_version"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/SignSecretkeyRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignSecretkeyResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "sign_key",
+      "public_ruby_method": "FlyIO::Client#secrets.sign_key"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/secretkeys/{secret_name}/verify Secretkey_verify",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secretkey_verify",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/secretkeys/{secret_name}/verify",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Verify with a secret key",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "Secret key name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        },
+        {
+          "name": "min_version",
+          "in": "query",
+          "description": "Minimum secrets version to return. Returned when setting a new secret",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "min_version"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/VerifySecretkeyRequest"
+        }
+      },
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "verify_key",
+      "public_ruby_method": "FlyIO::Client#secrets.verify_key"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/secrets Secrets_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secrets_list",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/secrets",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "List app secrets belonging to an app",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "min_version",
+          "in": "query",
+          "description": "Minimum secrets version to return. Returned when setting a new secret",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "min_version"
+        },
+        {
+          "name": "show_secrets",
+          "in": "query",
+          "description": "Show the secret values.",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "show_secrets"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppSecrets"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "list",
+      "public_ruby_method": "FlyIO::Client#secrets.list"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/secrets Secrets_update",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secrets_update",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/secrets",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Update app secrets belonging to an app",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/AppSecretsUpdateRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppSecretsUpdateResp"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "update",
+      "public_ruby_method": "FlyIO::Client#secrets.update"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/secrets/{secret_name} Secret_get",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secret_get",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/secrets/{secret_name}",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Get an app secret",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "App secret name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        },
+        {
+          "name": "min_version",
+          "in": "query",
+          "description": "Minimum secrets version to return. Returned when setting a new secret",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "min_version"
+        },
+        {
+          "name": "show_secrets",
+          "in": "query",
+          "description": "Show the secret value.",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "show_secrets"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppSecret"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "get",
+      "public_ruby_method": "FlyIO::Client#secrets.get"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/secrets/{secret_name} Secret_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secret_create",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/secrets/{secret_name}",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Create or update Secret",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "App secret name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/SetAppSecretRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetAppSecretResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "set",
+      "public_ruby_method": "FlyIO::Client#secrets.set"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/secrets/{secret_name} Secret_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Secret_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/secrets/{secret_name}",
+      "tags": [
+        "Secrets"
+      ],
+      "summary": "Delete an app secret",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "secret_name",
+          "in": "path",
+          "description": "App secret name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "secret_name"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAppSecretResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "secrets",
+      "ruby_method": "delete",
+      "public_ruby_method": "FlyIO::Client#secrets.delete"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/volumes Volumes_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Volumes_list",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/volumes",
+      "tags": [
+        "Volumes"
+      ],
+      "summary": "List Volumes",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "summary",
+          "in": "query",
+          "description": "Only return summary info about volumes (omit blocks, block size, etc)",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "summary"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Volume"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "volumes",
+      "ruby_method": "list",
+      "public_ruby_method": "FlyIO::Client#volumes.list"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/volumes Volumes_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Volumes_create",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/volumes",
+      "tags": [
+        "Volumes"
+      ],
+      "summary": "Create Volume",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/CreateVolumeRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Volume"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "volumes",
+      "ruby_method": "create",
+      "public_ruby_method": "FlyIO::Client#volumes.create"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/volumes/{volume_id} Volumes_get_by_id",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Volumes_get_by_id",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/volumes/{volume_id}",
+      "tags": [
+        "Volumes"
+      ],
+      "summary": "Get Volume",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "volume_id",
+          "in": "path",
+          "description": "Volume ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "volume_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Volume"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "volumes",
+      "ruby_method": "get",
+      "public_ruby_method": "FlyIO::Client#volumes.get"
+    },
+    {
+      "identity": "PUT /v1/apps/{app_name}/volumes/{volume_id} Volumes_update",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Volumes_update",
+      "method": "put",
+      "path": "/v1/apps/{app_name}/volumes/{volume_id}",
+      "tags": [
+        "Volumes"
+      ],
+      "summary": "Update Volume",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "volume_id",
+          "in": "path",
+          "description": "Volume ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "volume_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/UpdateVolumeRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Volume"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "volumes",
+      "ruby_method": "update",
+      "public_ruby_method": "FlyIO::Client#volumes.update"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/volumes/{volume_id} Volume_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Volume_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/volumes/{volume_id}",
+      "tags": [
+        "Volumes"
+      ],
+      "summary": "Destroy Volume",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "volume_id",
+          "in": "path",
+          "description": "Volume ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "volume_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Volume"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "volumes",
+      "ruby_method": "destroy",
+      "public_ruby_method": "FlyIO::Client#volumes.destroy"
+    },
+    {
+      "identity": "PUT /v1/apps/{app_name}/volumes/{volume_id}/extend Volumes_extend",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Volumes_extend",
+      "method": "put",
+      "path": "/v1/apps/{app_name}/volumes/{volume_id}/extend",
+      "tags": [
+        "Volumes"
+      ],
+      "summary": "Extend Volume",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "volume_id",
+          "in": "path",
+          "description": "Volume ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "volume_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/ExtendVolumeRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExtendVolumeResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "volumes",
+      "ruby_method": "extend",
+      "public_ruby_method": "FlyIO::Client#volumes.extend"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/volumes/{volume_id}/snapshots Volumes_list_snapshots",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Volumes_list_snapshots",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/volumes/{volume_id}/snapshots",
+      "tags": [
+        "Volumes"
+      ],
+      "summary": "List Snapshots",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "volume_id",
+          "in": "path",
+          "description": "Volume ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "volume_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/VolumeSnapshot"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "volumes",
+      "ruby_method": "list_snapshots",
+      "public_ruby_method": "FlyIO::Client#volumes.list_snapshots"
+    },
+    {
+      "identity": "POST /v1/apps/{app_name}/volumes/{volume_id}/snapshots createVolumeSnapshot",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "createVolumeSnapshot",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/volumes/{volume_id}/snapshots",
+      "tags": [
+        "Volumes"
+      ],
+      "summary": "Create Snapshot",
+      "parameters": [
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        },
+        {
+          "name": "volume_id",
+          "in": "path",
+          "description": "Volume ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "volume_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {}
+        }
+      },
+      "ruby_resource": "volumes",
+      "ruby_method": "create_snapshot",
+      "public_ruby_method": "FlyIO::Client#volumes.create_snapshot"
+    },
+    {
+      "identity": "GET /v1/orgs/{org_slug}/machines Machines_org_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Machines_org_list",
+      "method": "get",
+      "path": "/v1/orgs/{org_slug}/machines",
+      "tags": [
+        "Organizations"
+      ],
+      "summary": "List All Machines",
+      "parameters": [
+        {
+          "name": "org_slug",
+          "in": "path",
+          "description": "Fly Organization Slug",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "org_slug"
+        },
+        {
+          "name": "include_deleted",
+          "in": "query",
+          "description": "Include deleted machines",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "include_deleted"
+        },
+        {
+          "name": "region",
+          "in": "query",
+          "description": "Region filter",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "region"
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "description": "Comma separated list of states to filter (created, started, stopped, suspended)",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "state"
+        },
+        {
+          "name": "summary",
+          "in": "query",
+          "description": "Omit config from responses",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "summary"
+        },
+        {
+          "name": "updated_after",
+          "in": "query",
+          "description": "Only return machines updated after this time. Timestamp must be in the RFC 3339 format",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "updated_after"
+        },
+        {
+          "name": "cursor",
+          "in": "query",
+          "description": "Pagination cursor from previous response (takes precedence over updated_after). Note that there is no guarantee that all machines returned by this endpoint are sorted by their updated_at fields. Pagination may reveal machines older than the last updated_at.",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "cursor"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "The number of machines to fetch (max of 1000). This limit is advisory. Responses may be shorter, or even empty, even when more machines remain. If omitted, the maximum is used",
+          "schema": {
+            "type": "integer"
+          },
+          "ruby_name": "limit"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrgMachinesResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "organizations",
+      "ruby_method": "list_machines",
+      "public_ruby_method": "FlyIO::Client#organizations.list_machines"
+    },
+    {
+      "identity": "GET /v1/orgs/{org_slug}/volumes Volumes_org_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Volumes_org_list",
+      "method": "get",
+      "path": "/v1/orgs/{org_slug}/volumes",
+      "tags": [
+        "Organizations"
+      ],
+      "summary": "List All Volumes",
+      "parameters": [
+        {
+          "name": "org_slug",
+          "in": "path",
+          "description": "Fly Organization Slug",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "org_slug"
+        },
+        {
+          "name": "include_deleted",
+          "in": "query",
+          "description": "Include deleted volumes",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "include_deleted"
+        },
+        {
+          "name": "region",
+          "in": "query",
+          "description": "Region filter",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "region"
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "description": "Comma separated list of volume states to filter",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "state"
+        },
+        {
+          "name": "summary",
+          "in": "query",
+          "description": "Only return summary info about volumes (omit blocks, block size, etc)",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "summary"
+        },
+        {
+          "name": "updated_after",
+          "in": "query",
+          "description": "Only return volumes updated after this time. Timestamp must be in the RFC 3339 format",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "updated_after"
+        },
+        {
+          "name": "cursor",
+          "in": "query",
+          "description": "Pagination cursor from previous response (takes precedence over updated_after)",
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "cursor"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "The number of volumes to fetch (max of 1000). This limit is advisory. Responses may be shorter, even when more volumes remain. If omitted, the maximum is used",
+          "schema": {
+            "type": "integer"
+          },
+          "ruby_name": "limit"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrgVolumesResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "organizations",
+      "ruby_method": "list_volumes",
+      "public_ruby_method": "FlyIO::Client#organizations.list_volumes"
+    },
+    {
+      "identity": "POST /v1/platform/placements Platform_placements_post",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Platform_placements_post",
+      "method": "post",
+      "path": "/v1/platform/placements",
+      "tags": [
+        "Platform"
+      ],
+      "summary": "Get Placements",
+      "parameters": [],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/main.getPlacementsRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/main.getPlacementsResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "platform",
+      "ruby_method": "placements",
+      "public_ruby_method": "FlyIO::Client#platform.placements"
+    },
+    {
+      "identity": "GET /v1/platform/regions Platform_regions_get",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Platform_regions_get",
+      "method": "get",
+      "path": "/v1/platform/regions",
+      "tags": [
+        "Platform"
+      ],
+      "summary": "Get Regions",
+      "parameters": [],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/main.regionResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "platform",
+      "ruby_method": "regions",
+      "public_ruby_method": "FlyIO::Client#platform.regions"
+    },
+    {
+      "identity": "GET /v1/postgres Postgres_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_list",
+      "method": "get",
+      "path": "/v1/postgres",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "List Postgres Clusters",
+      "parameters": [
+        {
+          "name": "org_slug",
+          "in": "query",
+          "description": "Fly Organization Slug",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "org_slug"
+        },
+        {
+          "name": "include_deleted",
+          "in": "query",
+          "description": "Include deleted clusters",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "include_deleted"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listPostgresClustersResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Organization not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "include_deleted must be true or false",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "list",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.list"
+    },
+    {
+      "identity": "POST /v1/postgres Postgres_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_create",
+      "method": "post",
+      "path": "/v1/postgres",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Create Postgres Cluster",
+      "parameters": [],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/createPostgresClusterRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Cluster accepted for provisioning",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/showPostgresClusterResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Creation failed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Organization not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Invalid attributes",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "create",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.create"
+    },
+    {
+      "identity": "GET /v1/postgres/{postgres_cluster_id} Postgres_show",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_show",
+      "method": "get",
+      "path": "/v1/postgres/{postgres_cluster_id}",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Get Postgres Cluster",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/showPostgresClusterResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "show",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.show"
+    },
+    {
+      "identity": "DELETE /v1/postgres/{postgres_cluster_id} Postgres_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_delete",
+      "method": "delete",
+      "path": "/v1/postgres/{postgres_cluster_id}",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Delete Postgres Cluster",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "202": {
+          "description": "Accepted",
+          "content": {}
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "410": {
+          "description": "'This cluster has been deleted' or 'This cluster is being deleted'",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "delete",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.delete"
+    },
+    {
+      "identity": "POST /v1/postgres/{postgres_cluster_id}/attachments Postgres_attachments_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_attachments_create",
+      "method": "post",
+      "path": "/v1/postgres/{postgres_cluster_id}/attachments",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Attach Cluster to App",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/createPostgresAttachmentRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Cluster was already attached",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createPostgresAttachmentResponse"
+              }
+            }
+          }
+        },
+        "201": {
+          "description": "Attachment created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createPostgresAttachmentResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "'Cluster not found' for the cluster; 'App not found' for the app",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "410": {
+          "description": "'This cluster has been deleted' or 'This cluster is being deleted'",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "attachments_create",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.attachments_create"
+    },
+    {
+      "identity": "DELETE /v1/postgres/{postgres_cluster_id}/attachments/{app_name} Postgres_attachments_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_attachments_delete",
+      "method": "delete",
+      "path": "/v1/postgres/{postgres_cluster_id}/attachments/{app_name}",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Detach Cluster from App",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        },
+        {
+          "name": "app_name",
+          "in": "path",
+          "description": "Fly App Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "app_name"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        },
+        "404": {
+          "description": "'Cluster not found' for the cluster; 'App not found' for the app; 'Attachment not found' for the attachment",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "410": {
+          "description": "'This cluster has been deleted' or 'This cluster is being deleted'",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "attachments_delete",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.attachments_delete"
+    },
+    {
+      "identity": "GET /v1/postgres/{postgres_cluster_id}/backups Postgres_backups_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_backups_list",
+      "method": "get",
+      "path": "/v1/postgres/{postgres_cluster_id}/backups",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "List Backups",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listPostgresBackupsResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "backups_list",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.backups_list"
+    },
+    {
+      "identity": "POST /v1/postgres/{postgres_cluster_id}/backups Postgres_backups_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_backups_create",
+      "method": "post",
+      "path": "/v1/postgres/{postgres_cluster_id}/backups",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Create Backup",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/createPostgresBackupRequest"
+        }
+      },
+      "responses": {
+        "202": {
+          "description": "Accepted",
+          "content": {}
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "A backup is currently running",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "backups_create",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.backups_create"
+    },
+    {
+      "identity": "GET /v1/postgres/{postgres_cluster_id}/databases Postgres_databases_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_databases_list",
+      "method": "get",
+      "path": "/v1/postgres/{postgres_cluster_id}/databases",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "List Databases",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listPostgresDatabasesResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "databases_list",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.databases_list"
+    },
+    {
+      "identity": "POST /v1/postgres/{postgres_cluster_id}/databases Postgres_databases_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_databases_create",
+      "method": "post",
+      "path": "/v1/postgres/{postgres_cluster_id}/databases",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Create Database",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/createPostgresDatabaseRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postgresDatabaseResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Database name is reserved, a system database, or malformed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "name is required",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "databases_create",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.databases_create"
+    },
+    {
+      "identity": "DELETE /v1/postgres/{postgres_cluster_id}/databases/{database_name} Postgres_databases_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_databases_delete",
+      "method": "delete",
+      "path": "/v1/postgres/{postgres_cluster_id}/databases/{database_name}",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Drop Database",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        },
+        {
+          "name": "database_name",
+          "in": "path",
+          "description": "Database Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "database_name"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/postgresDatabaseResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Database name is reserved, a system database, or malformed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "'Cluster not found' for the cluster; 'Database not found' for the database",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "databases_delete",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.databases_delete"
+    },
+    {
+      "identity": "GET /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions Postgres_extensions_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_extensions_list",
+      "method": "get",
+      "path": "/v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "List Extensions",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        },
+        {
+          "name": "database_name",
+          "in": "path",
+          "description": "Database Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "database_name"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listPostgresExtensionsResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Database name is malformed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "extensions_list",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.extensions_list"
+    },
+    {
+      "identity": "POST /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions Postgres_extensions_enable",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_extensions_enable",
+      "method": "post",
+      "path": "/v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Enable Extension",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        },
+        {
+          "name": "database_name",
+          "in": "path",
+          "description": "Database Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "database_name"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/enablePostgresExtensionRequest"
+        }
+      },
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        },
+        "400": {
+          "description": "Database name is malformed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "'PostGIS is not enabled on this cluster' or 'Extension <name> is already installed in schema <schema>'",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Unknown or unsupported extension",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "extensions_enable",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.extensions_enable"
+    },
+    {
+      "identity": "DELETE /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions/{extension_name} Postgres_extensions_disable",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_extensions_disable",
+      "method": "delete",
+      "path": "/v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions/{extension_name}",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Disable Extension",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        },
+        {
+          "name": "database_name",
+          "in": "path",
+          "description": "Database Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "database_name"
+        },
+        {
+          "name": "extension_name",
+          "in": "path",
+          "description": "Extension Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "extension_name"
+        },
+        {
+          "name": "force",
+          "in": "query",
+          "description": "Also drop objects that depend on the extension",
+          "schema": {
+            "type": "boolean"
+          },
+          "ruby_name": "force"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        },
+        "400": {
+          "description": "'System extensions cannot be disabled' or 'Database name is malformed'",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Invalid extension name",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "extensions_disable",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.extensions_disable"
+    },
+    {
+      "identity": "POST /v1/postgres/{postgres_cluster_id}/fork Postgres_fork",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_fork",
+      "method": "post",
+      "path": "/v1/postgres/{postgres_cluster_id}/fork",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Fork Cluster to New Cluster",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": {
+        "required": false,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/forkPostgresClusterRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "New cluster provisioned from the fork",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/showPostgresClusterResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Fork failed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "The source cluster is not ready to be forked yet",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "410": {
+          "description": "'This cluster has been deleted' or 'This cluster is being deleted'",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Invalid attributes",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "fork",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.fork"
+    },
+    {
+      "identity": "POST /v1/postgres/{postgres_cluster_id}/restore Postgres_restore",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_restore",
+      "method": "post",
+      "path": "/v1/postgres/{postgres_cluster_id}/restore",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Restore Backup or Point in Time to New Cluster",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/restorePostgresClusterRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "New cluster provisioned from the backup or point in time",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/showPostgresClusterResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Restore failed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "'Cluster not found' for the cluster; 'Backup <backup_id> not found for cluster <postgres_cluster_id>' for the backup",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "A restore target is missing, both backup_id and pitr_time were supplied, point-in-time restore is outside the recovery window or unavailable, or name is invalid",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "restore",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.restore"
+    },
+    {
+      "identity": "GET /v1/postgres/{postgres_cluster_id}/users Postgres_users_list",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_users_list",
+      "method": "get",
+      "path": "/v1/postgres/{postgres_cluster_id}/users",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "List Users",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/listPostgresUsersResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "users_list",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.users_list"
+    },
+    {
+      "identity": "POST /v1/postgres/{postgres_cluster_id}/users Postgres_users_create",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_users_create",
+      "method": "post",
+      "path": "/v1/postgres/{postgres_cluster_id}/users",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Create User",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/createPostgresUserRequest"
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createPostgresUserResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Username is reserved, a system user, or malformed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Cluster not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "User already exists",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "username or role missing, or role invalid",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "users_create",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.users_create"
+    },
+    {
+      "identity": "DELETE /v1/postgres/{postgres_cluster_id}/users/{username} Postgres_users_delete",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_users_delete",
+      "method": "delete",
+      "path": "/v1/postgres/{postgres_cluster_id}/users/{username}",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Delete User",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        },
+        {
+          "name": "username",
+          "in": "path",
+          "description": "Postgres User Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "username"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        },
+        "400": {
+          "description": "Username is reserved, a system user, or malformed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "'Cluster not found' for the cluster; 'User not found' for the user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "users_delete",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.users_delete"
+    },
+    {
+      "identity": "PATCH /v1/postgres/{postgres_cluster_id}/users/{username} Postgres_users_update_role",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_users_update_role",
+      "method": "patch",
+      "path": "/v1/postgres/{postgres_cluster_id}/users/{username}",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Update User Role",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        },
+        {
+          "name": "username",
+          "in": "path",
+          "description": "Postgres User Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "username"
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/updatePostgresUserRoleRequest"
+        }
+      },
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {}
+        },
+        "400": {
+          "description": "Username is reserved, a system user, or malformed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "'Cluster not found' for the cluster; 'User not found' for the user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "role missing or invalid",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "users_update_role",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.users_update_role"
+    },
+    {
+      "identity": "GET /v1/postgres/{postgres_cluster_id}/users/{username}/credentials Postgres_users_credentials",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_users_credentials",
+      "method": "get",
+      "path": "/v1/postgres/{postgres_cluster_id}/users/{username}/credentials",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Get User Credentials",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        },
+        {
+          "name": "username",
+          "in": "path",
+          "description": "Postgres User Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "username"
+        }
+      ],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getPostgresUserCredentialsResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Username is reserved, a system user, or malformed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "'Cluster not found' for the cluster; 'User not found' for the user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "users_credentials",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.users_credentials"
+    },
+    {
+      "identity": "POST /v1/postgres/{postgres_cluster_id}/users/{username}/rotate_password Postgres_users_rotate_password",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Postgres_users_rotate_password",
+      "method": "post",
+      "path": "/v1/postgres/{postgres_cluster_id}/users/{username}/rotate_password",
+      "tags": [
+        "Postgres Clusters"
+      ],
+      "summary": "Rotate User Password",
+      "parameters": [
+        {
+          "name": "postgres_cluster_id",
+          "in": "path",
+          "description": "Managed Postgres Cluster ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "postgres_cluster_id"
+        },
+        {
+          "name": "username",
+          "in": "path",
+          "description": "Postgres User Name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "ruby_name": "username"
+        }
+      ],
+      "request_body": {
+        "required": false,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/rotatePostgresPasswordRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Rotated user credentials",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/rotatePostgresPasswordResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Username is reserved, a system user, or malformed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "'Cluster not found' for the cluster; 'User not found' for the user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "410": {
+          "description": "'This cluster has been deleted' or 'This cluster is being deleted'",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "kill_sessions must be true or false",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostgresErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "postgres_clusters",
+      "ruby_method": "users_rotate_password",
+      "public_ruby_method": "FlyIO::Client#postgres_clusters.users_rotate_password"
+    },
+    {
+      "identity": "POST /v1/tokens/authenticate Tokens_authenticate",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Tokens_authenticate",
+      "method": "post",
+      "path": "/v1/tokens/authenticate",
+      "tags": [
+        "Tokens"
+      ],
+      "summary": "Authenticate token header",
+      "parameters": [],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/authenticateTokenRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/root.VerifiedToken"
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "tokens",
+      "ruby_method": "authenticate",
+      "public_ruby_method": "FlyIO::Client#tokens.authenticate"
+    },
+    {
+      "identity": "POST /v1/tokens/authorize Tokens_authorize",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Tokens_authorize",
+      "method": "post",
+      "path": "/v1/tokens/authorize",
+      "tags": [
+        "Tokens"
+      ],
+      "summary": "Authorize token for resource access",
+      "parameters": [],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/authorizeTokenRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/authorizeResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "tokens",
+      "ruby_method": "authorize",
+      "public_ruby_method": "FlyIO::Client#tokens.authorize"
+    },
+    {
+      "identity": "GET /v1/tokens/current CurrentToken_show",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "CurrentToken_show",
+      "method": "get",
+      "path": "/v1/tokens/current",
+      "tags": [
+        "Tokens"
+      ],
+      "summary": "Get Current Token Information",
+      "parameters": [],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrentTokenResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "tokens",
+      "ruby_method": "current",
+      "public_ruby_method": "FlyIO::Client#tokens.current"
+    },
+    {
+      "identity": "POST /v1/tokens/kms Tokens_request_Kms",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Tokens_request_Kms",
+      "method": "post",
+      "path": "/v1/tokens/kms",
+      "tags": [
+        "Tokens"
+      ],
+      "summary": "Request a Petsem token for accessing KMS",
+      "parameters": [],
+      "request_body": null,
+      "responses": {
+        "200": {
+          "description": "KMS token",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "tokens",
+      "ruby_method": "request_kms",
+      "public_ruby_method": "FlyIO::Client#tokens.request_kms"
+    },
+    {
+      "identity": "POST /v1/tokens/oidc Tokens_request_OIDC",
+      "surface": "machines_rest",
+      "stability": "stable",
+      "base_url": "https://api.machines.dev",
+      "operation_id": "Tokens_request_OIDC",
+      "method": "post",
+      "path": "/v1/tokens/oidc",
+      "tags": [
+        "Tokens"
+      ],
+      "summary": "Request an OIDC token",
+      "parameters": [],
+      "request_body": {
+        "required": false,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/components/schemas/CreateOIDCTokenRequest"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OIDC token",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorResponse"
+              }
+            }
+          }
+        }
+      },
+      "ruby_resource": "tokens",
+      "ruby_method": "request_oidc",
+      "public_ruby_method": "FlyIO::Client#tokens.request_oidc"
+    }
+  ]
+}

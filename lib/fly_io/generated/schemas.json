@@ -1,0 +1,4237 @@
+{
+  "AcmeChallenge": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "target": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "AcmeChallenge"
+  },
+  "App": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "internal_numeric_id": {
+        "type": "integer"
+      },
+      "machine_count": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      },
+      "network": {
+        "type": "string"
+      },
+      "network_cidr": {
+        "type": "string"
+      },
+      "organization": {
+        "$ref": "#/components/schemas/AppOrganizationInfo"
+      },
+      "status": {
+        "type": "string"
+      },
+      "volume_count": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "App"
+  },
+  "AppOrganizationInfo": {
+    "type": "object",
+    "properties": {
+      "internal_numeric_id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      },
+      "slug": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "AppOrganizationInfo"
+  },
+  "AppSecret": {
+    "type": "object",
+    "properties": {
+      "created_at": {
+        "type": "string"
+      },
+      "digest": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      },
+      "value": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "AppSecret"
+  },
+  "AppSecrets": {
+    "type": "object",
+    "properties": {
+      "secrets": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/AppSecret"
+        }
+      }
+    },
+    "x-ruby-class": "AppSecrets"
+  },
+  "AppSecretsUpdateRequest": {
+    "type": "object",
+    "properties": {
+      "values": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    "x-ruby-class": "AppSecretsUpdateRequest"
+  },
+  "AppSecretsUpdateResp": {
+    "type": "object",
+    "properties": {
+      "Version": {
+        "type": "integer",
+        "description": "DEPRECATED"
+      },
+      "secrets": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/AppSecret"
+        }
+      },
+      "version": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "AppSecretsUpdateResp"
+  },
+  "CertificateCheckResponse": {
+    "type": "object",
+    "properties": {
+      "acme_requested": {
+        "type": "boolean"
+      },
+      "certificates": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CertificateEntry"
+        }
+      },
+      "configured": {
+        "type": "boolean"
+      },
+      "dns_provider": {
+        "type": "string"
+      },
+      "dns_records": {
+        "$ref": "#/components/schemas/DNSRecords"
+      },
+      "dns_requirements": {
+        "$ref": "#/components/schemas/DNSRequirements"
+      },
+      "hostname": {
+        "type": "string"
+      },
+      "rate_limited_until": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "validation": {
+        "$ref": "#/components/schemas/CertificateValidation"
+      },
+      "validation_errors": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CertificateValidationError"
+        }
+      }
+    },
+    "x-ruby-class": "CertificateCheckResponse"
+  },
+  "CertificateDetail": {
+    "type": "object",
+    "properties": {
+      "acme_requested": {
+        "type": "boolean"
+      },
+      "certificates": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CertificateEntry"
+        }
+      },
+      "configured": {
+        "type": "boolean"
+      },
+      "dns_provider": {
+        "type": "string"
+      },
+      "dns_requirements": {
+        "$ref": "#/components/schemas/DNSRequirements"
+      },
+      "hostname": {
+        "type": "string"
+      },
+      "rate_limited_until": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "validation": {
+        "$ref": "#/components/schemas/CertificateValidation"
+      },
+      "validation_errors": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CertificateValidationError"
+        }
+      }
+    },
+    "x-ruby-class": "CertificateDetail"
+  },
+  "CertificateEntry": {
+    "type": "object",
+    "properties": {
+      "created_at": {
+        "type": "string"
+      },
+      "expires_at": {
+        "type": "string"
+      },
+      "issued": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/IssuedCertificate"
+        }
+      },
+      "issuer": {
+        "type": "string"
+      },
+      "source": {
+        "type": "string",
+        "enum": [
+          "custom",
+          "fly"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "active",
+          "pending_ownership",
+          "pending_validation"
+        ]
+      }
+    },
+    "x-ruby-class": "CertificateEntry"
+  },
+  "CertificateSummary": {
+    "type": "object",
+    "properties": {
+      "acme_alpn_configured": {
+        "type": "boolean"
+      },
+      "acme_dns_configured": {
+        "type": "boolean"
+      },
+      "acme_http_configured": {
+        "type": "boolean"
+      },
+      "acme_requested": {
+        "type": "boolean"
+      },
+      "configured": {
+        "type": "boolean"
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "dns_provider": {
+        "type": "string"
+      },
+      "has_custom_certificate": {
+        "type": "boolean"
+      },
+      "has_fly_certificate": {
+        "type": "boolean"
+      },
+      "hostname": {
+        "type": "string"
+      },
+      "ownership_txt_configured": {
+        "type": "boolean"
+      },
+      "status": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "CertificateSummary"
+  },
+  "CertificateValidation": {
+    "type": "object",
+    "properties": {
+      "alpn_configured": {
+        "type": "boolean"
+      },
+      "dns_configured": {
+        "type": "boolean"
+      },
+      "http_configured": {
+        "type": "boolean"
+      },
+      "ownership_txt_configured": {
+        "type": "boolean"
+      }
+    },
+    "x-ruby-class": "CertificateValidation"
+  },
+  "CertificateValidationError": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string"
+      },
+      "message": {
+        "type": "string"
+      },
+      "remediation": {
+        "type": "string"
+      },
+      "timestamp": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "CertificateValidationError"
+  },
+  "CheckStatus": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "output": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "CheckStatus"
+  },
+  "CreateAppDeployTokenRequest": {
+    "type": "object",
+    "properties": {
+      "expiry": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "CreateAppDeployTokenRequest"
+  },
+  "CreateAppRequest": {
+    "type": "object",
+    "properties": {
+      "enable_subdomains": {
+        "type": "boolean"
+      },
+      "name": {
+        "type": "string"
+      },
+      "network": {
+        "type": "string"
+      },
+      "org_slug": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "CreateAppRequest"
+  },
+  "CreateAppResponse": {
+    "type": "object",
+    "properties": {
+      "token": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "CreateAppResponse"
+  },
+  "CreateLeaseRequest": {
+    "type": "object",
+    "properties": {
+      "description": {
+        "type": "string"
+      },
+      "ttl": {
+        "type": "integer",
+        "description": "seconds lease will be valid"
+      }
+    },
+    "x-ruby-class": "CreateLeaseRequest"
+  },
+  "CreateMachineRequest": {
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "description": "An object defining the Machine configuration",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/fly.MachineConfig"
+          }
+        ]
+      },
+      "lease_ttl": {
+        "type": "integer"
+      },
+      "min_secrets_version": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string",
+        "description": "Unique name for this Machine. If omitted, one is generated for you"
+      },
+      "region": {
+        "type": "string",
+        "description": "The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you)."
+      },
+      "skip_launch": {
+        "type": "boolean"
+      },
+      "skip_secrets": {
+        "type": "boolean"
+      },
+      "skip_service_registration": {
+        "type": "boolean"
+      }
+    },
+    "x-ruby-class": "CreateMachineRequest"
+  },
+  "CreateOIDCTokenRequest": {
+    "type": "object",
+    "properties": {
+      "aud": {
+        "type": "string",
+        "example": "https://fly.io/org-slug"
+      },
+      "aws_principal_tags": {
+        "type": "boolean"
+      }
+    },
+    "description": "Optional parameters",
+    "x-ruby-class": "CreateOIDCTokenRequest"
+  },
+  "CreateVolumeRequest": {
+    "type": "object",
+    "properties": {
+      "auto_backup_enabled": {
+        "type": "boolean",
+        "description": "enable scheduled automatic snapshots. Defaults to `true`"
+      },
+      "compute": {
+        "$ref": "#/components/schemas/fly.MachineGuest"
+      },
+      "compute_image": {
+        "type": "string"
+      },
+      "encrypted": {
+        "type": "boolean"
+      },
+      "fstype": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "region": {
+        "type": "string"
+      },
+      "require_unique_zone": {
+        "type": "boolean"
+      },
+      "size_gb": {
+        "type": "integer"
+      },
+      "snapshot_id": {
+        "type": "string",
+        "description": "restore from snapshot"
+      },
+      "snapshot_retention": {
+        "type": "integer"
+      },
+      "source_volume_id": {
+        "type": "string",
+        "description": "fork from remote volume"
+      },
+      "unique_zone_app_wide": {
+        "type": "boolean"
+      }
+    },
+    "x-ruby-class": "CreateVolumeRequest"
+  },
+  "CurrentTokenResponse": {
+    "type": "object",
+    "properties": {
+      "tokens": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/main.tokenInfo"
+        }
+      }
+    },
+    "x-ruby-class": "CurrentTokenResponse"
+  },
+  "DNSRecords": {
+    "type": "object",
+    "properties": {
+      "a": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "aaaa": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "acme_challenge_cname": {
+        "type": "string"
+      },
+      "cname": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "ownership_txt": {
+        "type": "string"
+      },
+      "resolved_addresses": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "soa": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "DNSRecords"
+  },
+  "DNSRequirements": {
+    "type": "object",
+    "properties": {
+      "a": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "aaaa": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "acme_challenge": {
+        "$ref": "#/components/schemas/AcmeChallenge"
+      },
+      "cname": {
+        "type": "string"
+      },
+      "ownership": {
+        "$ref": "#/components/schemas/OwnershipVerification"
+      }
+    },
+    "x-ruby-class": "DNSRequirements"
+  },
+  "DecryptSecretkeyRequest": {
+    "type": "object",
+    "properties": {
+      "associated_data": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      },
+      "ciphertext": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "DecryptSecretkeyRequest"
+  },
+  "DecryptSecretkeyResponse": {
+    "type": "object",
+    "properties": {
+      "plaintext": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "DecryptSecretkeyResponse"
+  },
+  "DeleteAppSecretResponse": {
+    "type": "object",
+    "properties": {
+      "Version": {
+        "type": "integer",
+        "description": "DEPRECATED"
+      },
+      "version": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "DeleteAppSecretResponse"
+  },
+  "DeleteSecretkeyResponse": {
+    "type": "object",
+    "properties": {
+      "Version": {
+        "type": "integer",
+        "description": "DEPRECATED"
+      },
+      "version": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "DeleteSecretkeyResponse"
+  },
+  "EncryptSecretkeyRequest": {
+    "type": "object",
+    "properties": {
+      "associated_data": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      },
+      "plaintext": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "EncryptSecretkeyRequest"
+  },
+  "EncryptSecretkeyResponse": {
+    "type": "object",
+    "properties": {
+      "ciphertext": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "EncryptSecretkeyResponse"
+  },
+  "ErrorResponse": {
+    "type": "object",
+    "properties": {
+      "details": {
+        "type": "object",
+        "description": "Deprecated"
+      },
+      "error": {
+        "type": "string"
+      },
+      "status": {
+        "$ref": "#/components/schemas/main.statusCode"
+      }
+    },
+    "x-ruby-class": "ErrorResponse"
+  },
+  "ExtendVolumeRequest": {
+    "type": "object",
+    "properties": {
+      "size_gb": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "ExtendVolumeRequest"
+  },
+  "ExtendVolumeResponse": {
+    "type": "object",
+    "properties": {
+      "needs_restart": {
+        "type": "boolean"
+      },
+      "volume": {
+        "$ref": "#/components/schemas/Volume"
+      }
+    },
+    "x-ruby-class": "ExtendVolumeResponse"
+  },
+  "IPAssignment": {
+    "type": "object",
+    "properties": {
+      "created_at": {
+        "type": "string"
+      },
+      "ip": {
+        "type": "string"
+      },
+      "region": {
+        "type": "string"
+      },
+      "service_name": {
+        "type": "string"
+      },
+      "shared": {
+        "type": "boolean"
+      }
+    },
+    "x-ruby-class": "IPAssignment"
+  },
+  "ImageRef": {
+    "type": "object",
+    "properties": {
+      "digest": {
+        "type": "string"
+      },
+      "labels": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "registry": {
+        "type": "string"
+      },
+      "repository": {
+        "type": "string"
+      },
+      "tag": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "ImageRef"
+  },
+  "IssuedCertificate": {
+    "type": "object",
+    "properties": {
+      "certificate_authority": {
+        "type": "string"
+      },
+      "expires_at": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "rsa",
+          "ecdsa"
+        ]
+      }
+    },
+    "x-ruby-class": "IssuedCertificate"
+  },
+  "Lease": {
+    "type": "object",
+    "properties": {
+      "description": {
+        "type": "string",
+        "description": "Description or reason for the Lease."
+      },
+      "expires_at": {
+        "type": "integer",
+        "description": "ExpiresAt is the unix timestamp in UTC to denote when the Lease will no longer be valid."
+      },
+      "nonce": {
+        "type": "string",
+        "description": "Nonce is the unique ID autogenerated and associated with the Lease."
+      },
+      "owner": {
+        "type": "string",
+        "description": "Owner is the user identifier which acquired the Lease."
+      },
+      "version": {
+        "type": "string",
+        "description": "Machine version"
+      }
+    },
+    "x-ruby-class": "Lease"
+  },
+  "ListAppsResponse": {
+    "type": "object",
+    "properties": {
+      "apps": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/App"
+        }
+      },
+      "total_apps": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "ListAppsResponse"
+  },
+  "ListenSocket": {
+    "type": "object",
+    "properties": {
+      "address": {
+        "type": "string"
+      },
+      "proto": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "ListenSocket"
+  },
+  "Machine": {
+    "type": "object",
+    "properties": {
+      "checks": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CheckStatus"
+        }
+      },
+      "config": {
+        "$ref": "#/components/schemas/fly.MachineConfig"
+      },
+      "cordoned": {
+        "type": "boolean"
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "events": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/MachineEvent"
+        }
+      },
+      "host_status": {
+        "type": "string",
+        "enum": [
+          "ok",
+          "unknown",
+          "unreachable"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "image_ref": {
+        "$ref": "#/components/schemas/ImageRef"
+      },
+      "incomplete_config": {
+        "$ref": "#/components/schemas/fly.MachineConfig"
+      },
+      "instance_id": {
+        "type": "string",
+        "description": "InstanceID is unique for each version of the machine"
+      },
+      "lease": {
+        "$ref": "#/components/schemas/StrippedLease"
+      },
+      "name": {
+        "type": "string"
+      },
+      "nonce": {
+        "type": "string",
+        "description": "Nonce is only every returned on machine creation if a lease_duration was provided."
+      },
+      "private_ip": {
+        "type": "string",
+        "description": "PrivateIP is the internal 6PN address of the machine."
+      },
+      "region": {
+        "type": "string"
+      },
+      "state": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "Machine"
+  },
+  "MachineEvent": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "request": {
+        "type": "object"
+      },
+      "source": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "timestamp": {
+        "type": "integer"
+      },
+      "type": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "MachineEvent"
+  },
+  "MachineExecRequest": {
+    "type": "object",
+    "properties": {
+      "cmd": {
+        "type": "string",
+        "description": "Deprecated: use Command instead"
+      },
+      "command": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "container": {
+        "type": "string"
+      },
+      "machine": {
+        "type": "boolean",
+        "description": "Machine runs the command in the machine's own namespace instead of in a\ncontainer. It is mutually exclusive with Container."
+      },
+      "stdin": {
+        "type": "string"
+      },
+      "timeout": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "MachineExecRequest"
+  },
+  "MachineOverviewConfig": {
+    "type": "object",
+    "properties": {
+      "guest": {
+        "$ref": "#/components/schemas/fly.MachineGuest"
+      },
+      "image": {
+        "type": "string"
+      },
+      "metadata": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    "x-ruby-class": "MachineOverviewConfig"
+  },
+  "MachineVersion": {
+    "type": "object",
+    "properties": {
+      "user_config": {
+        "$ref": "#/components/schemas/fly.MachineConfig"
+      },
+      "version": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "MachineVersion"
+  },
+  "OrgMachine": {
+    "type": "object",
+    "properties": {
+      "app_name": {
+        "type": "string"
+      },
+      "config": {
+        "$ref": "#/components/schemas/MachineOverviewConfig"
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "private_ip": {
+        "type": "string"
+      },
+      "region": {
+        "type": "string"
+      },
+      "state": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      },
+      "version": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "OrgMachine"
+  },
+  "OrgMachinesResponse": {
+    "type": "object",
+    "properties": {
+      "error_regions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "last_machine_id": {
+        "type": "string"
+      },
+      "last_updated_at": {
+        "type": "string"
+      },
+      "machines": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/OrgMachine"
+        }
+      },
+      "next_cursor": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "OrgMachinesResponse"
+  },
+  "OrgVolume": {
+    "type": "object",
+    "properties": {
+      "app_name": {
+        "type": "string"
+      },
+      "attached_alloc_id": {
+        "type": "string"
+      },
+      "attached_machine_id": {
+        "type": "string"
+      },
+      "auto_backup_enabled": {
+        "type": "boolean"
+      },
+      "block_size": {
+        "type": "integer"
+      },
+      "blocks": {
+        "type": "integer"
+      },
+      "blocks_avail": {
+        "type": "integer"
+      },
+      "blocks_free": {
+        "type": "integer"
+      },
+      "bytes_total": {
+        "type": "integer"
+      },
+      "bytes_used": {
+        "type": "integer"
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "encrypted": {
+        "type": "boolean"
+      },
+      "fstype": {
+        "type": "string"
+      },
+      "host_status": {
+        "type": "string",
+        "enum": [
+          "ok",
+          "unknown",
+          "unreachable"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "region": {
+        "type": "string"
+      },
+      "size_gb": {
+        "type": "integer"
+      },
+      "snapshot_retention": {
+        "type": "integer"
+      },
+      "state": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "local",
+          "cache"
+        ]
+      },
+      "updated_at": {
+        "type": "string"
+      },
+      "zone": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "OrgVolume"
+  },
+  "OrgVolumesResponse": {
+    "type": "object",
+    "properties": {
+      "last_updated_at": {
+        "type": "string"
+      },
+      "last_volume_id": {
+        "type": "string"
+      },
+      "next_cursor": {
+        "type": "string"
+      },
+      "volumes": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/OrgVolume"
+        }
+      }
+    },
+    "x-ruby-class": "OrgVolumesResponse"
+  },
+  "OrganizationRef": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Organization name."
+      },
+      "slug": {
+        "type": "string",
+        "description": "Organization slug."
+      }
+    },
+    "x-ruby-class": "OrganizationRef"
+  },
+  "OwnershipVerification": {
+    "type": "object",
+    "properties": {
+      "app_value": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "org_value": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "OwnershipVerification"
+  },
+  "PostgresAttachedApp": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Attached Fly app name."
+      }
+    },
+    "x-ruby-class": "PostgresAttachedApp"
+  },
+  "PostgresAttachment": {
+    "type": "object",
+    "properties": {
+      "app_name": {
+        "type": "string",
+        "description": "Attached Fly app name."
+      },
+      "attached_at": {
+        "type": "string",
+        "description": "RFC 3339 timestamp when the attachment was created."
+      },
+      "postgres_cluster_id": {
+        "type": "string",
+        "description": "Cluster ID the app is attached to."
+      }
+    },
+    "x-ruby-class": "PostgresAttachment"
+  },
+  "PostgresBackup": {
+    "type": "object",
+    "properties": {
+      "finished_at": {
+        "type": "string",
+        "description": "RFC 3339 stop timestamp."
+      },
+      "id": {
+        "type": "string",
+        "description": "Backup ID."
+      },
+      "size_bytes": {
+        "type": "integer",
+        "description": "Backup size in bytes."
+      },
+      "started_at": {
+        "type": "string",
+        "description": "RFC 3339 start timestamp."
+      },
+      "status": {
+        "type": "string",
+        "description": "Backup status.",
+        "example": "completed"
+      },
+      "type": {
+        "type": "string",
+        "description": "Backup type.",
+        "enum": [
+          "full",
+          "incr",
+          "diff"
+        ]
+      }
+    },
+    "x-ruby-class": "PostgresBackup"
+  },
+  "PostgresCluster": {
+    "type": "object",
+    "properties": {
+      "attached_apps": {
+        "type": "array",
+        "description": "Apps attached to the cluster.",
+        "items": {
+          "$ref": "#/components/schemas/PostgresAttachedApp"
+        }
+      },
+      "cpu_kind": {
+        "type": "string",
+        "description": "CPU class.",
+        "example": "shared",
+        "enum": [
+          "shared",
+          "performance"
+        ]
+      },
+      "cpus": {
+        "type": "integer",
+        "description": "vCPUs per node.",
+        "example": 2
+      },
+      "created_at": {
+        "type": "string",
+        "description": "RFC 3339 creation timestamp."
+      },
+      "disk_size_gb": {
+        "type": "integer",
+        "description": "Disk size in gigabytes.",
+        "example": 10
+      },
+      "endpoints": {
+        "type": "object",
+        "description": "Connection endpoints. Populated once the cluster is ready.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PostgresClusterEndpoints"
+          }
+        ]
+      },
+      "id": {
+        "type": "string",
+        "description": "Cluster ID."
+      },
+      "memory_mb": {
+        "type": "integer",
+        "description": "Memory per node in megabytes.",
+        "example": 1024
+      },
+      "name": {
+        "type": "string",
+        "description": "Cluster name."
+      },
+      "organization": {
+        "$ref": "#/components/schemas/OrganizationRef"
+      },
+      "pg_major_version": {
+        "type": "string",
+        "description": "Postgres major version.",
+        "example": "17",
+        "enum": [
+          "16",
+          "17"
+        ]
+      },
+      "plan": {
+        "type": "string",
+        "description": "Plan slug.",
+        "example": "basic",
+        "enum": [
+          "basic",
+          "starter",
+          "launch",
+          "scale",
+          "Performance"
+        ]
+      },
+      "postgis_enabled": {
+        "type": "boolean",
+        "description": "Whether PostGIS support is enabled."
+      },
+      "region": {
+        "type": "string",
+        "description": "Fly region code.",
+        "example": "iad"
+      },
+      "replicas": {
+        "type": "integer",
+        "description": "Number of replicas.",
+        "example": 1
+      },
+      "status": {
+        "type": "string",
+        "description": "Current lifecycle status.",
+        "example": "ready",
+        "enum": [
+          "creating",
+          "initializing",
+          "ready",
+          "deleting",
+          "deleted",
+          "failed"
+        ]
+      }
+    },
+    "x-ruby-class": "PostgresCluster"
+  },
+  "PostgresClusterEndpoints": {
+    "type": "object",
+    "properties": {
+      "primary": {
+        "type": "object",
+        "description": "Endpoints for connecting to the primary node.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PostgresNodeEndpoints"
+          }
+        ]
+      }
+    },
+    "x-ruby-class": "PostgresClusterEndpoints"
+  },
+  "PostgresClusterSummary": {
+    "type": "object",
+    "properties": {
+      "attached_apps": {
+        "type": "array",
+        "description": "Apps attached to the cluster.",
+        "items": {
+          "$ref": "#/components/schemas/PostgresAttachedApp"
+        }
+      },
+      "created_at": {
+        "type": "string",
+        "description": "RFC 3339 creation timestamp."
+      },
+      "deleted_at": {
+        "type": "string",
+        "description": "RFC 3339 deletion timestamp; present for deleted clusters."
+      },
+      "id": {
+        "type": "string",
+        "description": "Cluster ID."
+      },
+      "name": {
+        "type": "string",
+        "description": "Cluster name."
+      },
+      "plan": {
+        "type": "string",
+        "description": "Plan slug.",
+        "example": "basic",
+        "enum": [
+          "basic",
+          "starter",
+          "launch",
+          "scale",
+          "Performance"
+        ]
+      },
+      "region": {
+        "type": "string",
+        "description": "Fly region code.",
+        "example": "iad"
+      },
+      "status": {
+        "type": "string",
+        "description": "Current lifecycle status.",
+        "example": "ready",
+        "enum": [
+          "creating",
+          "initializing",
+          "ready",
+          "deleting",
+          "deleted",
+          "failed"
+        ]
+      }
+    },
+    "x-ruby-class": "PostgresClusterSummary"
+  },
+  "PostgresDatabase": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Database name."
+      }
+    },
+    "x-ruby-class": "PostgresDatabase"
+  },
+  "PostgresEndpoint": {
+    "type": "object",
+    "properties": {
+      "host": {
+        "type": "string",
+        "description": "Hostname to connect to."
+      },
+      "port": {
+        "type": "integer",
+        "description": "TCP port."
+      }
+    },
+    "x-ruby-class": "PostgresEndpoint"
+  },
+  "PostgresErrorResponse": {
+    "type": "object",
+    "properties": {
+      "error": {
+        "type": "string",
+        "description": "Human-readable error message."
+      }
+    },
+    "x-ruby-class": "PostgresErrorResponse"
+  },
+  "PostgresExtension": {
+    "type": "object",
+    "properties": {
+      "default_version": {
+        "type": "string",
+        "description": "Default version installed when enabled."
+      },
+      "description": {
+        "type": "string",
+        "description": "Human-readable description."
+      },
+      "installed": {
+        "type": "object",
+        "description": "Installation details, or null when the extension is not installed.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PostgresInstalledExtension"
+          }
+        ]
+      },
+      "name": {
+        "type": "string",
+        "description": "Extension name.",
+        "example": "citext"
+      },
+      "system": {
+        "type": "boolean",
+        "description": "Whether this is a system extension that cannot be disabled."
+      }
+    },
+    "x-ruby-class": "PostgresExtension"
+  },
+  "PostgresInstalledExtension": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "description": "Schema the extension is installed into.",
+        "example": "public"
+      },
+      "version": {
+        "type": "string",
+        "description": "Installed version.",
+        "example": "1.0"
+      }
+    },
+    "x-ruby-class": "PostgresInstalledExtension"
+  },
+  "PostgresNodeEndpoints": {
+    "type": "object",
+    "properties": {
+      "direct": {
+        "type": "object",
+        "description": "Unpooled connection to the cluster node.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PostgresEndpoint"
+          }
+        ]
+      },
+      "pooler": {
+        "type": "object",
+        "description": "Pooled connection to the cluster node (through PgBouncer).",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PostgresEndpoint"
+          }
+        ]
+      }
+    },
+    "x-ruby-class": "PostgresNodeEndpoints"
+  },
+  "PostgresUser": {
+    "type": "object",
+    "properties": {
+      "role": {
+        "type": "string",
+        "description": "User role.",
+        "enum": [
+          "schema_admin",
+          "writer",
+          "reader"
+        ]
+      },
+      "username": {
+        "type": "string",
+        "description": "User name."
+      }
+    },
+    "x-ruby-class": "PostgresUser"
+  },
+  "PostgresUserCredentials": {
+    "type": "object",
+    "properties": {
+      "password": {
+        "type": "string",
+        "description": "User password."
+      },
+      "username": {
+        "type": "string",
+        "description": "User name."
+      }
+    },
+    "x-ruby-class": "PostgresUserCredentials"
+  },
+  "ProcessStat": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string"
+      },
+      "cpu": {
+        "type": "integer"
+      },
+      "directory": {
+        "type": "string"
+      },
+      "listen_sockets": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ListenSocket"
+        }
+      },
+      "pid": {
+        "type": "integer"
+      },
+      "rss": {
+        "type": "integer"
+      },
+      "rtime": {
+        "type": "integer"
+      },
+      "stime": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "ProcessStat"
+  },
+  "SecretKey": {
+    "type": "object",
+    "properties": {
+      "created_at": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "public_key": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      },
+      "type": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "SecretKey"
+  },
+  "SecretKeys": {
+    "type": "object",
+    "properties": {
+      "secret_keys": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/SecretKey"
+        }
+      }
+    },
+    "x-ruby-class": "SecretKeys"
+  },
+  "SetAppSecretRequest": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "SetAppSecretRequest"
+  },
+  "SetAppSecretResponse": {
+    "type": "object",
+    "properties": {
+      "Version": {
+        "type": "integer",
+        "description": "DEPRECATED"
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "digest": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      },
+      "value": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "SetAppSecretResponse"
+  },
+  "SetSecretkeyRequest": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string"
+      },
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "SetSecretkeyRequest"
+  },
+  "SetSecretkeyResponse": {
+    "type": "object",
+    "properties": {
+      "Version": {
+        "type": "integer",
+        "description": "DEPRECATED"
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "public_key": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      },
+      "type": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "SetSecretkeyResponse"
+  },
+  "SignSecretkeyRequest": {
+    "type": "object",
+    "properties": {
+      "plaintext": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "SignSecretkeyRequest"
+  },
+  "SignSecretkeyResponse": {
+    "type": "object",
+    "properties": {
+      "signature": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "SignSecretkeyResponse"
+  },
+  "SignalRequest": {
+    "type": "object",
+    "properties": {
+      "signal": {
+        "type": "string",
+        "enum": [
+          "SIGABRT",
+          "SIGALRM",
+          "SIGFPE",
+          "SIGHUP",
+          "SIGILL",
+          "SIGINT",
+          "SIGKILL",
+          "SIGPIPE",
+          "SIGQUIT",
+          "SIGSEGV",
+          "SIGTERM",
+          "SIGTRAP",
+          "SIGUSR1",
+          "SIGUSR2"
+        ]
+      }
+    },
+    "x-ruby-class": "SignalRequest"
+  },
+  "StopRequest": {
+    "type": "object",
+    "properties": {
+      "signal": {
+        "type": "string",
+        "example": "SIGTERM",
+        "enum": [
+          "SIGHUP",
+          "SIGINT",
+          "SIGQUIT",
+          "SIGKILL",
+          "SIGUSR1",
+          "SIGUSR2",
+          "SIGTERM"
+        ]
+      },
+      "timeout": {
+        "type": "string",
+        "example": "1s"
+      }
+    },
+    "x-ruby-class": "StopRequest"
+  },
+  "StrippedLease": {
+    "type": "object",
+    "properties": {
+      "description": {
+        "type": "string"
+      },
+      "expires_at": {
+        "type": "integer"
+      },
+      "owner": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "StrippedLease"
+  },
+  "UpdateMachineRequest": {
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "description": "An object defining the Machine configuration",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/fly.MachineConfig"
+          }
+        ]
+      },
+      "current_version": {
+        "type": "string"
+      },
+      "lease_ttl": {
+        "type": "integer"
+      },
+      "min_secrets_version": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string",
+        "description": "Unique name for this Machine. If omitted, one is generated for you"
+      },
+      "region": {
+        "type": "string",
+        "description": "The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you)."
+      },
+      "skip_launch": {
+        "type": "boolean"
+      },
+      "skip_secrets": {
+        "type": "boolean"
+      },
+      "skip_service_registration": {
+        "type": "boolean"
+      }
+    },
+    "x-ruby-class": "UpdateMachineRequest"
+  },
+  "UpdateVolumeRequest": {
+    "type": "object",
+    "properties": {
+      "auto_backup_enabled": {
+        "type": "boolean"
+      },
+      "snapshot_retention": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "UpdateVolumeRequest"
+  },
+  "VerifySecretkeyRequest": {
+    "type": "object",
+    "properties": {
+      "plaintext": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      },
+      "signature": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "VerifySecretkeyRequest"
+  },
+  "Volume": {
+    "type": "object",
+    "properties": {
+      "attached_alloc_id": {
+        "type": "string"
+      },
+      "attached_machine_id": {
+        "type": "string"
+      },
+      "auto_backup_enabled": {
+        "type": "boolean"
+      },
+      "block_size": {
+        "type": "integer"
+      },
+      "blocks": {
+        "type": "integer"
+      },
+      "blocks_avail": {
+        "type": "integer"
+      },
+      "blocks_free": {
+        "type": "integer"
+      },
+      "bytes_total": {
+        "type": "integer"
+      },
+      "bytes_used": {
+        "type": "integer"
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "encrypted": {
+        "type": "boolean"
+      },
+      "fstype": {
+        "type": "string"
+      },
+      "host_status": {
+        "type": "string",
+        "enum": [
+          "ok",
+          "unknown",
+          "unreachable"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "region": {
+        "type": "string"
+      },
+      "size_gb": {
+        "type": "integer"
+      },
+      "snapshot_retention": {
+        "type": "integer"
+      },
+      "state": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "local",
+          "cache"
+        ]
+      },
+      "zone": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "Volume"
+  },
+  "VolumeSnapshot": {
+    "type": "object",
+    "properties": {
+      "created_at": {
+        "type": "string"
+      },
+      "digest": {
+        "type": "string"
+      },
+      "id": {
+        "type": "string"
+      },
+      "retention_days": {
+        "type": "integer"
+      },
+      "size": {
+        "type": "integer"
+      },
+      "status": {
+        "type": "string"
+      },
+      "volume_size": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "VolumeSnapshot"
+  },
+  "WaitMachineResponse": {
+    "type": "object",
+    "properties": {
+      "event_id": {
+        "type": "string"
+      },
+      "ok": {
+        "type": "boolean"
+      },
+      "state": {
+        "type": "string"
+      },
+      "version": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "WaitMachineResponse"
+  },
+  "assignIPRequest": {
+    "type": "object",
+    "properties": {
+      "network": {
+        "type": "string"
+      },
+      "org_slug": {
+        "type": "string"
+      },
+      "region": {
+        "type": "string"
+      },
+      "service_name": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "AssignIPRequest"
+  },
+  "authenticateTokenRequest": {
+    "type": "object",
+    "properties": {
+      "header": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "AuthenticateTokenRequest"
+  },
+  "authorizeResponse": {
+    "type": "object",
+    "properties": {
+      "access": {
+        "$ref": "#/components/schemas/flyio.Access"
+      },
+      "verified_token": {
+        "$ref": "#/components/schemas/root.VerifiedToken"
+      }
+    },
+    "x-ruby-class": "AuthorizeResponse"
+  },
+  "authorizeTokenRequest": {
+    "type": "object",
+    "properties": {
+      "access": {
+        "$ref": "#/components/schemas/main.TokenAccess"
+      },
+      "header": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "AuthorizeTokenRequest"
+  },
+  "createAcmeCertificateRequest": {
+    "type": "object",
+    "properties": {
+      "hostname": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "CreateAcmeCertificateRequest"
+  },
+  "createCustomCertificateRequest": {
+    "type": "object",
+    "properties": {
+      "fullchain": {
+        "type": "string"
+      },
+      "hostname": {
+        "type": "string"
+      },
+      "private_key": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "CreateCustomCertificateRequest"
+  },
+  "createPostgresAttachmentRequest": {
+    "required": [
+      "app_name"
+    ],
+    "type": "object",
+    "properties": {
+      "app_name": {
+        "type": "string",
+        "description": "Name of the Fly app to attach."
+      }
+    },
+    "x-ruby-class": "CreatePostgresAttachmentRequest"
+  },
+  "createPostgresAttachmentResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "$ref": "#/components/schemas/PostgresAttachment"
+      }
+    },
+    "x-ruby-class": "CreatePostgresAttachmentResponse"
+  },
+  "createPostgresBackupRequest": {
+    "required": [
+      "type"
+    ],
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "description": "Backup type.",
+        "example": "full",
+        "enum": [
+          "full",
+          "incr",
+          "diff"
+        ]
+      }
+    },
+    "x-ruby-class": "CreatePostgresBackupRequest"
+  },
+  "createPostgresClusterRequest": {
+    "required": [
+      "org_slug",
+      "plan",
+      "region"
+    ],
+    "type": "object",
+    "properties": {
+      "disk_size_gb": {
+        "maximum": 1000,
+        "minimum": 10,
+        "type": "integer",
+        "description": "Disk size in gigabytes.",
+        "example": 10
+      },
+      "name": {
+        "type": "string",
+        "description": "Name for the cluster. A name is generated when omitted."
+      },
+      "org_slug": {
+        "type": "string",
+        "description": "Slug of the organization that will own the cluster.",
+        "example": "my-org"
+      },
+      "pg_major_version": {
+        "type": "string",
+        "description": "Postgres major version.",
+        "example": "17",
+        "enum": [
+          "16",
+          "17"
+        ]
+      },
+      "plan": {
+        "type": "string",
+        "description": "Plan slug selecting CPU, memory, and disk sizing.",
+        "example": "basic",
+        "enum": [
+          "basic",
+          "starter",
+          "launch",
+          "scale",
+          "Performance"
+        ]
+      },
+      "pool_mode": {
+        "type": "string",
+        "description": "Connection pooler mode.",
+        "example": "transaction",
+        "enum": [
+          "session",
+          "transaction"
+        ]
+      },
+      "postgis_enabled": {
+        "type": "boolean",
+        "description": "Enable PostGIS support, required to later enable PostGIS extensions."
+      },
+      "region": {
+        "type": "string",
+        "description": "Fly region code where the cluster's primary runs.",
+        "example": "iad"
+      }
+    },
+    "x-ruby-class": "CreatePostgresClusterRequest"
+  },
+  "createPostgresDatabaseRequest": {
+    "required": [
+      "name"
+    ],
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Name of the database to create."
+      }
+    },
+    "x-ruby-class": "CreatePostgresDatabaseRequest"
+  },
+  "createPostgresUserRequest": {
+    "required": [
+      "role",
+      "username"
+    ],
+    "type": "object",
+    "properties": {
+      "role": {
+        "type": "string",
+        "description": "Role to grant the user.",
+        "example": "writer",
+        "enum": [
+          "schema_admin",
+          "writer",
+          "reader"
+        ]
+      },
+      "username": {
+        "type": "string",
+        "description": "Name for the new user."
+      }
+    },
+    "x-ruby-class": "CreatePostgresUserRequest"
+  },
+  "createPostgresUserResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "$ref": "#/components/schemas/PostgresUser"
+      }
+    },
+    "x-ruby-class": "CreatePostgresUserResponse"
+  },
+  "destroyCustomCertificateResponse": {
+    "type": "object",
+    "properties": {
+      "acme_requested": {
+        "type": "boolean"
+      },
+      "certificates": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CertificateEntry"
+        }
+      },
+      "configured": {
+        "type": "boolean"
+      },
+      "dns_provider": {
+        "type": "string"
+      },
+      "dns_requirements": {
+        "$ref": "#/components/schemas/DNSRequirements"
+      },
+      "hostname": {
+        "type": "string"
+      },
+      "rate_limited_until": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "validation": {
+        "$ref": "#/components/schemas/CertificateValidation"
+      },
+      "validation_errors": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CertificateValidationError"
+        }
+      },
+      "warning": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "DestroyCustomCertificateResponse"
+  },
+  "enablePostgresExtensionRequest": {
+    "required": [
+      "name"
+    ],
+    "type": "object",
+    "properties": {
+      "create_schema": {
+        "type": "boolean",
+        "description": "Create the schema first if it does not exist."
+      },
+      "name": {
+        "type": "string",
+        "description": "Extension to enable.",
+        "example": "citext"
+      },
+      "schema": {
+        "type": "string",
+        "description": "Schema to install the extension into. Defaults to the database's default schema."
+      }
+    },
+    "x-ruby-class": "EnablePostgresExtensionRequest"
+  },
+  "fly.ContainerConfig": {
+    "type": "object",
+    "properties": {
+      "cmd": {
+        "type": "array",
+        "description": "CmdOverride is used to override the default command of the image.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "depends_on": {
+        "type": "array",
+        "description": "DependsOn can be used to define dependencies between containers. The container will only be\nstarted after all of its dependent conditions have been satisfied.",
+        "items": {
+          "$ref": "#/components/schemas/fly.ContainerDependency"
+        }
+      },
+      "entrypoint": {
+        "type": "array",
+        "description": "EntrypointOverride is used to override the default entrypoint of the image.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "env": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "ExtraEnv is used to add additional environment variables to the container."
+      },
+      "env_from": {
+        "type": "array",
+        "description": "EnvFrom can be provided to set environment variables from machine fields.",
+        "items": {
+          "$ref": "#/components/schemas/fly.EnvFrom"
+        }
+      },
+      "exec": {
+        "type": "array",
+        "description": "Image Config overrides - these fields are used to override the image configuration.\nIf not provided, the image configuration will be used.\nExecOverride is used to override the default command of the image.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "files": {
+        "type": "array",
+        "description": "Files are files that will be written to the container file system.",
+        "items": {
+          "$ref": "#/components/schemas/fly.File"
+        }
+      },
+      "healthchecks": {
+        "type": "array",
+        "description": "Healthchecks determine the health of your containers. Healthchecks can use HTTP, TCP or an Exec command.",
+        "items": {
+          "$ref": "#/components/schemas/fly.ContainerHealthcheck"
+        }
+      },
+      "image": {
+        "type": "string",
+        "description": "Image is the docker image to run."
+      },
+      "name": {
+        "type": "string",
+        "description": "Name is used to identify the container in the machine."
+      },
+      "restart": {
+        "type": "object",
+        "description": "Restart is used to define the restart policy for the container. NOTE: spot-price is not\nsupported for containers.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/fly.MachineRestart"
+          }
+        ]
+      },
+      "secrets": {
+        "type": "array",
+        "description": "Secrets can be provided at the process level to explicitly indicate which secrets should be\nused for the process. If not provided, the secrets provided at the machine level will be used.",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachineSecret"
+        }
+      },
+      "stop": {
+        "type": "object",
+        "description": "Stop is used to define the signal and timeout for stopping the container.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/fly.StopConfig"
+          }
+        ]
+      },
+      "user": {
+        "type": "string",
+        "description": "UserOverride is used to override the default user of the image."
+      }
+    },
+    "x-ruby-class": "FlyContainerConfig"
+  },
+  "fly.ContainerDependency": {
+    "type": "object",
+    "properties": {
+      "condition": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/fly.ContainerDependencyCondition"
+          }
+        ]
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyContainerDependency"
+  },
+  "fly.ContainerDependencyCondition": {
+    "type": "string",
+    "enum": [
+      "exited_successfully",
+      "healthy",
+      "started"
+    ],
+    "x-enum-varnames": [
+      "ExitedSuccessfully",
+      "Healthy",
+      "Started"
+    ],
+    "x-ruby-class": "FlyContainerDependencyCondition"
+  },
+  "fly.ContainerHealthcheck": {
+    "type": "object",
+    "properties": {
+      "exec": {
+        "$ref": "#/components/schemas/fly.ExecHealthcheck"
+      },
+      "failure_threshold": {
+        "type": "integer",
+        "description": "The number of times the check must fail before considering the container unhealthy."
+      },
+      "grace_period": {
+        "type": "integer",
+        "description": "The time in seconds to wait after a container starts before checking its health."
+      },
+      "http": {
+        "$ref": "#/components/schemas/fly.HTTPHealthcheck"
+      },
+      "interval": {
+        "type": "integer",
+        "description": "The time in seconds between executing the defined check."
+      },
+      "kind": {
+        "type": "object",
+        "description": "Kind of healthcheck (readiness, liveness)",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/fly.ContainerHealthcheckKind"
+          }
+        ]
+      },
+      "name": {
+        "type": "string",
+        "description": "The name of the check. Must be unique within the container."
+      },
+      "success_threshold": {
+        "type": "integer",
+        "description": "The number of times the check must succeeed before considering the container healthy."
+      },
+      "tcp": {
+        "$ref": "#/components/schemas/fly.TCPHealthcheck"
+      },
+      "timeout": {
+        "type": "integer",
+        "description": "The time in seconds to wait for the check to complete."
+      },
+      "unhealthy": {
+        "type": "object",
+        "description": "Unhealthy policy that determines what action to take if a container is deemed unhealthy",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/fly.UnhealthyPolicy"
+          }
+        ]
+      }
+    },
+    "x-ruby-class": "FlyContainerHealthcheck"
+  },
+  "fly.ContainerHealthcheckKind": {
+    "type": "string",
+    "enum": [
+      "readiness",
+      "liveness"
+    ],
+    "x-enum-varnames": [
+      "Readiness",
+      "Liveness"
+    ],
+    "x-ruby-class": "FlyContainerHealthcheckKind"
+  },
+  "fly.ContainerHealthcheckScheme": {
+    "type": "string",
+    "enum": [
+      "http",
+      "https"
+    ],
+    "x-enum-varnames": [
+      "HTTP",
+      "HTTPS"
+    ],
+    "x-ruby-class": "FlyContainerHealthcheckScheme"
+  },
+  "fly.DNSConfig": {
+    "type": "object",
+    "properties": {
+      "dns_forward_rules": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.dnsForwardRule"
+        }
+      },
+      "hostname": {
+        "type": "string"
+      },
+      "hostname_fqdn": {
+        "type": "string"
+      },
+      "nameservers": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "options": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.dnsOption"
+        }
+      },
+      "searches": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "skip_registration": {
+        "type": "boolean"
+      }
+    },
+    "x-ruby-class": "FlyDNSConfig"
+  },
+  "fly.EnvFrom": {
+    "type": "object",
+    "properties": {
+      "env_var": {
+        "type": "string",
+        "description": "EnvVar is required and is the name of the environment variable that will be set from the\nsecret. It must be a valid environment variable name."
+      },
+      "field_ref": {
+        "type": "string",
+        "description": "FieldRef selects a field of the Machine: supports id, version, app_name, private_ip, region, image.",
+        "enum": [
+          "id",
+          "version",
+          "app_name",
+          "private_ip",
+          "region",
+          "image"
+        ]
+      }
+    },
+    "description": "EnvVar defines an environment variable to be populated from a machine field, env_var",
+    "x-ruby-class": "FlyEnvFrom"
+  },
+  "fly.ExecHealthcheck": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "array",
+        "description": "The command to run to check the health of the container (e.g. [\"cat\", \"/tmp/healthy\"])",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "x-ruby-class": "FlyExecHealthcheck"
+  },
+  "fly.File": {
+    "type": "object",
+    "properties": {
+      "guest_path": {
+        "type": "string",
+        "description": "GuestPath is the path on the machine where the file will be written and must be an absolute path.\nFor example: /full/path/to/file.json"
+      },
+      "image_config": {
+        "type": "string",
+        "description": "The name of an image to use the OCI image config as the file contents."
+      },
+      "mode": {
+        "type": "integer",
+        "description": "Mode bits used to set permissions on this file as accepted by chmod(2)."
+      },
+      "raw_value": {
+        "type": "string",
+        "description": "The base64 encoded string of the file contents."
+      },
+      "secret_name": {
+        "type": "string",
+        "description": "The name of the secret that contains the base64 encoded file contents."
+      }
+    },
+    "description": "A file that will be written to the Machine. One of RawValue or SecretName must be set.",
+    "x-ruby-class": "FlyFile"
+  },
+  "fly.HTTPHealthcheck": {
+    "type": "object",
+    "properties": {
+      "headers": {
+        "type": "array",
+        "description": "Additional headers to send with the request",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachineHTTPHeader"
+        }
+      },
+      "method": {
+        "type": "string",
+        "description": "The HTTP method to use to when making the request"
+      },
+      "path": {
+        "type": "string",
+        "description": "The path to send the request to"
+      },
+      "port": {
+        "type": "integer",
+        "description": "The port to connect to, often the same as internal_port"
+      },
+      "scheme": {
+        "type": "object",
+        "description": "Whether to use http or https",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/fly.ContainerHealthcheckScheme"
+          }
+        ]
+      },
+      "tls_server_name": {
+        "type": "string",
+        "description": "If the protocol is https, the hostname to use for TLS certificate validation"
+      },
+      "tls_skip_verify": {
+        "type": "boolean",
+        "description": "If the protocol is https, whether or not to verify the TLS certificate"
+      }
+    },
+    "x-ruby-class": "FlyHTTPHealthcheck"
+  },
+  "fly.HTTPOptions": {
+    "type": "object",
+    "properties": {
+      "compress": {
+        "type": "boolean"
+      },
+      "h2_backend": {
+        "type": "boolean"
+      },
+      "headers_read_timeout": {
+        "type": "integer"
+      },
+      "idle_timeout": {
+        "type": "integer"
+      },
+      "replay_cache": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.ReplayCache"
+        }
+      },
+      "response": {
+        "$ref": "#/components/schemas/fly.HTTPResponseOptions"
+      }
+    },
+    "x-ruby-class": "FlyHTTPOptions"
+  },
+  "fly.HTTPResponseOptions": {
+    "type": "object",
+    "properties": {
+      "headers": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "pristine": {
+        "type": "boolean"
+      }
+    },
+    "x-ruby-class": "FlyHTTPResponseOptions"
+  },
+  "fly.MachineCacheDrive": {
+    "type": "object",
+    "properties": {
+      "size_mb": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "FlyMachineCacheDrive"
+  },
+  "fly.MachineCheck": {
+    "type": "object",
+    "properties": {
+      "grace_period": {
+        "type": "string",
+        "description": "The time to wait after a VM starts before checking its health",
+        "example": "1s"
+      },
+      "headers": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachineHTTPHeader"
+        }
+      },
+      "interval": {
+        "type": "string",
+        "description": "The time between connectivity checks",
+        "example": "15s"
+      },
+      "kind": {
+        "type": "string",
+        "description": "Kind of the check (informational, readiness)",
+        "enum": [
+          "informational",
+          "readiness"
+        ]
+      },
+      "method": {
+        "type": "string",
+        "description": "For http checks, the HTTP method to use to when making the request"
+      },
+      "path": {
+        "type": "string",
+        "description": "For http checks, the path to send the request to"
+      },
+      "port": {
+        "type": "integer",
+        "description": "The port to connect to, often the same as internal_port"
+      },
+      "protocol": {
+        "type": "string",
+        "description": "For http checks, whether to use http or https"
+      },
+      "timeout": {
+        "type": "string",
+        "description": "The maximum time a connection can take before being reported as failing its health check",
+        "example": "2s"
+      },
+      "tls_server_name": {
+        "type": "string",
+        "description": "If the protocol is https, the hostname to use for TLS certificate validation"
+      },
+      "tls_skip_verify": {
+        "type": "boolean",
+        "description": "For http checks with https protocol, whether or not to verify the TLS certificate"
+      },
+      "type": {
+        "type": "string",
+        "description": "tcp or http"
+      }
+    },
+    "x-ruby-class": "FlyMachineCheck"
+  },
+  "fly.MachineConfig": {
+    "type": "object",
+    "properties": {
+      "auto_destroy": {
+        "type": "boolean",
+        "description": "Optional boolean telling the Machine to destroy itself once it’s complete (default false)"
+      },
+      "cache_drive": {
+        "$ref": "#/components/schemas/fly.MachineCacheDrive"
+      },
+      "checks": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/fly.MachineCheck"
+        },
+        "description": "An optional object that defines one or more named top-level checks. The key for each check is the check name."
+      },
+      "containers": {
+        "type": "array",
+        "description": "Containers are a list of containers that will run in the machine. Currently restricted to\nonly specific organizations.",
+        "items": {
+          "$ref": "#/components/schemas/fly.ContainerConfig"
+        }
+      },
+      "disable_machine_autostart": {
+        "type": "boolean",
+        "description": "Deprecated: use Service.Autostart instead"
+      },
+      "dns": {
+        "$ref": "#/components/schemas/fly.DNSConfig"
+      },
+      "env": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "An object filled with key/value pairs to be set as environment variables"
+      },
+      "files": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.File"
+        }
+      },
+      "guest": {
+        "$ref": "#/components/schemas/fly.MachineGuest"
+      },
+      "image": {
+        "type": "string",
+        "description": "The docker image to run"
+      },
+      "init": {
+        "$ref": "#/components/schemas/fly.MachineInit"
+      },
+      "metadata": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "metrics": {
+        "$ref": "#/components/schemas/fly.MachineMetrics"
+      },
+      "mounts": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachineMount"
+        }
+      },
+      "processes": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachineProcess"
+        }
+      },
+      "restart": {
+        "$ref": "#/components/schemas/fly.MachineRestart"
+      },
+      "rootfs": {
+        "$ref": "#/components/schemas/fly.MachineRootfs"
+      },
+      "schedule": {
+        "type": "string"
+      },
+      "services": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachineService"
+        }
+      },
+      "size": {
+        "type": "string",
+        "description": "Deprecated: use Guest instead"
+      },
+      "spot": {
+        "$ref": "#/components/schemas/fly.MachineSpot"
+      },
+      "standbys": {
+        "type": "array",
+        "description": "Standbys enable a machine to be a standby for another. In the event of a hardware failure,\nthe standby machine will be started.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "statics": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.Static"
+        }
+      },
+      "stop_config": {
+        "$ref": "#/components/schemas/fly.StopConfig"
+      }
+    },
+    "x-ruby-class": "FlyMachineConfig"
+  },
+  "fly.MachineGuest": {
+    "type": "object",
+    "properties": {
+      "cpu_kind": {
+        "type": "string"
+      },
+      "cpus": {
+        "type": "integer"
+      },
+      "gpu_kind": {
+        "type": "string"
+      },
+      "gpus": {
+        "type": "integer"
+      },
+      "host_dedication_id": {
+        "type": "string"
+      },
+      "kernel_args": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "max_memory_mb": {
+        "type": "integer"
+      },
+      "memory_mb": {
+        "type": "integer"
+      },
+      "persist_rootfs": {
+        "type": "string",
+        "description": "Deprecated: use MachineConfig.Rootfs instead",
+        "enum": [
+          "never",
+          "always",
+          "restart"
+        ]
+      }
+    },
+    "x-ruby-class": "FlyMachineGuest"
+  },
+  "fly.MachineHTTPHeader": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "The header name"
+      },
+      "values": {
+        "type": "array",
+        "description": "The header value",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "description": "For http checks, an array of objects with string field Name and array of strings field Values. The key/value pairs specify header and header values that will get passed with the check call.",
+    "x-ruby-class": "FlyMachineHTTPHeader"
+  },
+  "fly.MachineInit": {
+    "type": "object",
+    "properties": {
+      "cmd": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "entrypoint": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "exec": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "kernel_args": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "swap_size_mb": {
+        "type": "integer"
+      },
+      "tty": {
+        "type": "boolean"
+      }
+    },
+    "x-ruby-class": "FlyMachineInit"
+  },
+  "fly.MachineMetrics": {
+    "type": "object",
+    "properties": {
+      "https": {
+        "type": "boolean"
+      },
+      "path": {
+        "type": "string"
+      },
+      "port": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "FlyMachineMetrics"
+  },
+  "fly.MachineMount": {
+    "type": "object",
+    "properties": {
+      "add_size_gb": {
+        "type": "integer"
+      },
+      "encrypted": {
+        "type": "boolean"
+      },
+      "extend_threshold_percent": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      },
+      "path": {
+        "type": "string"
+      },
+      "size_gb": {
+        "type": "integer"
+      },
+      "size_gb_limit": {
+        "type": "integer"
+      },
+      "volume": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyMachineMount"
+  },
+  "fly.MachinePort": {
+    "type": "object",
+    "properties": {
+      "end_port": {
+        "type": "integer"
+      },
+      "force_https": {
+        "type": "boolean"
+      },
+      "handlers": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "http_options": {
+        "$ref": "#/components/schemas/fly.HTTPOptions"
+      },
+      "port": {
+        "type": "integer"
+      },
+      "proxy_proto_options": {
+        "$ref": "#/components/schemas/fly.ProxyProtoOptions"
+      },
+      "start_port": {
+        "type": "integer"
+      },
+      "tls_options": {
+        "$ref": "#/components/schemas/fly.TLSOptions"
+      }
+    },
+    "x-ruby-class": "FlyMachinePort"
+  },
+  "fly.MachineProcess": {
+    "type": "object",
+    "properties": {
+      "cmd": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "entrypoint": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "env": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "env_from": {
+        "type": "array",
+        "description": "EnvFrom can be provided to set environment variables from machine fields.",
+        "items": {
+          "$ref": "#/components/schemas/fly.EnvFrom"
+        }
+      },
+      "exec": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "ignore_app_secrets": {
+        "type": "boolean",
+        "description": "IgnoreAppSecrets can be set to true to ignore the secrets for the App the Machine belongs to\nand only use the secrets provided at the process level. The default/legacy behavior is to use\nthe secrets provided at the App level."
+      },
+      "secrets": {
+        "type": "array",
+        "description": "Secrets can be provided at the process level to explicitly indicate which secrets should be\nused for the process. If not provided, the secrets provided at the machine level will be used.",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachineSecret"
+        }
+      },
+      "user": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyMachineProcess"
+  },
+  "fly.MachineRestart": {
+    "type": "object",
+    "properties": {
+      "gpu_bid_price": {
+        "type": "number",
+        "description": "GPU bid price for spot Machines."
+      },
+      "max_retries": {
+        "type": "integer",
+        "description": "When policy is on-failure, the maximum number of times to attempt to restart the Machine before letting it stop."
+      },
+      "policy": {
+        "type": "string",
+        "description": "* no - Never try to restart a Machine automatically when its main process exits, whether that’s on purpose or on a crash.\n* always - Always restart a Machine automatically and never let it enter a stopped state, even when the main process exits cleanly.\n* on-failure - Try up to MaxRetries times to automatically restart the Machine if it exits with a non-zero exit code. Default when no explicit policy is set, and for Machines with schedules.\n* spot-price - Starts the Machine only when there is capacity and the spot price is less than or equal to the bid price.",
+        "enum": [
+          "no",
+          "always",
+          "on-failure",
+          "spot-price"
+        ]
+      }
+    },
+    "description": "The Machine restart policy defines whether and how flyd restarts a Machine after its main process exits. See https://fly.io/docs/machines/guides-examples/machine-restart-policy/.",
+    "x-ruby-class": "FlyMachineRestart"
+  },
+  "fly.MachineRootfs": {
+    "type": "object",
+    "properties": {
+      "persist": {
+        "type": "string",
+        "enum": [
+          "never",
+          "always",
+          "restart"
+        ]
+      },
+      "size_gb": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "FlyMachineRootfs"
+  },
+  "fly.MachineSecret": {
+    "type": "object",
+    "properties": {
+      "env_var": {
+        "type": "string",
+        "description": "EnvVar is required and is the name of the environment variable that will be set from the\nsecret. It must be a valid environment variable name."
+      },
+      "name": {
+        "type": "string",
+        "description": "Name is optional and when provided is used to reference a secret name where the EnvVar is\ndifferent from what was set as the secret name."
+      }
+    },
+    "description": "A Secret needing to be set in the environment of the Machine. env_var is required",
+    "x-ruby-class": "FlyMachineSecret"
+  },
+  "fly.MachineService": {
+    "type": "object",
+    "properties": {
+      "autostart": {
+        "type": "boolean"
+      },
+      "autostop": {
+        "type": "string",
+        "description": "Accepts a string (new format) or a boolean (old format). For backward compatibility with older clients, the API continues to use booleans for \"off\" and \"stop\" in responses.\n* \"off\" or false - Do not autostop the Machine.\n* \"stop\" or true - Automatically stop the Machine.\n* \"suspend\" - Automatically suspend the Machine, falling back to a full stop if this is not possible.",
+        "enum": [
+          "off",
+          "stop",
+          "suspend"
+        ]
+      },
+      "checks": {
+        "type": "array",
+        "description": "An optional list of service checks",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachineServiceCheck"
+        }
+      },
+      "concurrency": {
+        "$ref": "#/components/schemas/fly.MachineServiceConcurrency"
+      },
+      "force_instance_description": {
+        "type": "string"
+      },
+      "force_instance_key": {
+        "type": "string"
+      },
+      "internal_port": {
+        "type": "integer"
+      },
+      "min_machines_running": {
+        "type": "integer"
+      },
+      "ports": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachinePort"
+        }
+      },
+      "protocol": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyMachineService"
+  },
+  "fly.MachineServiceCheck": {
+    "type": "object",
+    "properties": {
+      "grace_period": {
+        "type": "string",
+        "description": "The time to wait after a VM starts before checking its health",
+        "example": "1s"
+      },
+      "headers": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fly.MachineHTTPHeader"
+        }
+      },
+      "interval": {
+        "type": "string",
+        "description": "The time between connectivity checks",
+        "example": "15s"
+      },
+      "method": {
+        "type": "string",
+        "description": "For http checks, the HTTP method to use to when making the request"
+      },
+      "path": {
+        "type": "string",
+        "description": "For http checks, the path to send the request to"
+      },
+      "port": {
+        "type": "integer",
+        "description": "The port to connect to, often the same as internal_port"
+      },
+      "protocol": {
+        "type": "string",
+        "description": "For http checks, whether to use http or https"
+      },
+      "timeout": {
+        "type": "string",
+        "description": "The maximum time a connection can take before being reported as failing its health check",
+        "example": "2s"
+      },
+      "tls_server_name": {
+        "type": "string",
+        "description": "If the protocol is https, the hostname to use for TLS certificate validation"
+      },
+      "tls_skip_verify": {
+        "type": "boolean",
+        "description": "For http checks with https protocol, whether or not to verify the TLS certificate"
+      },
+      "type": {
+        "type": "string",
+        "description": "tcp or http"
+      }
+    },
+    "x-ruby-class": "FlyMachineServiceCheck"
+  },
+  "fly.MachineServiceConcurrency": {
+    "type": "object",
+    "properties": {
+      "hard_limit": {
+        "type": "integer"
+      },
+      "soft_limit": {
+        "type": "integer"
+      },
+      "type": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyMachineServiceConcurrency"
+  },
+  "fly.MachineSpot": {
+    "type": "object",
+    "properties": {
+      "max_price_fraction": {
+        "type": "number",
+        "description": "MaxPriceFraction is the maximum fraction of the full Machine price you will pay for this Machine. Range: (0, 1.0]"
+      }
+    },
+    "x-ruby-class": "FlyMachineSpot"
+  },
+  "fly.ProxyProtoOptions": {
+    "type": "object",
+    "properties": {
+      "version": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyProxyProtoOptions"
+  },
+  "fly.ReplayCache": {
+    "type": "object",
+    "properties": {
+      "allow_bypass": {
+        "type": "boolean"
+      },
+      "name": {
+        "type": "string",
+        "description": "Name of the cookie or header to key the cache on"
+      },
+      "path_prefix": {
+        "type": "string"
+      },
+      "ttl_seconds": {
+        "type": "integer"
+      },
+      "type": {
+        "type": "string",
+        "description": "Currently either \"cookie\" or \"header\"",
+        "enum": [
+          "cookie",
+          "header"
+        ]
+      }
+    },
+    "x-ruby-class": "FlyReplayCache"
+  },
+  "fly.Static": {
+    "required": [
+      "guest_path",
+      "url_prefix"
+    ],
+    "type": "object",
+    "properties": {
+      "guest_path": {
+        "type": "string"
+      },
+      "index_document": {
+        "type": "string"
+      },
+      "tigris_bucket": {
+        "type": "string"
+      },
+      "url_prefix": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyStatic"
+  },
+  "fly.StopConfig": {
+    "type": "object",
+    "properties": {
+      "signal": {
+        "type": "string",
+        "enum": [
+          "SIGHUP",
+          "SIGINT",
+          "SIGQUIT",
+          "SIGKILL",
+          "SIGUSR1",
+          "SIGUSR2",
+          "SIGTERM"
+        ]
+      },
+      "timeout": {
+        "type": "string",
+        "example": "10s"
+      }
+    },
+    "x-ruby-class": "FlyStopConfig"
+  },
+  "fly.TCPHealthcheck": {
+    "type": "object",
+    "properties": {
+      "port": {
+        "type": "integer",
+        "description": "The port to connect to, often the same as internal_port"
+      }
+    },
+    "x-ruby-class": "FlyTCPHealthcheck"
+  },
+  "fly.TLSOptions": {
+    "type": "object",
+    "properties": {
+      "alpn": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "default_self_signed": {
+        "type": "boolean"
+      },
+      "versions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "x-ruby-class": "FlyTLSOptions"
+  },
+  "fly.UnhealthyPolicy": {
+    "type": "string",
+    "enum": [
+      "stop"
+    ],
+    "x-enum-varnames": [
+      "UnhealthyPolicyStop"
+    ],
+    "x-ruby-class": "FlyUnhealthyPolicy"
+  },
+  "fly.dnsForwardRule": {
+    "type": "object",
+    "properties": {
+      "addr": {
+        "type": "string"
+      },
+      "basename": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyDnsForwardRule"
+  },
+  "fly.dnsOption": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "value": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyDnsOption"
+  },
+  "flydv1.ExecResponse": {
+    "type": "object",
+    "properties": {
+      "exit_code": {
+        "type": "integer"
+      },
+      "exit_signal": {
+        "type": "integer"
+      },
+      "stderr": {
+        "type": "string"
+      },
+      "stdout": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "Flydv1ExecResponse"
+  },
+  "flyio.Access": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "$ref": "#/components/schemas/resset.Action"
+      },
+      "app_feature": {
+        "type": "string"
+      },
+      "appid": {
+        "type": "integer"
+      },
+      "cluster": {
+        "type": "string"
+      },
+      "command": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "feature": {
+        "type": "string"
+      },
+      "machine": {
+        "type": "string"
+      },
+      "machine_feature": {
+        "type": "string"
+      },
+      "mutation": {
+        "type": "string"
+      },
+      "orgid": {
+        "type": "integer"
+      },
+      "sourceApp": {
+        "type": "string"
+      },
+      "sourceMachine": {
+        "type": "string"
+      },
+      "sourceOrganization": {
+        "type": "string"
+      },
+      "storage_object": {
+        "type": "string"
+      },
+      "volume": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "FlyioAccess"
+  },
+  "forkPostgresClusterRequest": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Name for the forked cluster. Defaults to the source name with a -fork suffix."
+      }
+    },
+    "x-ruby-class": "ForkPostgresClusterRequest"
+  },
+  "getPostgresUserCredentialsResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "$ref": "#/components/schemas/PostgresUserCredentials"
+      }
+    },
+    "x-ruby-class": "GetPostgresUserCredentialsResponse"
+  },
+  "listCertificatesResponse": {
+    "type": "object",
+    "properties": {
+      "certificates": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CertificateSummary"
+        }
+      },
+      "next_cursor": {
+        "type": "string"
+      },
+      "total_count": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "ListCertificatesResponse"
+  },
+  "listIPAssignmentsResponse": {
+    "type": "object",
+    "properties": {
+      "ips": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/IPAssignment"
+        }
+      }
+    },
+    "x-ruby-class": "ListIPAssignmentsResponse"
+  },
+  "listPostgresBackupsResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PostgresBackup"
+        }
+      }
+    },
+    "x-ruby-class": "ListPostgresBackupsResponse"
+  },
+  "listPostgresClustersResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PostgresClusterSummary"
+        }
+      }
+    },
+    "x-ruby-class": "ListPostgresClustersResponse"
+  },
+  "listPostgresDatabasesResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PostgresDatabase"
+        }
+      }
+    },
+    "x-ruby-class": "ListPostgresDatabasesResponse"
+  },
+  "listPostgresExtensionsResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PostgresExtension"
+        }
+      }
+    },
+    "x-ruby-class": "ListPostgresExtensionsResponse"
+  },
+  "listPostgresUsersResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PostgresUser"
+        }
+      }
+    },
+    "x-ruby-class": "ListPostgresUsersResponse"
+  },
+  "macaroon.CaveatSet": {
+    "type": "object",
+    "properties": {
+      "caveats": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
+      }
+    },
+    "x-ruby-class": "MacaroonCaveatSet"
+  },
+  "macaroon.Nonce": {
+    "type": "object",
+    "properties": {
+      "kid": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      },
+      "proof": {
+        "type": "boolean"
+      },
+      "rnd": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "MacaroonNonce"
+  },
+  "main.TokenAccess": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "object",
+        "description": "Action is the action being taken on the specified resource. This is the\ncombination of individual action characters (e.g \"rw\")\n  - r: read\n  - w: write\n  - c: create\n  - d: delete\n  - C: control",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resset.Action"
+          }
+        ]
+      },
+      "app_feature": {
+        "type": "string",
+        "description": "AppFeature is a named set of functionality associated with the app. If\nthis is specified, the AppName field must be set.\n  - images: images in the fly.io registry"
+      },
+      "app_name": {
+        "type": "string",
+        "description": "AppName is the name of the app being accessed."
+      },
+      "command": {
+        "type": "array",
+        "description": "Command is the command being executed on a machine. If this is specified,\nthe Machine must be set.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "machine_feature": {
+        "type": "string",
+        "description": "MachineFeature is a named set of functionality associated with the\nmachine. If this is specified, the Machine field must be set.\n  - metadata: machine metadata service\n  - oidc: OIDC tokens\n  - kmstoken: Petsem tokens for KMS access"
+      },
+      "machine_id": {
+        "type": "string",
+        "description": "MachineID is the ID of the machine being accessed (e.g. 7811701f564258)."
+      },
+      "mutation": {
+        "type": "string",
+        "description": "Mutation is the GraphQL mutation being performed."
+      },
+      "org_feature": {
+        "type": "string",
+        "description": "OrgFeature is a named set of functionality associated with the\norganization. If this is specified, the OrgSlug field must be set.\n  - wg: WireGuard peers\n  - builder: remote builders\n  - addon: addons\n  - membership: organization membership\n  - billing: billing\n  - litefs-cloud: LiteFS Cloud\n  - authentication: authentication settings"
+      },
+      "org_slug": {
+        "type": "string",
+        "description": "OrgSlug is the slug of the organization being accessed."
+      },
+      "source_machine": {
+        "type": "string",
+        "description": "SourceMachine is the machine ID of the actor attempting access."
+      },
+      "storage_object": {
+        "type": "string",
+        "description": "StorageObject is the storage object being accessed. If this is specified,\nthe OrgSlug must be set."
+      },
+      "volume_id": {
+        "type": "string",
+        "description": "VolumeID is the encoded ID of the volume being accessed (e.g.\nvol_r1p6pln1k9m9j7zr)."
+      }
+    },
+    "x-ruby-class": "MainTokenAccess"
+  },
+  "main.getPlacementsRequest": {
+    "required": [
+      "org_slug"
+    ],
+    "type": "object",
+    "properties": {
+      "compute": {
+        "type": "object",
+        "description": "Resource requirements for the Machine to simulate. Defaults to a performance-1x machine",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/fly.MachineGuest"
+          }
+        ]
+      },
+      "count": {
+        "type": "integer",
+        "description": "Number of machines to simulate placement.\nDefaults to 0, which returns the org-specific limit for each region."
+      },
+      "org_slug": {
+        "type": "string",
+        "example": "personal"
+      },
+      "region": {
+        "type": "string",
+        "description": "Region expression for placement as a comma-delimited set of regions or aliases.\nDefaults to \"[region],any\", to prefer the API endpoint's local region with any other region as fallback.",
+        "example": "lhr,eu"
+      },
+      "volume_name": {
+        "type": "string",
+        "example": ""
+      },
+      "volume_size_bytes": {
+        "type": "integer"
+      },
+      "weights": {
+        "type": "object",
+        "description": "Optional weights to override default placement preferences.",
+        "example": {
+          "region": 1000,
+          "spread": 0
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/placement.Weights"
+          }
+        ]
+      }
+    },
+    "x-ruby-class": "MainGetPlacementsRequest"
+  },
+  "main.getPlacementsResponse": {
+    "type": "object",
+    "properties": {
+      "regions": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/placement.RegionPlacement"
+        }
+      }
+    },
+    "x-ruby-class": "MainGetPlacementsResponse"
+  },
+  "main.memoryResponse": {
+    "type": "object",
+    "properties": {
+      "available_mb": {
+        "type": "integer"
+      },
+      "limit_mb": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "MainMemoryResponse"
+  },
+  "main.reclaimMemoryRequest": {
+    "type": "object",
+    "properties": {
+      "amount_mb": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "MainReclaimMemoryRequest"
+  },
+  "main.reclaimMemoryResponse": {
+    "type": "object",
+    "properties": {
+      "actual_mb": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "MainReclaimMemoryResponse"
+  },
+  "main.regionResponse": {
+    "type": "object",
+    "properties": {
+      "nearest": {
+        "type": "string"
+      },
+      "regions": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/main.regionRow"
+        }
+      }
+    },
+    "x-ruby-class": "MainRegionResponse"
+  },
+  "main.regionRow": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string"
+      },
+      "deprecated": {
+        "type": "boolean"
+      },
+      "gateway_available": {
+        "type": "boolean"
+      },
+      "geo_region": {
+        "type": "string"
+      },
+      "latitude": {
+        "type": "number"
+      },
+      "longitude": {
+        "type": "number"
+      },
+      "mpg_available": {
+        "type": "boolean"
+      },
+      "name": {
+        "type": "string"
+      },
+      "requires_paid_plan": {
+        "type": "boolean"
+      }
+    },
+    "x-ruby-class": "MainRegionRow"
+  },
+  "main.setMemoryLimitRequest": {
+    "type": "object",
+    "properties": {
+      "limit_mb": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "MainSetMemoryLimitRequest"
+  },
+  "main.statusCode": {
+    "type": "string",
+    "enum": [
+      "unknown",
+      "insufficient_capacity",
+      "name_taken"
+    ],
+    "x-enum-varnames": [
+      "unknown",
+      "capacityErr",
+      "nameTakenErr"
+    ],
+    "x-ruby-class": "MainStatusCode"
+  },
+  "main.tokenInfo": {
+    "type": "object",
+    "properties": {
+      "apps": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "org_slug": {
+        "type": "string"
+      },
+      "organization": {
+        "type": "string"
+      },
+      "restricted_to_machine": {
+        "type": "string",
+        "description": "Machine the token is restricted to (FromMachine caveat)"
+      },
+      "source_machine_id": {
+        "type": "string",
+        "description": "Machine making the request"
+      },
+      "token_id": {
+        "type": "string"
+      },
+      "user": {
+        "type": "string",
+        "description": "User identifier if token is for a user"
+      }
+    },
+    "x-ruby-class": "MainTokenInfo"
+  },
+  "metadataValueResponse": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "MetadataValueResponse"
+  },
+  "placement.RegionPlacement": {
+    "type": "object",
+    "properties": {
+      "concurrency": {
+        "type": "integer"
+      },
+      "count": {
+        "type": "integer"
+      },
+      "region": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "PlacementRegionPlacement"
+  },
+  "placement.Weights": {
+    "type": "object",
+    "additionalProperties": {
+      "type": "integer"
+    },
+    "x-ruby-class": "PlacementWeights"
+  },
+  "postgresDatabaseResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "$ref": "#/components/schemas/PostgresDatabase"
+      }
+    },
+    "x-ruby-class": "PostgresDatabaseResponse"
+  },
+  "resset.Action": {
+    "type": "integer",
+    "enum": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      31,
+      0
+    ],
+    "x-enum-varnames": [
+      "ActionRead",
+      "ActionWrite",
+      "ActionCreate",
+      "ActionDelete",
+      "ActionControl",
+      "ActionAll",
+      "ActionNone"
+    ],
+    "x-ruby-class": "RessetAction"
+  },
+  "restorePostgresClusterRequest": {
+    "type": "object",
+    "properties": {
+      "backup_id": {
+        "type": "string",
+        "description": "Backup label to restore from, as returned by the backups list. Mutually exclusive with pitr_time."
+      },
+      "name": {
+        "type": "string",
+        "description": "Name for the restored cluster. Defaults to a generated name derived from the source cluster and backup/point in time when omitted or blank."
+      },
+      "pitr_time": {
+        "type": "string",
+        "description": "Point in time to restore to, as an RFC3339 timestamp with an explicit offset from UTC (e.g. Z or +02:00). Normalized to UTC and must fall within the cluster's PITR recovery window. Mutually exclusive with backup_id."
+      }
+    },
+    "x-ruby-class": "RestorePostgresClusterRequest"
+  },
+  "root.VerifiedToken": {
+    "type": "object",
+    "properties": {
+      "caveats": {
+        "$ref": "#/components/schemas/macaroon.CaveatSet"
+      },
+      "header": {
+        "type": "string"
+      },
+      "nonce": {
+        "$ref": "#/components/schemas/macaroon.Nonce"
+      },
+      "permission_token": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "x-ruby-class": "RootVerifiedToken"
+  },
+  "rotatePostgresPasswordRequest": {
+    "type": "object",
+    "properties": {
+      "kill_sessions": {
+        "type": "boolean",
+        "description": "Terminate the user's existing sessions after rotating."
+      }
+    },
+    "x-ruby-class": "RotatePostgresPasswordRequest"
+  },
+  "rotatePostgresPasswordResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "$ref": "#/components/schemas/PostgresUserCredentials"
+      }
+    },
+    "x-ruby-class": "RotatePostgresPasswordResponse"
+  },
+  "showPostgresClusterResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "$ref": "#/components/schemas/PostgresCluster"
+      }
+    },
+    "x-ruby-class": "ShowPostgresClusterResponse"
+  },
+  "updateMetadataRequest": {
+    "type": "object",
+    "properties": {
+      "machine_version": {
+        "type": "string"
+      },
+      "metadata": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "updated_at": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "UpdateMetadataRequest"
+  },
+  "updatePostgresUserRoleRequest": {
+    "required": [
+      "role"
+    ],
+    "type": "object",
+    "properties": {
+      "role": {
+        "type": "string",
+        "description": "New role for the user.",
+        "example": "reader",
+        "enum": [
+          "schema_admin",
+          "writer",
+          "reader"
+        ]
+      }
+    },
+    "x-ruby-class": "UpdatePostgresUserRoleRequest"
+  },
+  "upsertMetadataKeyRequest": {
+    "type": "object",
+    "properties": {
+      "updated_at": {
+        "type": "string"
+      },
+      "value": {
+        "type": "string"
+      }
+    },
+    "x-ruby-class": "UpsertMetadataKeyRequest"
+  },
+  "NetworkPolicyPort": {
+    "type": "object",
+    "required": [
+      "protocol",
+      "port"
+    ],
+    "properties": {
+      "protocol": {
+        "type": "string"
+      },
+      "port": {
+        "type": "integer"
+      }
+    },
+    "x-ruby-class": "NetworkPolicyPort"
+  },
+  "NetworkPolicyRule": {
+    "type": "object",
+    "required": [
+      "action",
+      "direction",
+      "ports"
+    ],
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "allow"
+        ]
+      },
+      "direction": {
+        "type": "string",
+        "enum": [
+          "ingress",
+          "egress"
+        ]
+      },
+      "ports": {
+        "type": "array",
+        "items": {
+          "$ref": "#/additional/schemas/NetworkPolicyPort"
+        }
+      }
+    },
+    "x-ruby-class": "NetworkPolicyRule"
+  },
+  "NetworkPolicySelector": {
+    "type": "object",
+    "properties": {
+      "all": {
+        "type": "boolean"
+      },
+      "machines": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "metadata": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    "x-ruby-class": "NetworkPolicySelector"
+  },
+  "NetworkPolicyRequest": {
+    "type": "object",
+    "required": [
+      "name",
+      "selector",
+      "rules"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "selector": {
+        "$ref": "#/additional/schemas/NetworkPolicySelector"
+      },
+      "rules": {
+        "type": "array",
+        "items": {
+          "$ref": "#/additional/schemas/NetworkPolicyRule"
+        }
+      }
+    },
+    "x-ruby-class": "NetworkPolicyRequest"
+  },
+  "NetworkPolicy": {
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "selector": {
+        "$ref": "#/additional/schemas/NetworkPolicySelector"
+      },
+      "rules": {
+        "type": "array",
+        "items": {
+          "$ref": "#/additional/schemas/NetworkPolicyRule"
+        }
+      }
+    },
+    "x-ruby-class": "NetworkPolicy"
+  },
+  "PrometheusAPIResponse": {
+    "type": "object",
+    "required": [
+      "status"
+    ],
+    "additionalProperties": true,
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "success",
+          "error"
+        ]
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "errorType": {
+        "type": "string"
+      },
+      "error": {
+        "type": "string"
+      },
+      "warnings": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "infos": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "x-ruby-class": "PrometheusAPIResponse"
+  }
+}

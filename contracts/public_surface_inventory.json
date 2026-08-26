@@ -1,0 +1,164 @@
+{
+  "retrieved_at": "2026-08-26",
+  "source_revisions": {
+    "flyctl": "1f906765dee8e973f6d1dd8fff65b58212e7b425",
+    "fly_go_v0_9_8": "858ec691152ab3faa0b0a0438726bda8144d8734",
+    "fly_docs": "1e8cac5f0fd7a82e66e3b01ece3a10a8ecb2b7e3"
+  },
+  "surfaces": [
+    {
+      "id": "machines_rest_openapi",
+      "classification": "public_documented_control_plane",
+      "stability": "official_versioned_reference_without_an_explicit_compatibility_policy",
+      "base_urls": {
+        "public": "https://api.machines.dev",
+        "private_wireguard": "http://_api.internal:4280"
+      },
+      "authentication": {
+        "official_guide": "Authorization: Bearer <fly_api_token>",
+        "generated_reference_text": "FlyV1 wording with a Bearer example",
+        "flyctl_behavior": "FlyV1 for macaroon tokens; Bearer for OAuth/user tokens",
+        "implementation_note": "Accept raw tokens and explicit preformatted authorization values; never duplicate a scheme"
+      },
+      "authoritative_contract": {
+        "url": "https://docs.machines.dev/openapi.json",
+        "openapi": "3.0.1",
+        "info_version": "1.0",
+        "sha256": "9e6a180c40a38bf20b72a8577a8cd93866f47882627b608af753cc4c22f7758f",
+        "bytes": 140004,
+        "etag": "\"222e4-Y2JlbkeX2XlDU7gTxh4WI2j04MM\"",
+        "last_modified": "Thu, 20 Aug 2026 16:50:52 GMT"
+      },
+      "counts": {
+        "paths": 68,
+        "operations": 98,
+        "unique_operation_ids": 97,
+        "schemas": 173,
+        "ref_occurrences": 315,
+        "unique_refs": 173,
+        "unresolved_refs": 0,
+        "methods": {"GET": 33, "POST": 43, "PUT": 4, "PATCH": 2, "DELETE": 16},
+        "families": {
+          "Apps": 8,
+          "TLS Certificates": 8,
+          "Machines": 29,
+          "Secrets": 14,
+          "Volumes": 8,
+          "Organizations": 2,
+          "Platform": 2,
+          "Postgres Clusters": 22,
+          "Tokens": 5
+        }
+      },
+      "contract_ambiguities": [
+        "Machines_update_metadata is duplicated for PUT and PATCH, so method plus path must be part of the operation key",
+        "The OpenAPI document defines neither securitySchemes nor top-level security",
+        "The generated landing page omits Organizations and Platform resource cards even though the operations exist",
+        "The top-level tags array omits several tags used by operations",
+        "Official Network Policies operations are absent from this contract"
+      ],
+      "official_sources": [
+        "https://fly.io/docs/machines/api/",
+        "https://docs.machines.dev/",
+        "https://fly.io/docs/machines/api/working-with-machines-api",
+        "https://fly.io/docs/machines/guides-examples/managing-machines-with-the-api"
+      ]
+    },
+    {
+      "id": "machines_network_policies",
+      "classification": "public_documented_control_plane_without_machine_readable_contract",
+      "stability": "no_explicit_stability_label",
+      "base_url": "https://api.machines.dev",
+      "authentication": "Authorization: Bearer <FLY_API_TOKEN>",
+      "authoritative_contract": null,
+      "prose_source": "https://fly.io/docs/machines/guides-examples/network-policies",
+      "operation_count": 3,
+      "operation_inventory": "network_policies_operations.json",
+      "openapi_status": "absent"
+    },
+    {
+      "id": "control_plane_graphql",
+      "classification": "public_endpoint_internal_unstable_control_plane",
+      "stability": "explicitly_no_stability_guarantees_and_may_change_without_notice",
+      "endpoint": "https://api.fly.io/graphql",
+      "authentication": "FlyV1 or Bearer as selected by token type in flyctl; official curl examples show Bearer",
+      "authoritative_contract": null,
+      "implementation_evidence": {
+        "flyctl_schema_path": "gql/schema.graphql",
+        "flyctl_schema_sha256": "2f1a1d0f2f8940277e5e14002c78cb4f6404b3ea1ce9d0999d4d3b65c52f9480",
+        "flyctl_schema_bytes": 190611,
+        "flyctl_schema_lines": 10995,
+        "flyctl_schema_root_query_fields": 39,
+        "flyctl_schema_root_mutation_fields": 141,
+        "schema_last_change_revision": "acb4fa7a4ea6bad1d9defdf36a8db3be62c6d7b7",
+        "schema_provenance": "Manually copied from Fly's internal web repository according to flyctl CONTRIBUTING.md",
+        "flyctl_named_documents": 27,
+        "flyctl_ad_hoc_documents": 2,
+        "fly_go_source_documents": 85,
+        "fly_go_unique_root_fields": 52
+      },
+      "inventories": [
+        "flyctl_graphql_operations.json",
+        "fly_go_graphql_operations.json",
+        "official_docs_graphql_examples.json"
+      ],
+      "official_sources": [
+        "https://fly.io/docs/machines/guides-examples/managing-machines-with-the-api",
+        "https://fly.io/docs/mcp/deploy-with/machines-api",
+        "https://fly.io/docs/blueprints/using-the-fly-docker-registry"
+      ]
+    },
+    {
+      "id": "prometheus_metrics",
+      "classification": "public_documented_observability_data_api_not_control_plane",
+      "stability": "stable_standard_http_query_api_with_qualified_fly_compatibility",
+      "base_url": "https://api.fly.io/prometheus/{org_slug}/",
+      "authentication": "Authorization: Bearer or FlyV1 depending on token type",
+      "authoritative_contract": "Prometheus HTTP API and VictoriaMetrics compatibility documentation; no Fly-owned OpenAPI",
+      "documented_endpoint_families": 7,
+      "endpoint_families": [
+        "/api/v1/query",
+        "/api/v1/query_range",
+        "/api/v1/series",
+        "/api/v1/labels",
+        "/api/v1/label/{label_name}/values",
+        "/api/v1/status/tsdb",
+        "/federate"
+      ],
+      "official_source": "https://fly.io/docs/monitoring/metrics"
+    },
+    {
+      "id": "extensions_partner_oauth",
+      "classification": "partner_gated_public_integration_api",
+      "stability": "no_explicit_stability_label",
+      "base_url": "https://api.fly.io",
+      "authentication": "OAuth client credentials plus partner-provided shared secrets; token info uses Bearer",
+      "authoritative_contract": null,
+      "prose_operations": [
+        "GET /oauth/authorize",
+        "POST /oauth/token",
+        "GET /oauth/token/info",
+        "POST /api/hooks/extensions/{provider}"
+      ],
+      "limitations": "Requires enrollment and Fly-provided credentials; page is excluded from sitemap; not a general account control-plane API",
+      "official_source": "https://fly.io/docs/reference/extensions_api"
+    },
+    {
+      "id": "flyctl_uiex_rest",
+      "classification": "observed_internal_implementation_not_public_contract",
+      "stability": "undocumented_internal",
+      "base_url": "https://api.fly.io/api/v1",
+      "authoritative_contract": null,
+      "flyctl_request_call_sites": 52,
+      "methods": {"GET": 21, "POST": 20, "PATCH": 3, "DELETE": 8},
+      "decision": "Exclude from supported public surface; do not infer stability from flyctl use"
+    },
+    {
+      "id": "tigris_s3_and_fly_registry",
+      "classification": "adjacent_data_planes",
+      "stability": "Tigris Fly documentation is beta; registry uses external Docker/OCI behavior",
+      "authoritative_contract": "External S3 and OCI/Distribution contracts, not Fly control-plane contracts",
+      "decision": "Document as out of the control-plane client boundary"
+    }
+  ]
+}

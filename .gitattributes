@@ -1,0 +1,7 @@
+# Preserve byte-for-byte upstream evidence and deterministic generated docs,
+# even when their source formatting includes trailing or terminal whitespace.
+contracts/sources/** -whitespace
+docs/API.md -whitespace
+
+# HTTP headers were captured with CRLF but are stored as normalized text.
+contracts/machines/openapi.headers text eol=lf

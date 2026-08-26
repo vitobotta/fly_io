@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "json"
+require "digest"
+
+ROOT = File.expand_path("..", __dir__)
+abort unless system(RbConfig.ruby, File.join(ROOT, "script/generate_api"), "--check")
+
+additional = JSON.parse(File.read(File.join(ROOT, "lib/fly_io/generated/additional_operations.json")))
+abort "Network Policies coverage drift" unless additional.fetch("operations").length == 3
+puts "Network Policies REST coverage OK: 3 documentation-derived operations (response contracts undocumented upstream)"
+network_source_hash = Digest::SHA256.file(File.join(ROOT, "contracts/sources/network-policies.html.markerb")).hexdigest
+abort "Network Policies source drift" unless network_source_hash == additional.fetch("generated_from").fetch("source_sha256")
+
+prometheus = JSON.parse(File.read(File.join(ROOT, "lib/fly_io/generated/prometheus_operations.json")))
+abort "Prometheus endpoint-family coverage drift" unless prometheus.fetch("operations").length == 7
+puts "Prometheus API coverage OK: 7 documented endpoint families (standard contract delegated upstream)"
+metrics_source_hash = Digest::SHA256.file(File.join(ROOT, "contracts/sources/metrics.html.md")).hexdigest
+abort "Prometheus source drift" unless metrics_source_hash == prometheus.fetch("generated_from").fetch("source_sha256")
+
+graphql_path = File.join(ROOT, "lib/fly_io/generated/graphql_operations.json")
+graphql = JSON.parse(File.read(graphql_path))
+operations = graphql.fetch("operations")
+names = operations.map { |operation| operation.fetch("name") }
+abort "duplicate GraphQL operation names" unless names.uniq.length == names.length
+operations.each do |operation|
+  abort "GraphQL operation #{operation['name']} lacks a document" if operation.fetch("document").strip.empty?
+  abort "GraphQL operation #{operation['name']} is not experimental" unless operation.fetch("stability") == "experimental"
+end
+counts = graphql.fetch("counts")
+abort "GraphQL inventory count drift" unless counts == {
+  "flyctl_named" => 27, "flyctl_ad_hoc" => 2, "fly_go" => 85, "official_examples" => 3, "total" => 117
+}
+schema_path = File.join(ROOT, "contracts/graphql/schema.graphql")
+schema_hash = Digest::SHA256.file(schema_path).hexdigest
+abort "GraphQL evidence schema drift" unless schema_hash == graphql.fetch("schema").fetch("sha256")
+schema_document = File.read(schema_path)
+root_fields = {"query" => "Queries", "mutation" => "Mutations"}.to_h do |kind, type_name|
+  block = schema_document.match(/^type #{type_name} \{$(.*?)^\}/m)&.captures&.first
+  abort "GraphQL evidence schema lacks #{type_name}" unless block
+  [kind, block.scan(/^  ([A-Za-z_]\w*)\s*(?:\(|:)/).flatten]
+end
+abort "GraphQL Query root count drift" unless root_fields.fetch("query").length == 39
+abort "GraphQL Mutation root count drift" unless root_fields.fetch("mutation").length == 141
+operations.each do |operation|
+  missing = operation.fetch("root_fields") - root_fields.fetch(operation.fetch("operation_type"))
+  abort "GraphQL operation #{operation['name']} has unknown roots: #{missing.join(', ')}" unless missing.empty?
+end
+graphql_source = JSON.parse(File.read(File.join(ROOT, "contracts/graphql/source.json")))
+{
+  "flyctl_operations.json" => graphql_source.dig("flyctl", "inventory_sha256"),
+  "fly_go_operations.json" => graphql_source.dig("fly_go", "inventory_sha256"),
+  "official_examples.json" => graphql_source.dig("official_examples", "inventory_sha256"),
+  "flyctl_named_operations.graphql" => graphql_source.dig("flyctl", "named_documents_sha256")
+}.each do |name, expected|
+  actual = Digest::SHA256.file(File.join(ROOT, "contracts/graphql", name)).hexdigest
+  abort "GraphQL source drift: #{name}" unless actual == expected
+end
+puts "GraphQL audit OK: 29 flyctl + 85 fly-go + 3 official experimental operations; raw documents supported"

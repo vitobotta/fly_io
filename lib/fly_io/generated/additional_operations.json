@@ -1,0 +1,123 @@
+{
+  "generated_from": {
+    "documentation_url": "https://fly.io/docs/machines/guides-examples/network-policies/",
+    "source_revision": "1e8cac5f0fd7a82e66e3b01ece3a10a8ecb2b7e3",
+    "source_path": "machines/guides-examples/network-policies.html.markerb",
+    "source_sha256": "fa64b69db56beb1da2de60e3ff91820b628a1238a120d103c2f3bae16e2fcc1f",
+    "retrieved_at": "2026-08-26T21:00:00Z"
+  },
+  "counts": {
+    "operations": 3,
+    "schemas": 5
+  },
+  "limitations": [
+    "This official guide is not represented in the Machines OpenAPI document.",
+    "The guide documents methods, paths, authentication, and request shape, but no response status or schema."
+  ],
+  "operations": [
+    {
+      "identity": "POST /v1/apps/{app_name}/network_policies NetworkPolicies_upsert",
+      "operation_id": "NetworkPolicies_upsert",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/network_policies",
+      "summary": "Create or update a network policy",
+      "parameters": [
+        {
+          "name": "app_name",
+          "ruby_name": "app_name",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content_types": [
+          "application/json"
+        ],
+        "schema": {
+          "$ref": "#/additional/schemas/NetworkPolicyRequest"
+        }
+      },
+      "responses": {},
+      "surface": "network_policies_rest",
+      "stability": "stable_documented",
+      "base_url": "https://api.machines.dev",
+      "tags": [
+        "Network Policies"
+      ],
+      "ruby_resource": "network_policies",
+      "ruby_method": "upsert",
+      "public_ruby_method": "FlyIO::Client#network_policies.upsert"
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/network_policies/ NetworkPolicies_list",
+      "operation_id": "NetworkPolicies_list",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/network_policies/",
+      "summary": "List network policies",
+      "parameters": [
+        {
+          "name": "app_name",
+          "ruby_name": "app_name",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "request_body": null,
+      "responses": {},
+      "surface": "network_policies_rest",
+      "stability": "stable_documented",
+      "base_url": "https://api.machines.dev",
+      "tags": [
+        "Network Policies"
+      ],
+      "ruby_resource": "network_policies",
+      "ruby_method": "list",
+      "public_ruby_method": "FlyIO::Client#network_policies.list"
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/network_policies/{policy_id} NetworkPolicies_delete",
+      "operation_id": "NetworkPolicies_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/network_policies/{policy_id}",
+      "summary": "Delete a network policy",
+      "parameters": [
+        {
+          "name": "app_name",
+          "ruby_name": "app_name",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "policy_id",
+          "ruby_name": "policy_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "request_body": null,
+      "responses": {},
+      "surface": "network_policies_rest",
+      "stability": "stable_documented",
+      "base_url": "https://api.machines.dev",
+      "tags": [
+        "Network Policies"
+      ],
+      "ruby_resource": "network_policies",
+      "ruby_method": "delete",
+      "public_ruby_method": "FlyIO::Client#network_policies.delete"
+    }
+  ]
+}

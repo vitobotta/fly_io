@@ -1,0 +1,17 @@
+{
+  "retrieved_at": "2026-08-26",
+  "rubygems_name": {
+    "name": "fly_io",
+    "api_url": "https://rubygems.org/api/v1/gems/fly_io.json",
+    "api_status": 404,
+    "exact_search_matches": [],
+    "decision": "Use fly_io; availability is verified but only a publish can reserve it."
+  },
+  "ruby": {
+    "authoritative_url": "https://www.ruby-lang.org/en/downloads/releases/",
+    "latest_stable": "4.0.6",
+    "released_at": "2026-07-14",
+    "source_url": "https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.6.tar.gz",
+    "source_sha256": "837d299e8f7ddf2be31a229a7a7e019d354979825117989acb3b32b1a9be262a"
+  }
+}

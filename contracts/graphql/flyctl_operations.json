@@ -1,0 +1,336 @@
+{
+  "retrieved_at": "2026-08-26",
+  "repository": "https://github.com/superfly/flyctl",
+  "revision": "1f906765dee8e973f6d1dd8fff65b58212e7b425",
+  "schema": {
+    "source_path": "gql/schema.graphql",
+    "sha256": "2f1a1d0f2f8940277e5e14002c78cb4f6404b3ea1ce9d0999d4d3b65c52f9480",
+    "bytes": 190611,
+    "lines": 10995
+  },
+  "named_operation_count": 27,
+  "ad_hoc_operation_count": 2,
+  "named_operations": [
+    {
+      "operation_type": "query",
+      "operation_name": "AgentGetInstances",
+      "root_fields": [
+        "app"
+      ],
+      "name": "AgentGetInstances",
+      "document": "query AgentGetInstances ($appName: String!) {\n\tapp(name: $appName) {\n\t\torganization {\n\t\t\tslug\n\t\t}\n\t\tid\n\t\tname\n\t\tallocations(showCompleted: false) {\n\t\t\tid\n\t\t\tregion\n\t\t\tprivateIP\n\t\t}\n\t\tmachines {\n\t\t\tnodes {\n\t\t\t\tstate\n\t\t\t\tid\n\t\t\t\tregion\n\t\t\t\tips {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tkind\n\t\t\t\t\t\tfamily\n\t\t\t\t\t\tip\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+      "source_path": "agent/client.go",
+      "source_line": 585
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "AgreedToProviderTos",
+      "root_fields": [
+        "viewer"
+      ],
+      "name": "AgreedToProviderTos",
+      "document": "query AgreedToProviderTos ($addOnProviderName: String!) {\n\tviewer {\n\t\t__typename\n\t\t... on User {\n\t\t\tagreedToProviderTos(providerName: $addOnProviderName)\n\t\t}\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 90
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "AllApps",
+      "root_fields": [
+        "organization"
+      ],
+      "name": "AllApps",
+      "document": "query AllApps ($orgSlug: String!) {\n\torganization(slug: $orgSlug) {\n\t\tapps {\n\t\t\tnodes {\n\t\t\t\tid\n\t\t\t\tcreatedAt\n\t\t\t}\n\t\t}\n\t}\n}",
+      "source_path": "scripts/clean-up-preflight-apps/main.go",
+      "source_line": 37
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "CreateAddOn",
+      "root_fields": [
+        "createAddOn"
+      ],
+      "name": "CreateAddOn",
+      "document": "mutation CreateAddOn ($input: CreateAddOnInput!) {\n\tcreateAddOn(input: $input) {\n\t\taddOn {\n\t\t\tname\n\t\t\tpublicUrl\n\t\t\tssoLink\n\t\t\tenvironment\n\t\t\tprimaryRegion\n\t\t}\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 41
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "CreateApp",
+      "root_fields": [
+        "createApp"
+      ],
+      "name": "CreateApp",
+      "document": "mutation CreateApp ($input: CreateAppInput!) {\n\tcreateApp(input: $input) {\n\t\tapp {\n\t\t\t... AppData\n\t\t\tconfig {\n\t\t\t\tdefinition\n\t\t\t}\n\t\t\tregions {\n\t\t\t\tname\n\t\t\t\tcode\n\t\t\t}\n\t\t}\n\t}\n}\nfragment AppData on App {\n\tid\n\tname\n\tdeployed\n\tplatformVersion\n\tcnameTarget\n\tsecrets {\n\t\tname\n\t}\n\torganization {\n\t\t... OrganizationData\n\t}\n}\nfragment OrganizationData on Organization {\n\tid\n\tslug\n\trawSlug\n\tpaidPlan\n\taddOnSsoLink\n\tprovisionsBetaExtensions\n\tname\n\tbillable\n\tbillingStatus\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 69
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "CreateExtension",
+      "root_fields": [
+        "createAddOn"
+      ],
+      "name": "CreateExtension",
+      "document": "mutation CreateExtension ($input: CreateAddOnInput!) {\n\tcreateAddOn(input: $input) {\n\t\taddOn {\n\t\t\t... ExtensionData\n\t\t}\n\t}\n}\nfragment ExtensionData on AddOn {\n\tname\n\tssoLink\n\tenvironment\n\tprimaryRegion\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 60
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "CreateLimitedAccessToken",
+      "root_fields": [
+        "createLimitedAccessToken"
+      ],
+      "name": "CreateLimitedAccessToken",
+      "document": "mutation CreateLimitedAccessToken ($name: String!, $organizationId: ID!, $profile: String!, $profileParams: JSON, $expiry: String!) {\n\tcreateLimitedAccessToken(input: {name:$name,organizationId:$organizationId,profile:$profile,profileParams:$profileParams,expiry:$expiry}) {\n\t\tlimitedAccessToken {\n\t\t\ttokenHeader\n\t\t}\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 188
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "CreateTosAgreement",
+      "root_fields": [
+        "createExtensionTosAgreement"
+      ],
+      "name": "CreateTosAgreement",
+      "document": "mutation CreateTosAgreement ($providerName: String!) {\n\tcreateExtensionTosAgreement(input: {addOnProviderName:$providerName}) {\n\t\tclientMutationId\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 84
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "DeleteAddOn",
+      "root_fields": [
+        "deleteAddOn"
+      ],
+      "name": "DeleteAddOn",
+      "document": "mutation DeleteAddOn ($name: String, $provider: String) {\n\tdeleteAddOn(input: {name:$name,provider:$provider}) {\n\t\tdeletedAddOnName\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 212
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "FlyctlConfigCurrentRelease",
+      "root_fields": [
+        "app"
+      ],
+      "name": "FlyctlConfigCurrentRelease",
+      "document": "query FlyctlConfigCurrentRelease ($appName: String!) {\n\tapp(name: $appName) {\n\t\tcurrentReleaseUnprocessed {\n\t\t\tconfigDefinition\n\t\t}\n\t}\n}",
+      "source_path": "internal/appconfig/remote.go",
+      "source_line": 54
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetAddOn",
+      "root_fields": [
+        "addOn"
+      ],
+      "name": "GetAddOn",
+      "document": "query GetAddOn ($name: String, $provider: String) {\n\taddOn(name: $name, provider: $provider) {\n\t\t... AddOnData\n\t\tpublicUrl\n\t\tprivateIp\n\t\tpassword\n\t\tstatus\n\t\tprimaryRegion\n\t\treadRegions\n\t\toptions\n\t\tmetadata\n\t\tssoLink\n\t\torganization {\n\t\t\tslug\n\t\t\tpaidPlan\n\t\t}\n\t\taddOnProvider {\n\t\t\t... ExtensionProviderData\n\t\t}\n\t\tapp {\n\t\t\t... AppData\n\t\t}\n\t\taddOnPlan {\n\t\t\tid\n\t\t\tname\n\t\t\tdisplayName\n\t\t\tdescription\n\t\t}\n\t}\n}\nfragment AddOnData on AddOn {\n\tid\n\tname\n\tprimaryRegion\n\tstatus\n\terrorMessage\n\tmetadata\n\toptions\n}\nfragment ExtensionProviderData on AddOnProvider {\n\tid\n\tname\n\tdisplayName\n\ttosUrl\n\tasyncProvisioning\n\tautoProvision\n\tselectName\n\tselectRegion\n\tselectReplicaRegions\n\tdetectPlatform\n\tresourceName\n\tnameSuffix\n\tbeta\n\ttosAgreement\n\tinternal\n\tprovisioningInstructions\n\texcludedRegions {\n\t\tcode\n\t}\n}\nfragment AppData on App {\n\tid\n\tname\n\tdeployed\n\tplatformVersion\n\tcnameTarget\n\tsecrets {\n\t\tname\n\t}\n\torganization {\n\t\t... OrganizationData\n\t}\n}\nfragment OrganizationData on Organization {\n\tid\n\tslug\n\trawSlug\n\tpaidPlan\n\taddOnSsoLink\n\tprovisionsBetaExtensions\n\tname\n\tbillable\n\tbillingStatus\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 10
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetAddOnProvider",
+      "root_fields": [
+        "addOnProvider"
+      ],
+      "name": "GetAddOnProvider",
+      "document": "query GetAddOnProvider ($name: String!) {\n\taddOnProvider(name: $name) {\n\t\t... ExtensionProviderData\n\t}\n}\nfragment ExtensionProviderData on AddOnProvider {\n\tid\n\tname\n\tdisplayName\n\ttosUrl\n\tasyncProvisioning\n\tautoProvision\n\tselectName\n\tselectRegion\n\tselectReplicaRegions\n\tdetectPlatform\n\tresourceName\n\tnameSuffix\n\tbeta\n\ttosAgreement\n\tinternal\n\tprovisioningInstructions\n\texcludedRegions {\n\t\tcode\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 240
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetApp",
+      "root_fields": [
+        "app"
+      ],
+      "name": "GetApp",
+      "document": "query GetApp ($name: String!) {\n\tapp(name: $name) {\n\t\t... AppData\n\t}\n}\nfragment AppData on App {\n\tid\n\tname\n\tdeployed\n\tplatformVersion\n\tcnameTarget\n\tsecrets {\n\t\tname\n\t}\n\torganization {\n\t\t... OrganizationData\n\t}\n}\nfragment OrganizationData on Organization {\n\tid\n\tslug\n\trawSlug\n\tpaidPlan\n\taddOnSsoLink\n\tprovisionsBetaExtensions\n\tname\n\tbillable\n\tbillingStatus\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 104
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetAppWithAddons",
+      "root_fields": [
+        "app"
+      ],
+      "name": "GetAppWithAddons",
+      "document": "query GetAppWithAddons ($name: String!, $addOnType: AddOnType!) {\n\tapp(name: $name) {\n\t\t... AppData\n\t\taddOns(type: $addOnType) {\n\t\t\tnodes {\n\t\t\t\t... AddOnData\n\t\t\t}\n\t\t}\n\t}\n}\nfragment AppData on App {\n\tid\n\tname\n\tdeployed\n\tplatformVersion\n\tcnameTarget\n\tsecrets {\n\t\tname\n\t}\n\torganization {\n\t\t... OrganizationData\n\t}\n}\nfragment AddOnData on AddOn {\n\tid\n\tname\n\tprimaryRegion\n\tstatus\n\terrorMessage\n\tmetadata\n\toptions\n}\nfragment OrganizationData on Organization {\n\tid\n\tslug\n\trawSlug\n\tpaidPlan\n\taddOnSsoLink\n\tprovisionsBetaExtensions\n\tname\n\tbillable\n\tbillingStatus\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 110
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetAppsByRole",
+      "root_fields": [
+        "apps"
+      ],
+      "name": "GetAppsByRole",
+      "document": "query GetAppsByRole ($role: String!, $organizationId: ID!) {\n\tapps(role: $role, organizationId: $organizationId) {\n\t\tnodes {\n\t\t\t... AppData\n\t\t}\n\t}\n}\nfragment AppData on App {\n\tid\n\tname\n\tdeployed\n\tplatformVersion\n\tcnameTarget\n\tsecrets {\n\t\tname\n\t}\n\torganization {\n\t\t... OrganizationData\n\t}\n}\nfragment OrganizationData on Organization {\n\tid\n\tslug\n\trawSlug\n\tpaidPlan\n\taddOnSsoLink\n\tprovisionsBetaExtensions\n\tname\n\tbillable\n\tbillingStatus\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 121
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetExtensionSsoLink",
+      "root_fields": [
+        "organization"
+      ],
+      "name": "GetExtensionSsoLink",
+      "document": "query GetExtensionSsoLink ($orgSlug: String!, $provider: String!) {\n\torganization(slug: $orgSlug) {\n\t\textensionSsoLink(provider: $provider)\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 129
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetNearestRegion",
+      "root_fields": [
+        "nearestRegion"
+      ],
+      "name": "GetNearestRegion",
+      "document": "query GetNearestRegion {\n\tnearestRegion {\n\t\tcode\n\t\tname\n\t\tgatewayAvailable\n\t\tdeprecated\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 179
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetOrganization",
+      "root_fields": [
+        "organization"
+      ],
+      "name": "GetOrganization",
+      "document": "query GetOrganization ($slug: String!) {\n\torganization(slug: $slug) {\n\t\t... OrganizationData\n\t}\n}\nfragment OrganizationData on Organization {\n\tid\n\tslug\n\trawSlug\n\tpaidPlan\n\taddOnSsoLink\n\tprovisionsBetaExtensions\n\tname\n\tbillable\n\tbillingStatus\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 98
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "ListAddOnPlans",
+      "root_fields": [
+        "addOnPlans"
+      ],
+      "name": "ListAddOnPlans",
+      "document": "query ListAddOnPlans ($addOnType: AddOnType!) {\n\taddOnPlans(type: $addOnType) {\n\t\tnodes {\n\t\t\tid\n\t\t\tdescription\n\t\t\tdisplayName\n\t\t\tmaxDataSize\n\t\t\tpricePerMonth\n\t\t}\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 305
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "ListAddOns",
+      "root_fields": [
+        "addOns"
+      ],
+      "name": "ListAddOns",
+      "document": "query ListAddOns ($addOnType: AddOnType) {\n\taddOns(type: $addOnType) {\n\t\tnodes {\n\t\t\tid\n\t\t\tname\n\t\t\taddOnPlan {\n\t\t\t\tdisplayName\n\t\t\t\tdescription\n\t\t\t}\n\t\t\tprivateIp\n\t\t\tprimaryRegion\n\t\t\treadRegions\n\t\t\toptions\n\t\t\tmetadata\n\t\t\torganization {\n\t\t\t\tid\n\t\t\t\tslug\n\t\t\t}\n\t\t}\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 245
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "ListOrganizationAddOns",
+      "root_fields": [
+        "organization"
+      ],
+      "name": "ListOrganizationAddOns",
+      "document": "query ListOrganizationAddOns ($orgSlug: String!, $addOnType: AddOnType) {\n\torganization(slug: $orgSlug) {\n\t\taddOns(type: $addOnType) {\n\t\t\tnodes {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\taddOnPlan {\n\t\t\t\t\tdisplayName\n\t\t\t\t\tdescription\n\t\t\t\t}\n\t\t\t\tprivateIp\n\t\t\t\tprimaryRegion\n\t\t\t\treadRegions\n\t\t\t\toptions\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 267
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "LogOut",
+      "root_fields": [
+        "logOut"
+      ],
+      "name": "LogOut",
+      "document": "mutation LogOut {\n\tlogOut(input: {}) {\n\t\tok\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 196
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "ResetAddOnPassword",
+      "root_fields": [
+        "resetAddOnPassword"
+      ],
+      "name": "ResetAddOnPassword",
+      "document": "mutation ResetAddOnPassword ($name: String!) {\n\tresetAddOnPassword(input: {name:$name}) {\n\t\taddOn {\n\t\t\tpublicUrl\n\t\t}\n\t}\n}",
+      "source_path": "internal/command/redis/reset_password.go",
+      "source_line": 43
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "SetNomadVMCount",
+      "root_fields": [
+        "setVmCount"
+      ],
+      "name": "SetNomadVMCount",
+      "document": "mutation SetNomadVMCount ($input: SetVMCountInput!) {\n\tsetVmCount(input: $input) {\n\t\ttaskGroupCounts {\n\t\t\tname\n\t\t\tcount\n\t\t}\n\t\twarnings\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 202
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "SetSecrets",
+      "root_fields": [
+        "setSecrets"
+      ],
+      "name": "SetSecrets",
+      "document": "mutation SetSecrets ($input: SetSecretsInput!) {\n\tsetSecrets(input: $input) {\n\t\trelease {\n\t\t\tid\n\t\t\tversion\n\t\t\treason\n\t\t\tdescription\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\temail\n\t\t\t\tname\n\t\t\t}\n\t\t\tevaluationId\n\t\t\tcreatedAt\n\t\t}\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 161
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "UpdateAddOn",
+      "root_fields": [
+        "updateAddOn"
+      ],
+      "name": "UpdateAddOn",
+      "document": "mutation UpdateAddOn ($addOnId: ID!, $planId: ID!, $readRegions: [String!]!, $options: JSON!, $metadata: JSON!) {\n\tupdateAddOn(input: {addOnId:$addOnId,planId:$planId,readRegions:$readRegions,options:$options,metadata:$metadata}) {\n\t\taddOn {\n\t\t\tid\n\t\t}\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 287
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "UpdateRedisAddOn",
+      "root_fields": [
+        "updateAddOn"
+      ],
+      "name": "UpdateRedisAddOn",
+      "document": "mutation UpdateRedisAddOn ($addOnId: ID!, $planId: ID!, $readRegions: [String!]!, $options: JSON!, $metadata: JSON!, $prodPack: Boolean) {\n\tupdateAddOn(input: {addOnId:$addOnId,planId:$planId,readRegions:$readRegions,options:$options,metadata:$metadata,prodPack:$prodPack}) {\n\t\taddOn {\n\t\t\tid\n\t\t}\n\t}\n}",
+      "source_path": "gql/genqclient.graphql",
+      "source_line": 295
+    }
+  ],
+  "ad_hoc_operations": [
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "apps"
+      ],
+      "adapter": "apps_list_with_network",
+      "document": "query($org: ID, $after: String) {\n\t\t\tapps(type: \"container\", first: 200, after: $after, organizationId: $org) {\n\t\t\t\tpageInfo {\n\t\t\t\t\thasNextPage\n\t\t\t\t\tendCursor\n\t\t\t\t}\n\t\t\t\tnodes {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t\tdeployed\n\t\t\t\t\thostname\n\t\t\t\t\tplatformVersion\n\t\t\t\t\tnetwork\n\t\t\t\t\torganization {\n\t\t\t\t\t\tslug\n\t\t\t\t\t\tname\n\t\t\t\t\t}\n\t\t\t\t\tcurrentRelease {\n\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\tstatus\n\t\t\t\t\t}\n\t\t\t\t\tstatus\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "internal/command/apps/list.go",
+      "source_line": 137
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "status_current_release_version",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name:$appName) {\n\t\t\t\tcurrentRelease:currentReleaseUnprocessed {\n\t\t\t\t\tversion\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "internal/command/status/machines.go",
+      "source_line": 239
+    }
+  ]
+}

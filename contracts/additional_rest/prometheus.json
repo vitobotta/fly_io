@@ -1,0 +1,103 @@
+{
+  "surface": "prometheus_metrics",
+  "stability": "stable_standard_api_with_qualified_compatibility",
+  "base_url": "https://api.fly.io",
+  "documentation_url": "https://fly.io/docs/monitoring/metrics",
+  "source_repository": "https://github.com/superfly/docs",
+  "source_revision": "1e8cac5f0fd7a82e66e3b01ece3a10a8ecb2b7e3",
+  "source_path": "monitoring/metrics.html.md",
+  "source_sha256": "e22d7b34406b16c2ea75eed6cd92c51ec07d166963155623557295ef24f67e9f",
+  "retrieved_at": "2026-08-26T21:00:00Z",
+  "limitations": [
+    "This is an observability data API, not a control-plane API.",
+    "Fly documents support for most common Prometheus query endpoints and delegates their parameter/response contracts to Prometheus/VictoriaMetrics."
+  ],
+  "schemas": {
+    "PrometheusAPIResponse": {
+      "type": "object",
+      "required": ["status"],
+      "additionalProperties": true,
+      "properties": {
+        "status": {"type": "string", "enum": ["success", "error"]},
+        "data": {"type": "object", "additionalProperties": true},
+        "errorType": {"type": "string"},
+        "error": {"type": "string"},
+        "warnings": {"type": "array", "items": {"type": "string"}},
+        "infos": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  },
+  "operations": [
+    {
+      "operation_id": "Prometheus_query", "method": "get", "path": "/prometheus/{org_slug}/api/v1/query",
+      "summary": "Run an instant Prometheus query",
+      "parameters": [
+        {"name": "org_slug", "ruby_name": "org_slug", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "query", "ruby_name": "query", "in": "query", "required": true, "schema": {"type": "string"}},
+        {"name": "time", "ruby_name": "time", "in": "query", "required": false, "schema": {"type": "string"}},
+        {"name": "timeout", "ruby_name": "timeout", "in": "query", "required": false, "schema": {"type": "string"}}
+      ]
+    },
+    {
+      "operation_id": "Prometheus_query_range", "method": "get", "path": "/prometheus/{org_slug}/api/v1/query_range",
+      "summary": "Run a range Prometheus query",
+      "parameters": [
+        {"name": "org_slug", "ruby_name": "org_slug", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "query", "ruby_name": "query", "in": "query", "required": true, "schema": {"type": "string"}},
+        {"name": "start", "ruby_name": "start", "in": "query", "required": true, "schema": {"type": "string"}},
+        {"name": "end", "ruby_name": "end", "in": "query", "required": true, "schema": {"type": "string"}},
+        {"name": "step", "ruby_name": "step", "in": "query", "required": true, "schema": {"type": "string"}},
+        {"name": "timeout", "ruby_name": "timeout", "in": "query", "required": false, "schema": {"type": "string"}}
+      ]
+    },
+    {
+      "operation_id": "Prometheus_series", "method": "get", "path": "/prometheus/{org_slug}/api/v1/series",
+      "summary": "Find series by label matchers",
+      "parameters": [
+        {"name": "org_slug", "ruby_name": "org_slug", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "match[]", "ruby_name": "match", "in": "query", "required": true, "schema": {"type": "array", "items": {"type": "string"}}},
+        {"name": "start", "ruby_name": "start", "in": "query", "required": false, "schema": {"type": "string"}},
+        {"name": "end", "ruby_name": "end", "in": "query", "required": false, "schema": {"type": "string"}}
+      ]
+    },
+    {
+      "operation_id": "Prometheus_labels", "method": "get", "path": "/prometheus/{org_slug}/api/v1/labels",
+      "summary": "Get label names",
+      "parameters": [
+        {"name": "org_slug", "ruby_name": "org_slug", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "match[]", "ruby_name": "match", "in": "query", "required": false, "schema": {"type": "array", "items": {"type": "string"}}},
+        {"name": "start", "ruby_name": "start", "in": "query", "required": false, "schema": {"type": "string"}},
+        {"name": "end", "ruby_name": "end", "in": "query", "required": false, "schema": {"type": "string"}}
+      ]
+    },
+    {
+      "operation_id": "Prometheus_label_values", "method": "get", "path": "/prometheus/{org_slug}/api/v1/label/{label_name}/values",
+      "summary": "Get values for a label",
+      "parameters": [
+        {"name": "org_slug", "ruby_name": "org_slug", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "label_name", "ruby_name": "label_name", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "match[]", "ruby_name": "match", "in": "query", "required": false, "schema": {"type": "array", "items": {"type": "string"}}},
+        {"name": "start", "ruby_name": "start", "in": "query", "required": false, "schema": {"type": "string"}},
+        {"name": "end", "ruby_name": "end", "in": "query", "required": false, "schema": {"type": "string"}}
+      ]
+    },
+    {
+      "operation_id": "Prometheus_tsdb", "method": "get", "path": "/prometheus/{org_slug}/api/v1/status/tsdb",
+      "summary": "Get TSDB statistics",
+      "parameters": [
+        {"name": "org_slug", "ruby_name": "org_slug", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "limit", "ruby_name": "limit", "in": "query", "required": false, "schema": {"type": "integer"}},
+        {"name": "match[]", "ruby_name": "match", "in": "query", "required": false, "schema": {"type": "array", "items": {"type": "string"}}}
+      ]
+    },
+    {
+      "operation_id": "Prometheus_federate", "method": "get", "path": "/prometheus/{org_slug}/federate",
+      "summary": "Federate selected metrics",
+      "parameters": [
+        {"name": "org_slug", "ruby_name": "org_slug", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "match[]", "ruby_name": "match", "in": "query", "required": true, "schema": {"type": "array", "items": {"type": "string"}}}
+      ],
+      "response_content_type": "text/plain"
+    }
+  ]
+}

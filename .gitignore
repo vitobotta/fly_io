@@ -1,0 +1,27 @@
+# Bundler and local dependency installs
+/.bundle/
+/vendor/bundle/
+Gemfile.lock
+
+# Build, test, and documentation output
+/coverage/
+/pkg/
+/tmp/
+/.yardoc/
+/doc/
+*.gem
+
+# Editor and language-server state
+/.ruby-lsp/
+*.swp
+*.swo
+*~
+
+# Local environment and agent-only notes
+.env
+.env.*
+!.env.example
+/.learnings/
+
+# macOS
+.DS_Store

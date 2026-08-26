@@ -1,0 +1,302 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "digest"
+require "fileutils"
+require "json"
+
+ROOT = File.expand_path("..", __dir__)
+SPEC_PATH = File.join(ROOT, "contracts/machines/openapi.json")
+SOURCE_PATH = File.join(ROOT, "contracts/machines/source.json")
+ADDITIONAL_PATH = File.join(ROOT, "contracts/additional_rest/network_policies.json")
+PROMETHEUS_PATH = File.join(ROOT, "contracts/additional_rest/prometheus.json")
+HTTP_METHODS = %w[get put post delete patch options head trace].freeze
+
+def constant_name(name, used)
+  words = name.gsub(/([a-z0-9])([A-Z])/, "\\1_\\2").split(/[^A-Za-z0-9]+/).reject(&:empty?)
+  candidate = words.map { |word| word[0].upcase + word[1..].to_s }.join
+  candidate = "Schema#{candidate}" if candidate.empty? || candidate.match?(/\A\d/)
+  candidate += Digest::SHA256.hexdigest(name)[0, 8] if used.key?(candidate) && used[candidate] != name
+  used[candidate] = name
+  candidate
+end
+
+def ruby_resource(tag)
+  {
+    "Apps" => "apps", "TLS Certificates" => "certificates", "Machines" => "machines",
+    "Secrets" => "secrets", "Volumes" => "volumes", "Organizations" => "organizations",
+    "Platform" => "platform", "Postgres Clusters" => "postgres_clusters", "Tokens" => "tokens"
+  }.fetch(tag)
+end
+
+def ruby_method(operation_id, method)
+  exact = {
+    "Apps_list" => "list", "Apps_create" => "create", "Apps_show" => "get", "Apps_delete" => "destroy",
+    "App_create_deploy_token" => "create_deploy_token",
+    "App_IPAssignments_list" => "list_ip_assignments", "App_IPAssignments_create" => "create_ip_assignment",
+    "App_IPAssignments_delete" => "delete_ip_assignment",
+    "App_Certificates_list" => "list", "App_Certificates_acme_create" => "request_acme",
+    "App_Certificates_custom_create" => "upload_custom", "App_Certificates_show" => "get",
+    "App_Certificates_delete" => "remove", "App_Certificates_acme_delete" => "remove_acme",
+    "App_Certificates_check" => "check", "App_Certificates_custom_delete" => "remove_custom",
+    "Machines_show" => "get", "Machines_delete" => "destroy", "Machines_list_events" => "events",
+    "Machines_exec" => "execute", "Machines_show_lease" => "lease", "Machines_get_memory" => "memory",
+    "Machines_show_metadata" => "metadata", "Machines_get_metadata_key" => "get_metadata",
+    "Machines_upsert_metadata" => "set_metadata", "Machines_delete_metadata" => "delete_metadata",
+    "Machines_list_processes" => "processes", "Machines_list_versions" => "versions",
+    "Volumes_get_by_id" => "get", "Volume_delete" => "destroy", "createVolumeSnapshot" => "create_snapshot",
+    "Machines_org_list" => "list_machines", "Volumes_org_list" => "list_volumes",
+    "Platform_placements_post" => "placements", "Platform_regions_get" => "regions",
+    "CurrentToken_show" => "current", "Tokens_request_Kms" => "request_kms", "Tokens_request_OIDC" => "request_oidc"
+  }
+  return method == "put" ? "replace_metadata" : "update_metadata" if operation_id == "Machines_update_metadata"
+  return exact.fetch(operation_id) if exact.key?(operation_id)
+  return "list_keys" if operation_id == "Secretkeys_list"
+  if operation_id.start_with?("Secretkey_")
+    return operation_id.delete_prefix("Secretkey_").then do |suffix|
+      "#{suffix == 'get' ? 'get' : suffix}_key"
+    end
+  end
+  return operation_id.delete_prefix("Secret_").sub("create", "set") if operation_id.start_with?("Secret_")
+  return operation_id.delete_prefix("Secrets_") if operation_id.start_with?("Secrets_")
+
+  %w[Machines_ Volumes_ Postgres_ Tokens_].each do |prefix|
+    return operation_id.delete_prefix(prefix).downcase if operation_id.start_with?(prefix)
+  end
+  operation_id.gsub(/([a-z0-9])([A-Z])/, "\\1_\\2").downcase
+end
+
+def refs_in(value, result = [])
+  case value
+  when Hash
+    value.each do |key, child|
+      result << child if key == "$ref"
+      refs_in(child, result)
+    end
+  when Array
+    value.each { |child| refs_in(child, result) }
+  end
+  result
+end
+
+def operation_rows(spec)
+  spec.fetch("paths").flat_map do |path, path_item|
+    path_item.filter_map do |method, operation|
+      next unless HTTP_METHODS.include?(method)
+
+      tag = operation.fetch("tags").first
+      parameters = (path_item.fetch("parameters", []) + operation.fetch("parameters", [])).map do |parameter|
+        parameter.merge("ruby_name" => parameter.fetch("name").tr("-", "_").downcase)
+      end
+      body = operation["requestBody"]
+      body_metadata = if body
+                        content = body.fetch("content")
+                        json = content["application/json"] || content.values.first
+                        {"required" => body.fetch("required", false), "content_types" => content.keys,
+                         "schema" => json["schema"]}
+                      end
+      responses = operation.fetch("responses").transform_values do |response|
+        {
+          "description" => response["description"],
+          "content" => response.fetch("content", {}).transform_values { |entry| {"schema" => entry["schema"]} }
+        }
+      end
+      operation_id = operation.fetch("operationId")
+      resource = ruby_resource(tag)
+      {
+        "identity" => "#{method.upcase} #{path} #{operation_id}",
+        "surface" => "machines_rest", "stability" => "stable", "base_url" => spec.fetch("servers").first.fetch("url"),
+        "operation_id" => operation_id, "method" => method, "path" => path, "tags" => operation.fetch("tags"),
+        "summary" => operation["summary"], "parameters" => parameters, "request_body" => body_metadata,
+        "responses" => responses, "ruby_resource" => resource, "ruby_method" => ruby_method(operation_id, method),
+        "public_ruby_method" => "FlyIO::Client##{resource}.#{ruby_method(operation_id, method)}"
+      }
+    end
+  end
+end
+
+def pretty(value)
+  "#{JSON.pretty_generate(value)}\n"
+end
+
+spec_bytes = File.binread(SPEC_PATH)
+spec = JSON.parse(spec_bytes)
+source = JSON.parse(File.read(SOURCE_PATH))
+additional = JSON.parse(File.read(ADDITIONAL_PATH))
+prometheus = JSON.parse(File.read(PROMETHEUS_PATH))
+abort "OpenAPI 3.x required" unless spec.fetch("openapi").start_with?("3.")
+actual_sha = Digest::SHA256.hexdigest(spec_bytes)
+abort "snapshot hash drift: expected #{source.fetch('sha256')}, got #{actual_sha}" unless actual_sha == source.fetch("sha256")
+
+schemas = spec.fetch("components").fetch("schemas")
+refs = refs_in(spec)
+invalid_refs = refs.reject do |ref|
+  ref.start_with?("#/components/schemas/") && schemas.key?(ref.delete_prefix("#/components/schemas/"))
+end
+abort "unresolved or non-local refs: #{invalid_refs.uniq.join(', ')}" unless invalid_refs.empty?
+
+used_constants = {}
+all_schemas = schemas.merge(additional.fetch("schemas")).merge(prometheus.fetch("schemas"))
+additional_refs = refs_in(additional) + refs_in(prometheus)
+invalid_additional_refs = additional_refs.reject do |ref|
+  ref.start_with?("#/additional/schemas/") && all_schemas.key?(ref.delete_prefix("#/additional/schemas/"))
+end
+abort "unresolved additional-surface refs: #{invalid_additional_refs.uniq.join(', ')}" unless invalid_additional_refs.empty?
+generated_schemas = all_schemas.to_h do |name, schema|
+  [name, schema.merge("x-ruby-class" => constant_name(name, used_constants))]
+end
+operations = operation_rows(spec)
+additional_operations = additional.fetch("operations").map do |operation|
+  operation.merge(
+    "surface" => additional.fetch("surface"), "stability" => additional.fetch("stability"),
+    "base_url" => additional.fetch("base_url"), "tags" => ["Network Policies"],
+    "ruby_resource" => "network_policies",
+    "ruby_method" => {"NetworkPolicies_upsert" => "upsert", "NetworkPolicies_list" => "list", "NetworkPolicies_delete" => "delete"}.fetch(operation.fetch("operation_id")),
+    "public_ruby_method" => "FlyIO::Client#network_policies.#{{'NetworkPolicies_upsert' => 'upsert', 'NetworkPolicies_list' => 'list', 'NetworkPolicies_delete' => 'delete'}.fetch(operation.fetch('operation_id'))}"
+  )
+end
+prometheus_operations = prometheus.fetch("operations").map do |operation|
+  content_type = operation.fetch("response_content_type", "application/json")
+  response_schema = content_type == "application/json" ? {"$ref" => "#/additional/schemas/PrometheusAPIResponse"} : {"type" => "string"}
+  method_name = operation.fetch("operation_id").delete_prefix("Prometheus_")
+  operation.merge(
+    "identity" => "#{operation.fetch('method').upcase} #{operation.fetch('path')} #{operation.fetch('operation_id')}",
+    "surface" => prometheus.fetch("surface"), "stability" => prometheus.fetch("stability"),
+    "base_url" => prometheus.fetch("base_url"), "tags" => ["Metrics"], "request_body" => nil,
+    "responses" => {"200" => {"description" => "Prometheus API response", "content" => {content_type => {"schema" => response_schema}}}},
+    "ruby_resource" => "metrics", "ruby_method" => method_name,
+    "public_ruby_method" => "FlyIO::Client#metrics.#{method_name}"
+  ).except("response_content_type")
+end
+identities = (operations + additional_operations + prometheus_operations).map { |operation| operation.fetch("identity") }
+abort "duplicate operation identities" unless identities.uniq.length == identities.length
+public_methods = (operations + additional_operations + prometheus_operations).map do |operation|
+  [operation.fetch("ruby_resource"), operation.fetch("ruby_method")]
+end
+duplicates = public_methods.group_by(&:itself).select { |_, entries| entries.length > 1 }
+abort "duplicate public methods: #{duplicates.keys.inspect}" unless duplicates.empty?
+
+counts = {
+  "paths" => spec.fetch("paths").length, "operations" => operations.length,
+  "unique_operation_ids" => operations.map { |operation| operation.fetch("operation_id") }.uniq.length,
+  "schemas" => schemas.length,
+  "tags" => operations.flat_map { |operation| operation.fetch("tags") }.tally.sort.to_h
+}
+%w[paths operations unique_operation_ids schemas].each do |key|
+  abort "#{key} drift: expected #{source.fetch(key)}, got #{counts.fetch(key)}" unless counts.fetch(key) == source.fetch(key)
+end
+
+manifest = {
+  "generated_from" => source.slice("contract_url", "retrieved_at", "etag", "last_modified", "sha256"),
+  "counts" => counts, "operations" => operations
+}
+api_lines = (operations + additional_operations + prometheus_operations).group_by do |operation|
+  operation.fetch("tags").first
+end.sort.flat_map do |tag, tagged|
+  ["## #{tag}", ""] + tagged.map do |operation|
+    "- `#{operation.fetch('method').upcase} #{operation.fetch('path')}` → `client.#{operation.fetch('ruby_resource')}.#{operation.fetch('ruby_method')}` (`#{operation.fetch('operation_id')}`)"
+  end + [""]
+end
+api_doc = <<~MARKDOWN
+  # Generated Fly API reference
+
+  Machines metadata is generated from `#{source.fetch('contract_url')}` (SHA-256 `#{source.fetch('sha256')}`).
+  This file lists #{operations.length} Machines OpenAPI operations, #{additional_operations.length} Network Policies
+  documentation-derived operations, and #{prometheus_operations.length} Prometheus endpoint families. GraphQL's
+  experimental generated-operation adapter is inventoried separately in `generated/graphql_operations.json`.
+  Do not edit this file by hand.
+
+  #{api_lines.join("\n")}
+MARKDOWN
+
+flyctl_graphql = JSON.parse(File.read(File.join(ROOT, "contracts/graphql/flyctl_operations.json")))
+fly_go_graphql = JSON.parse(File.read(File.join(ROOT, "contracts/graphql/fly_go_operations.json")))
+official_graphql = JSON.parse(File.read(File.join(ROOT, "contracts/graphql/official_examples.json")))
+graphql_operations = flyctl_graphql.fetch("named_operations").map do |operation|
+  {
+    "name" => "flyctl.#{operation.fetch('name')}", "operation_name" => operation["operation_name"],
+    "operation_type" => operation.fetch("operation_type"), "root_fields" => operation.fetch("root_fields"),
+    "document" => operation.fetch("document"), "stability" => "experimental",
+    "observed_in" => "flyctl", "source_revision" => flyctl_graphql.fetch("revision"),
+    "source_path" => operation.fetch("source_path"), "source_line" => operation.fetch("source_line")
+  }
+end
+flyctl_graphql.fetch("ad_hoc_operations").each do |operation|
+  graphql_operations << {
+    "name" => "flyctl.#{operation.fetch('adapter')}", "operation_name" => operation["operation_name"],
+    "operation_type" => operation.fetch("operation_type"), "root_fields" => operation.fetch("root_fields"),
+    "document" => operation.fetch("document"), "stability" => "experimental",
+    "observed_in" => "flyctl", "source_revision" => flyctl_graphql.fetch("revision"),
+    "source_path" => operation.fetch("source_path"), "source_line" => operation.fetch("source_line")
+  }
+end
+fly_go_graphql.fetch("documents").each do |operation|
+  graphql_operations << {
+    "name" => "fly_go.#{operation.fetch('adapter')}", "operation_name" => operation["operation_name"],
+    "operation_type" => operation.fetch("operation_type"), "root_fields" => operation.fetch("root_fields"),
+    "document" => operation.fetch("document"), "stability" => "experimental",
+    "observed_in" => "fly-go", "source_revision" => fly_go_graphql.fetch("revision"),
+    "source_path" => operation.fetch("source_path"), "source_line" => operation.fetch("source_line")
+  }
+end
+official_graphql.fetch("examples").each do |operation|
+  graphql_operations << {
+    "name" => "official.#{operation.fetch('id')}", "operation_name" => operation["operation_name"],
+    "operation_type" => operation.fetch("operation_type"), "root_fields" => operation.fetch("root_fields"),
+    "document" => operation.fetch("document"), "stability" => "experimental",
+    "observed_in" => "official_documentation", "source_revision" => official_graphql.fetch("docs_revision"),
+    "source_path" => operation.fetch("source_path"), "source_line" => operation.fetch("source_lines").first
+  }
+end
+abort "duplicate generated GraphQL operation names" unless graphql_operations.map do |entry|
+  entry.fetch("name")
+end.uniq.length == graphql_operations.length
+graphql_manifest = {
+  "surface" => "control_plane_graphql", "endpoint" => "https://api.fly.io/graphql",
+  "stability" => "experimental_internal_no_stability_guarantee",
+  "schema" => flyctl_graphql.fetch("schema"),
+  "counts" => {
+    "flyctl_named" => flyctl_graphql.fetch("named_operation_count"),
+    "flyctl_ad_hoc" => flyctl_graphql.fetch("ad_hoc_operation_count"),
+    "fly_go" => fly_go_graphql.fetch("document_count"),
+    "official_examples" => official_graphql.fetch("examples").length,
+    "total" => graphql_operations.length
+  },
+  "operations" => graphql_operations
+}
+
+outputs = {
+  File.join(ROOT, "lib/fly_io/generated/schemas.json") => pretty(generated_schemas),
+  File.join(ROOT, "lib/fly_io/generated/operations.json") => pretty(manifest),
+  File.join(ROOT, "lib/fly_io/generated/additional_operations.json") => pretty({
+                                                                                 "generated_from" => additional.slice("documentation_url", "source_revision", "source_path", "source_sha256", "retrieved_at"),
+                                                                                 "counts" => {"operations" => additional_operations.length, "schemas" => additional.fetch("schemas").length},
+                                                                                 "limitations" => additional.fetch("limitations"), "operations" => additional_operations
+                                                                               }),
+  File.join(ROOT, "lib/fly_io/generated/prometheus_operations.json") => pretty({
+                                                                                 "generated_from" => prometheus.slice("documentation_url", "source_revision", "source_path", "source_sha256", "retrieved_at"),
+                                                                                 "counts" => {"endpoint_families" => prometheus_operations.length, "schemas" => prometheus.fetch("schemas").length},
+                                                                                 "limitations" => prometheus.fetch("limitations"), "operations" => prometheus_operations
+                                                                               }),
+  File.join(ROOT, "lib/fly_io/generated/graphql_operations.json") => pretty(graphql_manifest),
+  File.join(ROOT, "docs/API.md") => api_doc
+}
+
+if ARGV.include?("--check")
+  failures = outputs.filter_map do |path, expected|
+    actual = File.exist?(path) ? File.read(path, encoding: "UTF-8") : nil
+    path unless actual == expected
+  end
+  unless failures.empty?
+    abort "generated API drift: #{failures.map do |path|
+      path.delete_prefix("#{ROOT}/")
+    end.join(', ')}"
+  end
+  puts "Machines REST API coverage OK: #{counts.fetch('paths')} paths, #{counts.fetch('operations')} operations, #{counts.fetch('schemas')} schemas, #{refs.length} resolved refs"
+else
+  outputs.each do |path, contents|
+    FileUtils.mkdir_p(File.dirname(path))
+    File.write(path, contents)
+  end
+  puts "Generated #{operations.length} operations and #{schemas.length} schemas"
+end

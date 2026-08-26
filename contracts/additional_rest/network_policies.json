@@ -1,0 +1,94 @@
+{
+  "surface": "network_policies_rest",
+  "stability": "stable_documented",
+  "base_url": "https://api.machines.dev",
+  "documentation_url": "https://fly.io/docs/machines/guides-examples/network-policies/",
+  "source_repository": "https://github.com/superfly/docs",
+  "source_revision": "1e8cac5f0fd7a82e66e3b01ece3a10a8ecb2b7e3",
+  "source_path": "machines/guides-examples/network-policies.html.markerb",
+  "source_sha256": "fa64b69db56beb1da2de60e3ff91820b628a1238a120d103c2f3bae16e2fcc1f",
+  "retrieved_at": "2026-08-26T21:00:00Z",
+  "limitations": [
+    "This official guide is not represented in the Machines OpenAPI document.",
+    "The guide documents methods, paths, authentication, and request shape, but no response status or schema."
+  ],
+  "schemas": {
+    "NetworkPolicyPort": {
+      "type": "object",
+      "required": ["protocol", "port"],
+      "properties": {"protocol": {"type": "string"}, "port": {"type": "integer"}}
+    },
+    "NetworkPolicyRule": {
+      "type": "object",
+      "required": ["action", "direction", "ports"],
+      "properties": {
+        "action": {"type": "string", "enum": ["allow"]},
+        "direction": {"type": "string", "enum": ["ingress", "egress"]},
+        "ports": {"type": "array", "items": {"$ref": "#/additional/schemas/NetworkPolicyPort"}}
+      }
+    },
+    "NetworkPolicySelector": {
+      "type": "object",
+      "properties": {
+        "all": {"type": "boolean"},
+        "machines": {"type": "array", "items": {"type": "object", "required": ["id"], "properties": {"id": {"type": "string"}}}},
+        "metadata": {"type": "object", "additionalProperties": {"type": "string"}}
+      }
+    },
+    "NetworkPolicyRequest": {
+      "type": "object",
+      "required": ["name", "selector", "rules"],
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "selector": {"$ref": "#/additional/schemas/NetworkPolicySelector"},
+        "rules": {"type": "array", "items": {"$ref": "#/additional/schemas/NetworkPolicyRule"}}
+      }
+    },
+    "NetworkPolicy": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "selector": {"$ref": "#/additional/schemas/NetworkPolicySelector"},
+        "rules": {"type": "array", "items": {"$ref": "#/additional/schemas/NetworkPolicyRule"}}
+      }
+    }
+  },
+  "operations": [
+    {
+      "identity": "POST /v1/apps/{app_name}/network_policies NetworkPolicies_upsert",
+      "operation_id": "NetworkPolicies_upsert",
+      "method": "post",
+      "path": "/v1/apps/{app_name}/network_policies",
+      "summary": "Create or update a network policy",
+      "parameters": [{"name": "app_name", "ruby_name": "app_name", "in": "path", "required": true, "schema": {"type": "string"}}],
+      "request_body": {"required": true, "content_types": ["application/json"], "schema": {"$ref": "#/additional/schemas/NetworkPolicyRequest"}},
+      "responses": {}
+    },
+    {
+      "identity": "GET /v1/apps/{app_name}/network_policies/ NetworkPolicies_list",
+      "operation_id": "NetworkPolicies_list",
+      "method": "get",
+      "path": "/v1/apps/{app_name}/network_policies/",
+      "summary": "List network policies",
+      "parameters": [{"name": "app_name", "ruby_name": "app_name", "in": "path", "required": true, "schema": {"type": "string"}}],
+      "request_body": null,
+      "responses": {}
+    },
+    {
+      "identity": "DELETE /v1/apps/{app_name}/network_policies/{policy_id} NetworkPolicies_delete",
+      "operation_id": "NetworkPolicies_delete",
+      "method": "delete",
+      "path": "/v1/apps/{app_name}/network_policies/{policy_id}",
+      "summary": "Delete a network policy",
+      "parameters": [
+        {"name": "app_name", "ruby_name": "app_name", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "policy_id", "ruby_name": "policy_id", "in": "path", "required": true, "schema": {"type": "string"}}
+      ],
+      "request_body": null,
+      "responses": {}
+    }
+  ]
+}

@@ -1,0 +1,948 @@
+{
+  "retrieved_at": "2026-08-26",
+  "repository": "https://github.com/superfly/fly-go",
+  "version": "v0.9.8",
+  "revision": "858ec691152ab3faa0b0a0438726bda8144d8734",
+  "document_count": 85,
+  "counts_by_type": {
+    "query": 44,
+    "mutation": 41
+  },
+  "documents": [
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "apps"
+      ],
+      "adapter": "getAppsPage",
+      "document": "query($org: ID, $role: String, $after: String) {\n\t\t\tapps(type: \"container\", first: 200, after: $after, organizationId: $org, role: $role) {\n\t\t\t\tpageInfo {\n\t\t\t\t\thasNextPage\n\t\t\t\t\tendCursor\n\t\t\t\t}\n\t\t\t\tnodes {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t\tdeployed\n\t\t\t\t\thostname\n\t\t\t\t\tplatformVersion\n\t\t\t\t\torganization {\n\t\t\t\t\t\tslug\n\t\t\t\t\t\tname\n\t\t\t\t\t}\n\t\t\t\t\tcurrentRelease {\n\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\tstatus\n\t\t\t\t\t}\n\t\t\t\t\tstatus\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 48
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetApp",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tid\n\t\t\t\tinternalNumericId\n\t\t\t\tname\n\t\t\t\thostname\n\t\t\t\tdeployed\n\t\t\t\tstatus\n\t\t\t\tversion\n\t\t\t\tappUrl\n\t\t\t\tplatformVersion\n\t\t\t\tcurrentRelease {\n\t\t\t\t\tevaluationId\n\t\t\t\t\tstatus\n\t\t\t\t\tinProgress\n\t\t\t\t\tversion\n\t\t\t\t}\n\t\t\t\tconfig {\n\t\t\t\t\tdefinition\n\t\t\t\t}\n\t\t\t\torganization {\n\t\t\t\t\tid\n\t\t\t\t\tslug\n\t\t\t\t\tpaidPlan\n\t\t\t\t}\n\t\t\t\tservices {\n\t\t\t\t\tdescription\n\t\t\t\t\tprotocol\n\t\t\t\t\tinternalPort\n\t\t\t\t\tports {\n\t\t\t\t\t\tport\n\t\t\t\t\t\thandlers\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tipAddresses {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tid\n\t\t\t\t\t\taddress\n\t\t\t\t\t\ttype\n\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tsharedIpAddress\n\t\t\t\tcnameTarget\n\t\t\t\timageDetails {\n\t\t\t\t\tregistry\n\t\t\t\t\trepository\n\t\t\t\t\ttag\n\t\t\t\t\tdigest\n\t\t\t\t\tversion\n\t\t\t\t}\n\t\t\t\tmachines{\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tname\n\t\t\t\t\t\tconfig\n\t\t\t\t\t\tstate\n\t\t\t\t\t\tregion\n\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\tapp {\n\t\t\t\t\t\t\tname\n\t\t\t\t\t\t}\n\t\t\t\t\t\tips {\n\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\tfamily\n\t\t\t\t\t\t\t\tkind\n\t\t\t\t\t\t\t\tip\n\t\t\t\t\t\t\t\tmaskSize\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t\thost {\n\t\t\t\t\t\t\tid\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpostgresAppRole: role {\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 96
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppRemoteBuilder",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\thostname\n\t\t\t\tdeployed\n\t\t\t\tstatus\n\t\t\t\tversion\n\t\t\t\tappUrl\n\t\t\t\tplatformVersion\n\t\t\t\tcurrentRelease {\n\t\t\t\t\tevaluationId\n\t\t\t\t\tstatus\n\t\t\t\t\tinProgress\n\t\t\t\t\tversion\n\t\t\t\t}\n\t\t\t\tconfig {\n\t\t\t\t\tdefinition\n\t\t\t\t}\n\t\t\t\torganization {\n\t\t\t\t\tid\n\t\t\t\t\tslug\n\t\t\t\t\tpaidPlan\n\t\t\t\t\tremoteBuilderApp {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tname\n\t\t\t\t\t\thostname\n\t\t\t\t\t\tdeployed\n\t\t\t\t\t\tstatus\n\t\t\t\t\t\tversion\n\t\t\t\t\t\tappUrl\n\t\t\t\t\t\tplatformVersion\n\t\t\t\t\t\tcurrentRelease {\n\t\t\t\t\t\t\tevaluationId\n\t\t\t\t\t\t\tstatus\n\t\t\t\t\t\t\tinProgress\n\t\t\t\t\t\t\tversion\n\t\t\t\t\t\t}\n\t\t\t\t\t\tipAddresses {\n\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\t\taddress\n\t\t\t\t\t\t\t\ttype\n\t\t\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t\torganization {\n\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\tslug\n\t\t\t\t\t\t\tpaidPlan\n\t\t\t\t\t\t}\n\t\t\t\t\t\timageDetails {\n\t\t\t\t\t\t\tregistry\n\t\t\t\t\t\t\trepository\n\t\t\t\t\t\t\ttag\n\t\t\t\t\t\t\tdigest\n\t\t\t\t\t\t\tversion\n\t\t\t\t\t\t}\n\t\t\t\t\t\tmachines{\n\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\tconfig\n\t\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\t\tregion\n\t\t\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\t\t\tapp {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\tips {\n\t\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\t\tfamily\n\t\t\t\t\t\t\t\t\t\tkind\n\t\t\t\t\t\t\t\t\t\tip\n\t\t\t\t\t\t\t\t\t\tmaskSize\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\thost {\n\t\t\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t\tpostgresAppRole: role {\n\t\t\t\t\t\t\tname\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\n\t\t\t\t}\n\t\t\t\tservices {\n\t\t\t\t\tdescription\n\t\t\t\t\tprotocol\n\t\t\t\t\tinternalPort\n\t\t\t\t\tports {\n\t\t\t\t\t\tport\n\t\t\t\t\t\thandlers\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tipAddresses {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tid\n\t\t\t\t\t\taddress\n\t\t\t\t\t\ttype\n\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\timageDetails {\n\t\t\t\t\tregistry\n\t\t\t\t\trepository\n\t\t\t\t\ttag\n\t\t\t\t\tdigest\n\t\t\t\t\tversion\n\t\t\t\t}\n\t\t\t\tmachines{\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tname\n\t\t\t\t\t\tconfig\n\t\t\t\t\t\tstate\n\t\t\t\t\t\tregion\n\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\tapp {\n\t\t\t\t\t\t\tname\n\t\t\t\t\t\t}\n\t\t\t\t\t\tips {\n\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\tfamily\n\t\t\t\t\t\t\t\tkind\n\t\t\t\t\t\t\t\tip\n\t\t\t\t\t\t\t\tmaskSize\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t\thost {\n\t\t\t\t\t\t\tid\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpostgresAppRole: role {\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 192
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppNetwork",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tnetwork\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 368
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppCNAMETarget",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tcnameTarget\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 389
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppCompact",
+      "document": "query ($appName: String!) {\n\t\t\tappcompact:app(name: $appName) {\n\t\t\t\tid\n\t\t\t\tinternalNumericId\n\t\t\t\tname\n\t\t\t\thostname\n\t\t\t\tcnameTarget\n\t\t\t\tdeployed\n\t\t\t\tnetwork\n\t\t\t\tstatus\n\t\t\t\tappUrl\n\t\t\t\tplatformVersion\n\t\t\t\torganization {\n\t\t\t\t\tid\n\t\t\t\t\tinternalNumericId\n\t\t\t\t\tslug\n\t\t\t\t\tpaidPlan\n\t\t\t\t}\n\t\t\t\tpostgresAppRole: role {\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 410
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppBasic",
+      "document": "query ($appName: String!) {\n\t\t\tappbasic:app(name: $appName) {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tplatformVersion\n\t\t\t\torganization {\n\t\t\t\t\tid\n\t\t\t\t\tinternalNumericId\n\t\t\t\t\tslug\n\t\t\t\t\trawSlug\n\t\t\t\t\tpaidPlan\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 449
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "createApp"
+      ],
+      "adapter": "CreateApp",
+      "document": "mutation($input: CreateAppInput!) {\n\t\t\tcreateApp(input: $input) {\n\t\t\t\tapp {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t\torganization {\n\t\t\t\t\t\tslug\n\t\t\t\t\t}\n\t\t\t\t\tconfig {\n\t\t\t\t\t\tdefinition\n\t\t\t\t\t}\n\t\t\t\t\tregions {\n\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\tcode\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 479
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "deleteApp"
+      ],
+      "adapter": "DeleteApp",
+      "document": "mutation($appId: ID!) {\n\t\t\t\tdeleteApp(appId: $appId) {\n\t\t\t\t\torganization {\n\t\t\t\t\t\tid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 514
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "moveApp"
+      ],
+      "adapter": "MoveApp",
+      "document": "mutation ($input: MoveAppInput!) {\n\t\t\tmoveApp(input: $input) {\n\t\t\t\tapp {\n\t\t\t\t\tid\n\t\t\t\t\tnetworkId\n\t\t\t\t\torganization {\n\t\t\t\t\t\tslug\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 535
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "ResolveImageForApp",
+      "document": "query ($appName: String!, $imageRef: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tid\n\t\t\t\timage(ref: $imageRef) {\n\t\t\t\t\tid\n\t\t\t\t\tdigest\n\t\t\t\t\tref\n\t\t\t\t\tcompressedSize: compressedSizeFull\n\t\t\t\t\tmanifest\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 563
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "appNameAvailable"
+      ],
+      "adapter": "AppNameAvailable",
+      "document": "query ($appName: String!) {\n\t\t\tappNameAvailable(name: $appName)\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 592
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "lockApp"
+      ],
+      "adapter": "LockApp",
+      "document": "mutation($input: LockAppInput!) {\n\t\t\tlockApp(input: $input) {\n\t\t\t\tlockId\n\t\t\t\texpiration\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 612
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "unlockApp"
+      ],
+      "adapter": "UnlockApp",
+      "document": "mutation($input: UnlockAppInput!) {\n\t\t\tunlockApp(input: $input) {\n\t\t\t\tapp {\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_apps.go",
+      "source_line": 637
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppLock",
+      "document": "query($name: String!) {\n\t\tapp(name: $name) {\n\t\t  currentLock {\n\t\t\tlockId\n\t\t\texpiration\n\t\t  }\n\t\t}\n\t  }",
+      "source_path": "resource_apps.go",
+      "source_line": 664
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "CreateBuild",
+      "root_fields": [
+        "createBuild"
+      ],
+      "adapter": "CreateBuild",
+      "document": "# @genqlient\n\tmutation CreateBuild($input:CreateBuildInput!) {\n\t\tcreateBuild(input:$input) {\n\t\t\tid\n\t\t\tstatus\n\t\t}\n\t}",
+      "source_path": "resource_build.go",
+      "source_line": 8
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "FinishBuild",
+      "root_fields": [
+        "finishBuild"
+      ],
+      "adapter": "FinishBuild",
+      "document": "# @genqlient\n\tmutation FinishBuild($input:FinishBuildInput!) {\n\t\tfinishBuild(input:$input) {\n\t\t\tid\n\t\t\tstatus\n\t\t\twallclockTimeMs\n\t\t}\n\t}",
+      "source_path": "resource_build.go",
+      "source_line": 21
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppCertificates",
+      "document": "query($appName: String!) {\n\t\t\tappcertscompact:app(name: $appName) {\n\t\t\t\tcertificates {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\thostname\n\t\t\t\t\t\tclientStatus\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_certificates.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "checkCertificate"
+      ],
+      "adapter": "CheckAppCertificate",
+      "document": "mutation($input: CheckCertificateInput!) {\n\t\t\tcheckCertificate(input: $input) {\n\t\t\t\tcertificate {\n\t\t\t\t\tacmeDnsConfigured\n\t\t\t\t\tacmeAlpnConfigured\n\t\t\t\t\tconfigured\n\t\t\t\t\tcertificateAuthority\n\t\t\t\t\tcreatedAt\n\t\t\t\t\tdnsProvider\n\t\t\t\t\tdnsValidationInstructions\n\t\t\t\t\tdnsValidationHostname\n\t\t\t\t\tdnsValidationTarget\n\t\t\t\t\thostname\n\t\t\t\t\tid\n\t\t\t\t\tsource\n\t\t\t\t\tclientStatus\n\t\t\t\t\tisApex\n\t\t\t\t\tisWildcard\n\t\t\t\t\tissued {\n\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\ttype\n\t\t\t\t\t\t\texpiresAt\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tvalidationErrors {\n\t\t\t\t\t\terrorCode\n\t\t\t\t\t\tmessage\n\t\t\t\t\t\tremediation\n\t\t\t\t\t\ttimestamp\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tcheck {\n\t\t\t\t\taRecords\n\t\t\t\t   \taaaaRecords\n\t\t\t\t   \tcnameRecords\n\t\t\t\t   \tsoa\n\t\t\t   \t\tdnsProvider\n\t\t\t   \t\tdnsVerificationRecord\n\t\t\t\t \tresolvedAddresses\n\t\t\t   }\n\t\t\t}\n\t\t}",
+      "source_path": "resource_certificates.go",
+      "source_line": 34
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "addCertificate"
+      ],
+      "adapter": "AddCertificate",
+      "document": "mutation($appId: ID!, $hostname: String!) {\n\t\t\taddCertificate(appId: $appId, hostname: $hostname) {\n\t\t\t\tcertificate {\n\t\t\t\t\tacmeDnsConfigured\n\t\t\t\t\tacmeAlpnConfigured\n\t\t\t\t\tconfigured\n\t\t\t\t\tcertificateAuthority\n\t\t\t\t\tcreatedAt\n\t\t\t\t\tdnsProvider\n\t\t\t\t\tdnsValidationInstructions\n\t\t\t\t\tdnsValidationHostname\n\t\t\t\t\tdnsValidationTarget\n\t\t\t\t\thostname\n\t\t\t\t\tid\n\t\t\t\t\tsource\n\t\t\t\t\tclientStatus\n\t\t\t\t\tisApex\n\t\t\t\t\tisWildcard\n\t\t\t\t\tissued {\n\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\ttype\n\t\t\t\t\t\t\texpiresAt\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tvalidationErrors {\n\t\t\t\t\t\terrorCode\n\t\t\t\t\t\tmessage\n\t\t\t\t\t\tremediation\n\t\t\t\t\t\ttimestamp\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tcheck {\n\t\t\t\t\taRecords\n\t\t\t\t\taaaaRecords\n\t\t\t\t\tcnameRecords\n\t\t\t\t\tsoa\n\t\t\t\t\tdnsProvider\n\t\t\t\t\tdnsVerificationRecord\n\t\t\t\t  \tresolvedAddresses\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_certificates.go",
+      "source_line": 96
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "deleteCertificate"
+      ],
+      "adapter": "DeleteCertificate",
+      "document": "mutation($appId: ID!, $hostname: String!) {\n\t\t\tdeleteCertificate(appId: $appId, hostname: $hostname) {\n\t\t\t\tapp {\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t\tcertificate {\n\t\t\t\t\thostname\n\t\t\t\t\tid\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_certificates.go",
+      "source_line": 156
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "canPerformBluegreenDeployment"
+      ],
+      "adapter": "CanPerformBluegreenDeployment",
+      "document": "query ($appName: String!) {\n\t\t\tcanPerformBluegreenDeployment(name: $appName)\n\t\t}",
+      "source_path": "resource_deploy.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "createDoctorUrl"
+      ],
+      "adapter": "CreateDoctorUrl",
+      "document": "mutation {\n\t\t\tcreateDoctorUrl {\n\t\t\t\tputUrl\n\t\t\t}\n\t\t}",
+      "source_path": "resource_doctor.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "latestImageTag"
+      ],
+      "adapter": "GetLatestImageTag",
+      "document": "query($repository: String!, $snapshotId: ID) {\n\t\t\tlatestImageTag(repository: $repository, snapshotId: $snapshotId)\n\t\t}",
+      "source_path": "resource_images.go",
+      "source_line": 9
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "latestImageDetails"
+      ],
+      "adapter": "GetLatestImageDetails",
+      "document": "query($image: String!, $flyVersion: String) {\n\t\t\tlatestImageDetails(image: $image, flyVersion: $flyVersion) {\n\t\t\t  registry\n\t\t\t  repository\n\t\t\t  tag\n\t\t\t  version\n\t\t\t  digest\n\t\t\t}\n\t\t}",
+      "source_path": "resource_images.go",
+      "source_line": 28
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "LatestImage",
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "LatestImage",
+      "document": "# @genqlient\n\t       query LatestImage($appName:String!) {\n\t               app(name:$appName) {\n\t                       currentReleaseUnprocessed {\n\t                               id\n\t                               version\n\t                               imageRef\n\t                       }\n\t               }\n\t       }",
+      "source_path": "resource_images.go",
+      "source_line": 54
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetIPAddresses",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tipAddresses {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tid\n\t\t\t\t\t\taddress\n\t\t\t\t\t\ttype\n\t\t\t\t\t\tregion\n\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\tnetwork {\n\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\torganization {\n\t\t\t\t\t\t\t\tslug\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t\tserviceName\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tsharedIpAddress\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 10
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "allocateIpAddress"
+      ],
+      "adapter": "AllocateIPAddress",
+      "document": "mutation($input: AllocateIPAddressInput!) {\n\t\t\tallocateIpAddress(input: $input) {\n\t\t\t\tipAddress {\n\t\t\t\t\tid\n\t\t\t\t\taddress\n\t\t\t\t\ttype\n\t\t\t\t\tregion\n\t\t\t\t\tcreatedAt\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 60
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "allocateIpAddress"
+      ],
+      "adapter": "AllocateSharedIPAddress",
+      "document": "mutation($input: AllocateIPAddressInput!) {\n\t\t\tallocateIpAddress(input: $input) {\n\t\t\t\tapp {\n\t\t\t\t\tsharedIpAddress\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 97
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "allocateEgressIpAddress"
+      ],
+      "adapter": "AllocateEgressIPAddress",
+      "document": "mutation($input: AllocateEgressIPAddressInput!) {\n\t\t\tallocateEgressIpAddress(input: $input) {\n\t\t\t\tv4,\n\t\t\t\tv6\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 120
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetEgressIPAddresses",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tmachines {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tegressIpAddresses {\n\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\t\tip\n\t\t\t\t\t\t\t\tversion\n\t\t\t\t\t\t\t\tregion\n\t\t\t\t\t\t\t\tupdatedAt\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 142
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "releaseEgressIpAddress"
+      ],
+      "adapter": "ReleaseEgressIPAddress",
+      "document": "mutation($input: ReleaseEgressIPAddressInput!) {\n\t\t\treleaseEgressIpAddress(input: $input) {\n\t\t\t\tv4\n\t\t\t\tv6\n\t\t\t\tclientMutationId\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 189
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "releaseIpAddress"
+      ],
+      "adapter": "ReleaseIPAddress",
+      "document": "mutation($input: ReleaseIPAddressInput!) {\n\t\t\treleaseIpAddress(input: $input) {\n\t\t\t\tclientMutationId\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 212
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppScopedEgressIPAddresses",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tegressIpAddresses {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tip\n\t\t\t\t\t\tversion\n\t\t\t\t\t\tregion\n\t\t\t\t\t\tupdatedAt\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 233
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "allocateEgressIpAddress"
+      ],
+      "adapter": "AllocateAppScopedEgressIPAddress",
+      "document": "mutation($input: AllocateEgressIPAddressInput!) {\n\t\t\tallocateEgressIpAddress(input: $input) {\n\t\t\t\tv4,\n\t\t\t\tv6\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 271
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "releaseEgressIpAddress"
+      ],
+      "adapter": "ReleaseAppScopedEgressIPAddress",
+      "document": "mutation($input: ReleaseEgressIPAddressInput!) {\n\t\t\treleaseEgressIpAddress(input: $input) {\n\t\t\t\tv4\n\t\t\t\tv6\n\t\t\t\tclientMutationId\n\t\t\t}\n\t\t}",
+      "source_path": "resource_ip_addresses.go",
+      "source_line": 293
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppHostIssues",
+      "document": "query($appName: String!) {\n\t\t\tapphostissues:app(name: $appName) {\n\t\t\t\thostIssues {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tinternalId\n\t\t\t\t\t\tmessage\n\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\tupdatedAt\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_issues.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "machine"
+      ],
+      "adapter": "GetMachine",
+      "document": "query ($machineId: String!) {\n\t\t\tgqlmachine:machine(machineId: $machineId) {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tapp {\n\t\t\t\t\tname\n\t\t\t\t\torganization {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tslug\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_machines.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organizations"
+      ],
+      "adapter": "GetOrganizations",
+      "document": "query($admin: Boolean!) {\n\t\t\torganizations(admin: $admin) {\n\t\t\t\tnodes {\n\t\t\t\t\tid\n\t\t\t\t\tslug\n\t\t\t\t\trawSlug\n\t\t\t\t\tname\n\t\t\t\t\ttype\n\t\t\t\t\tpaidPlan\n\t\t\t\t\tbillable\n\t\t\t\t\tviewerRole\n\t\t\t\t\tinternalNumericId\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 29
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetOrganizationRemoteBuilderBySlug",
+      "document": "query($slug: String!) {\n\t\t\torganization(slug: $slug) {\n\t\t\t\tid\n\t\t\t\tinternalNumericId\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\ttype\n\t\t\t\tbillable\n\t\t\t\tremoteBuilderImage\n\t\t\t\tremoteBuilderApp {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t\thostname\n\t\t\t\t\tdeployed\n\t\t\t\t\tstatus\n\t\t\t\t\tversion\n\t\t\t\t\tappUrl\n\t\t\t\t\tplatformVersion\n\t\t\t\t\tcurrentRelease {\n\t\t\t\t\t\tevaluationId\n\t\t\t\t\t\tstatus\n\t\t\t\t\t\tinProgress\n\t\t\t\t\t\tversion\n\t\t\t\t\t}\n\t\t\t\t\tipAddresses {\n\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\taddress\n\t\t\t\t\t\t\ttype\n\t\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\torganization {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tslug\n\t\t\t\t\t\tpaidPlan\n\t\t\t\t\t}\n\t\t\t\t\timageDetails {\n\t\t\t\t\t\tregistry\n\t\t\t\t\t\trepository\n\t\t\t\t\t\ttag\n\t\t\t\t\t\tdigest\n\t\t\t\t\t\tversion\n\t\t\t\t\t}\n\t\t\t\t\tmachines{\n\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\tconfig\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\tregion\n\t\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\t\tapp {\n\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tips {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tfamily\n\t\t\t\t\t\t\t\t\tkind\n\t\t\t\t\t\t\t\t\tip\n\t\t\t\t\t\t\t\t\tmaskSize\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\thost {\n\t\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tpostgresAppRole: role {\n\t\t\t\t\t\tname\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 66
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetOrganizationBySlug",
+      "document": "query($slug: String!) {\n\t\t\torganization(slug: $slug) {\n\t\t\t\tid\n\t\t\t\tinternalNumericId\n\t\t\t\tslug\n\t\t\t\trawSlug\n\t\t\t\tname\n\t\t\t\ttype\n\t\t\t\tbillable\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 156
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetDetailedOrganizationBySlug",
+      "document": "query($slug: String!) {\n\t\torganizationdetails: organization(slug: $slug) {\n\t\t\tid\n\t\t\tslug\n\t\t\trawSlug\n\t\t\tname\n\t\t\ttype\n\t\t\tviewerRole\n\t\t\tinternalNumericId\n\t\t\tremoteBuilderImage\n\t\t\tremoteBuilderApp {\n\t\t\t\tname\n\t\t\t}\n\t\t\tmembers {\n\t\t\t\tedges {\n\t\t\t\t\tcursor\n\t\t\t\t\tnode {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tname\n\t\t\t\t\t\temail\n\t\t\t\t\t}\n\t\t\t\t\tjoinedAt\n\t\t\t\t\trole\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 183
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "createOrganization"
+      ],
+      "adapter": "CreateOrganization",
+      "document": "mutation($input: CreateOrganizationInput!) {\n\t\t\tcreateOrganization(input: $input) {\n\t\t\t    organization {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t\tslug\n\t\t\t\t\ttype\n\t\t\t\t\tviewerRole\n\t\t\t\t  }\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 224
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "deleteOrganization"
+      ],
+      "adapter": "DeleteOrganization",
+      "document": "mutation($input: DeleteOrganizationInput!) {\n\t\tdeleteOrganization(input: $input) {\n\t\t  clientMutationId\n\t\t  deletedOrganizationId\n\t\t  }\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 254
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "createOrganizationInvitation"
+      ],
+      "adapter": "CreateOrganizationInvite",
+      "document": "mutation($input: CreateOrganizationInvitationInput!){\n\t\tcreateOrganizationInvitation(input: $input){\n\t\t\tinvitation {\n\t\t\t\tid\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tredeemed\n\t\t\t\torganization {\n\t\t\t  \t\tslug\n\t\t\t\t}\n\t\t  }\n\t\t}\n\t  }",
+      "source_path": "resource_organizations.go",
+      "source_line": 280
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "deleteOrganizationMembership"
+      ],
+      "adapter": "DeleteOrganizationMembership",
+      "document": "mutation($input: DeleteOrganizationMembershipInput!){\n\t\tdeleteOrganizationMembership(input: $input){\n\t\torganization{\n\t\t  slug\n\t\t}\n\t\tuser{\n\t\t  name\n\t\t  email\n\t\t}\n\t  }\n\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 313
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetOrganizationByApp",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\torganization {\n\t\t\t\t\tid\n\t\t\t\t\tslug\n\t\t\t\t\trawSlug\n\t\t\t\t\tpaidPlan\n\t\t\t\t\tremoteBuilderImage\n\t\t\t\t\tremoteBuilderApp {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tname\n\t\t\t\t\t\thostname\n\t\t\t\t\t\tdeployed\n\t\t\t\t\t\tstatus\n\t\t\t\t\t\tversion\n\t\t\t\t\t\tappUrl\n\t\t\t\t\t\tplatformVersion\n\t\t\t\t\t\tcurrentRelease {\n\t\t\t\t\t\t\tevaluationId\n\t\t\t\t\t\t\tstatus\n\t\t\t\t\t\t\tinProgress\n\t\t\t\t\t\t\tversion\n\t\t\t\t\t\t}\n\t\t\t\t\t\tipAddresses {\n\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\t\taddress\n\t\t\t\t\t\t\t\ttype\n\t\t\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t\torganization {\n\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\tslug\n\t\t\t\t\t\t\tpaidPlan\n\t\t\t\t\t\t}\n\t\t\t\t\t\timageDetails {\n\t\t\t\t\t\t\tregistry\n\t\t\t\t\t\t\trepository\n\t\t\t\t\t\t\ttag\n\t\t\t\t\t\t\tdigest\n\t\t\t\t\t\t\tversion\n\t\t\t\t\t\t}\n\t\t\t\t\t\tmachines{\n\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\tconfig\n\t\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\t\tregion\n\t\t\t\t\t\t\t\tcreatedAt\n\t\t\t\t\t\t\t\tapp {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\tips {\n\t\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\t\tfamily\n\t\t\t\t\t\t\t\t\t\tkind\n\t\t\t\t\t\t\t\t\t\tip\n\t\t\t\t\t\t\t\t\t\tmaskSize\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\thost {\n\t\t\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t\tpostgresAppRole: role {\n\t\t\t\t\t\t\tname\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\n\t\t\t\t}\n\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 344
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetAllowedReplaySourceOrgSlugs",
+      "document": "query($slug: String!) {\n\t\t\torganization(slug: $slug) {\n\t\t\t\tallowedReplaySourceOrgSlugs\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 439
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "addAllowedReplaySourceOrgs"
+      ],
+      "adapter": "AddAllowedReplaySourceOrgs",
+      "document": "mutation($input: AddAllowedReplaySourceOrgsInput!) {\n\t\t\taddAllowedReplaySourceOrgs(input: $input) {\n\t\t\t\torganization {\n\t\t\t\t\tid\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 464
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "removeAllowedReplaySourceOrgs"
+      ],
+      "adapter": "RemoveAllowedReplaySourceOrgs",
+      "document": "mutation($input: RemoveAllowedReplaySourceOrgsInput!) {\n\t\t\tremoveAllowedReplaySourceOrgs(input: $input) {\n\t\t\t\torganization {\n\t\t\t\t\tid\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 496
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "setAllowAllCrossNetworkReplays"
+      ],
+      "adapter": "SetAllowAllCrossNetworkReplays",
+      "document": "mutation($input: SetAllowAllCrossNetworkReplaysInput!) {\n\t\t\tsetAllowAllCrossNetworkReplays(input: $input) {\n\t\t\t\torganization {\n\t\t\t\t\tid\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t\tallowAllCrossNetworkReplays\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 528
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetAllowAllCrossNetworkReplays",
+      "document": "query($slug: String!) {\n\t\t\torganization(slug: $slug) {\n\t\t\t\tallowAllCrossNetworkReplays\n\t\t\t}\n\t\t}",
+      "source_path": "resource_organizations.go",
+      "source_line": 557
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "platform"
+      ],
+      "adapter": "PlatformRegions",
+      "document": "query {\n\t\t\tplatform {\n\t\t\t\trequestRegion\n\t\t\t\tregions {\n\t\t\t\t\tname\n\t\t\t\t\tcode\n\t\t\t\t\tlatitude\n\t\t\t\t\tlongitude\n\t\t\t\t\tgatewayAvailable\n\t\t\t\t\trequiresPaidPlan\n\t\t\t\t\tdeprecated\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_platform.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "attachPostgresCluster"
+      ],
+      "adapter": "AttachPostgresCluster",
+      "document": "mutation($input: AttachPostgresClusterInput!) {\n\t\t\tattachPostgresCluster(input: $input) {\n\t\t\t\tapp {\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t\tpostgresClusterApp {\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t\tenvironmentVariableName\n\t\t\t\tconnectionString\n\t\t\t\tenvironmentVariableName\n\t\t\t}\n\t\t}",
+      "source_path": "resource_postgres.go",
+      "source_line": 8
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "detachPostgresCluster"
+      ],
+      "adapter": "DetachPostgresCluster",
+      "document": "mutation($input: DetachPostgresClusterInput!) {\n\t\t\tdetachPostgresCluster(input: $input) {\n\t\t\t\tclientMutationId\n\t\t\t}\n\t\t}",
+      "source_path": "resource_postgres.go",
+      "source_line": 37
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "postgresAttachments"
+      ],
+      "adapter": "ListPostgresClusterAttachments",
+      "document": "query($appName: String!, $postgresAppName: String!) {\n\t\t\tpostgresAttachments(appName: $appName, postgresAppName: $postgresAppName) {\n\t\t\t\tnodes {\n\t\t\t\t\tid\n\t\t\t\t\tdatabaseName\n\t\t\t\t\tdatabaseUser\n\t\t\t\t\tenvironmentVariableName\n\t\t\t\t}\n\t\t  }\n\t\t}",
+      "source_path": "resource_postgres.go",
+      "source_line": 55
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "enablePostgresConsul"
+      ],
+      "adapter": "EnablePostgresConsul",
+      "document": "mutation($appName: ID!) {\n\t\t\tenablePostgresConsul(input: {appId: $appName}) {\n\t\t\t\tconsulUrl\n\t\t\t}\n\t\t}",
+      "source_path": "resource_postgres.go",
+      "source_line": 82
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "nearestRegion"
+      ],
+      "adapter": "GetNearestRegion",
+      "document": "query {\n\t\t\tnearestRegion {\n\t\t\t\tcode\n\t\t\t\tname\n\t\t\t\tgatewayAvailable\n\t\t\t\tdeprecated\n\t\t\t}\n\t\t}",
+      "source_path": "resource_regions.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppReleasesMachines",
+      "document": "query($appName: String!, $limit: Int!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\treleases: releasesUnprocessed(first: $limit) {\n\t\t\t\t\tnodes {\n\t\t\t  \t\t\tid\n\t\t\t  \t\t\tversion\n\t\t\t  \t\t\tdescription\n\t\t\t  \t\t\treason\n\t\t\t  \t\t\tstatus\n\t\t\t  \t\t\timageRef\n\t\t\t  \t\t\tstable\n\t\t\t  \t\t\tuser {\n\t\t\t\t\t\t\tid\n\t\t\t\t\t\t\temail\n\t\t\t\t\t\t\tname\n\t\t\t\t\t\t}\n\t\t\t  \t\t\tcreatedAt\n\t\t\t\t\t}\n\t\t  \t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_releases.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppCurrentReleaseMachines",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tcurrentRelease: currentReleaseUnprocessed {\n\t\t\t\t\tid\n\t\t\t\t\tversion\n\t\t\t\t\tdescription\n\t\t\t\t\treason\n\t\t\t\t\tstatus\n\t\t\t\t\timageRef\n\t\t\t\t\tstable\n\t\t\t\t\tuser {\n\t\t\t\t\t\tid\n\t\t\t\t\t\temail\n\t\t\t\t\t\tname\n\t\t\t\t\t}\n\t\t\t\t\tcreatedAt\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_releases.go",
+      "source_line": 47
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "CreateRelease",
+      "root_fields": [
+        "createRelease"
+      ],
+      "adapter": "CreateRelease",
+      "document": "# @genqlient\n\tmutation CreateRelease($input:CreateReleaseInput!) {\n\t\tcreateRelease(input:$input) {\n\t\t\trelease {\n\t\t\t\tid\n\t\t\t\tversion\n\t\t\t}\n\t\t}\n\t}",
+      "source_path": "resource_releases.go",
+      "source_line": 82
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "UpdateRelease",
+      "root_fields": [
+        "updateRelease"
+      ],
+      "adapter": "UpdateRelease",
+      "document": "# @genqlient\n\tmutation UpdateRelease($input:UpdateReleaseInput!) {\n\t\tupdateRelease(input:$input) {\n\t\t\trelease {\n\t\t\t\tid\n\t\t\t}\n\t\t}\n\t}",
+      "source_path": "resource_releases.go",
+      "source_line": 97
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "ensureMachineRemoteBuilder"
+      ],
+      "adapter": "EnsureRemoteBuilder",
+      "document": "mutation($input: EnsureMachineRemoteBuilderInput!) {\n\t\t\tensureMachineRemoteBuilder(input: $input) {\n\t\t\t\tmachine {\n\t\t\t\t\tid\n\t\t\t\t\tstate\n\t\t\t\t\tips {\n\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\tfamily\n\t\t\t\t\t\t\tkind\n\t\t\t\t\t\t\tip\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\tapp {\n\t\t\t\t\tname\n\t\t\t\t\torganization {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tslug\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_remote_builders.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": "EnsureDepotRemoteBuilder",
+      "root_fields": [
+        "ensureDepotRemoteBuilder"
+      ],
+      "adapter": "EnsureDepotRemoteBuilder",
+      "document": "# @genqlient(pointer: true)\n\t\tmutation EnsureDepotRemoteBuilder($input: EnsureDepotRemoteBuilderInput!) {\n\t\t\tensureDepotRemoteBuilder(input:$input) {\n\t\t\t\tbuildId\n\t\t\t\tbuildToken\n\t\t\t}\n\t\t}",
+      "source_path": "resource_remote_builders.go",
+      "source_line": 56
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "setSecrets"
+      ],
+      "adapter": "SetSecrets",
+      "document": "mutation($input: SetSecretsInput!) {\n\t\t\tsetSecrets(input: $input) {\n\t\t\t\trelease {\n\t\t\t\t\tid\n\t\t\t\t\tversion\n\t\t\t\t\treason\n\t\t\t\t\tdescription\n\t\t\t\t\tuser {\n\t\t\t\t\t\tid\n\t\t\t\t\t\temail\n\t\t\t\t\t\tname\n\t\t\t\t\t}\n\t\t\t\t\tevaluationId\n\t\t\t\t\tcreatedAt\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_secrets.go",
+      "source_line": 6
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "unsetSecrets"
+      ],
+      "adapter": "UnsetSecrets",
+      "document": "mutation($input: UnsetSecretsInput!) {\n\t\t\tunsetSecrets(input: $input) {\n\t\t\t\trelease {\n\t\t\t\t\tid\n\t\t\t\t\tversion\n\t\t\t\t\treason\n\t\t\t\t\tdescription\n\t\t\t\t\tuser {\n\t\t\t\t\t\tid\n\t\t\t\t\t\temail\n\t\t\t\t\t\tname\n\t\t\t\t\t}\n\t\t\t\t\tevaluationId\n\t\t\t\t\tcreatedAt\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_secrets.go",
+      "source_line": 45
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppSecrets",
+      "document": "query ($appName: String!) {\n\t\t\tapp(name: $appName) {\n\t\t\t\tsecrets {\n\t\t\t\t\tname\n\t\t\t\t\tdigest\n\t\t\t\t\tcreatedAt\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_secrets.go",
+      "source_line": 79
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetLoggedCertificates",
+      "document": "query($slug: String!) {\n  organization(slug: $slug) {\n    loggedCertificates {\n      nodes {\n        root\n        cert\n      }\n    }\n  }\n}",
+      "source_path": "resource_ssh.go",
+      "source_line": 12
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "issueCertificate"
+      ],
+      "adapter": "IssueSSHCertificate",
+      "document": "mutation($input: IssueCertificateInput!) {\n  issueCertificate(input: $input) {\n    certificate, key\n  }\n}",
+      "source_path": "resource_ssh.go",
+      "source_line": 36
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetOrgLimitedAccessTokens",
+      "document": "query ($slug: String!) {\n\t\t\torgLimitedAccessTokens: organization(slug: $slug) {\n\t\t\t\tlimitedAccessTokens {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tname\n\t\t\t\t\t\texpiresAt\n\t\t\t\t\t\trevokedAt\n\t\t\t\t\t\tuser {\n\t\t\t\t\t\t\temail\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_tokens.go",
+      "source_line": 8
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "adapter": "GetAppLimitedAccessTokens",
+      "document": "query ($appName: String!) {\n\t\t\tappLimitedAccessTokens: app(name: $appName) {\n\t\t\t\tlimitedAccessTokens {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tid\n\t\t\t\t\t\tname\n\t\t\t\t\t\ttoken\n\t\t\t\t\t\texpiresAt\n\t\t\t\t\t\trevokedAt\n\t\t\t\t\t\tuser {\n\t\t\t\t\t\t\temail\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "source_path": "resource_tokens.go",
+      "source_line": 43
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "deleteLimitedAccessToken"
+      ],
+      "adapter": "RevokeLimitedAccessToken",
+      "document": "mutation($input:DeleteLimitedAccessTokenInput!) {\n\t\t\tdeleteLimitedAccessToken(input: $input) {\n\t\t\t\ttoken\n\t\t\t}\n\t\t}",
+      "source_path": "resource_tokens.go",
+      "source_line": 79
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "viewer"
+      ],
+      "adapter": "GetCurrentUser",
+      "document": "query {\n\t\t\t\tviewer {\n\t\t\t\t\t... on User {\n\t\t\t\t\t\tid\n\t\t\t\t\t\temail\n\t\t\t\t\t\tenablePaidHobby\n\t\t\t\t\t}\n\t\t\t\t\t... on Macaroon {\n\t\t\t\t\t\temail\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t}",
+      "source_path": "resource_user.go",
+      "source_line": 8
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "volume"
+      ],
+      "adapter": "GetAppNameFromVolume",
+      "document": "query($id: ID!) {\n\tvolume: volume(id: $id) {\n\t\t... on Volume {\n\t\t\tapp {\n\t\t\t\tname\n\t\t\t}\n\t\t}\n\t}\n}",
+      "source_path": "resource_volumes.go",
+      "source_line": 8
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetAppNameStateFromVolume",
+      "root_fields": [
+        "volume"
+      ],
+      "adapter": "GetAppNameStateFromVolume",
+      "document": "query GetAppNameStateFromVolume($id: ID!) {\n\tvolume: volume(id: $id) {\n\t\t... on Volume {\n\t\t\tapp {\n\t\t\t\tname\n\t\t\t}\n\t\t\tstate\n\t\t}\n\t}\n}",
+      "source_path": "resource_volumes.go",
+      "source_line": 34
+    },
+    {
+      "operation_type": "query",
+      "operation_name": "GetSnapshotsFromVolume",
+      "root_fields": [
+        "volume"
+      ],
+      "adapter": "GetSnapshotsFromVolume",
+      "document": "query GetSnapshotsFromVolume($id: ID!) {\n\tvolume: volume(id: $id) {\n\t\t... on Volume {\n\t\t\tsnapshots {\n\t\t\t\tnodes {\n\t\t\t\t\tid\n\t\t\t\t\tsize\n\t\t\t\t\tdigest\n\t\t\t\t\tcreatedAt\n\t\t\t\t\tretentionDays\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+      "source_path": "resource_volumes.go",
+      "source_line": 61
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetWireGuardPeer",
+      "document": "query($slug: String!, $name: String!) {\n  organization(slug: $slug) {\n    wireGuardPeer(name: $name) {\n      id\n      name\n      pubkey\n      region\n      peerip\n    }\n  }\n}",
+      "source_path": "resource_wireguard.go",
+      "source_line": 10
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetWireGuardPeers",
+      "document": "query($slug: String!) {\n  organization(slug: $slug) {\n    wireGuardPeers {\n      nodes {\n        id\n        name\n        pubkey\n        region\n        peerip\n      }\n    }\n  }\n}",
+      "source_path": "resource_wireguard.go",
+      "source_line": 37
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "addWireGuardPeer"
+      ],
+      "adapter": "CreateWireGuardPeer",
+      "document": "mutation($input: AddWireGuardPeerInput!) {\n  addWireGuardPeer(input: $input) {\n    peerip\n    endpointip\n    pubkey\n  }\n}",
+      "source_path": "resource_wireguard.go",
+      "source_line": 64
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "removeWireGuardPeer"
+      ],
+      "adapter": "RemoveWireGuardPeer",
+      "document": "mutation($input: RemoveWireGuardPeerInput!) {\n  removeWireGuardPeer(input: $input) {\n    organization {\n      id\n    }\n  }\n}",
+      "source_path": "resource_wireguard.go",
+      "source_line": 108
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "createDelegatedWireGuardToken"
+      ],
+      "adapter": "CreateDelegatedWireGuardToken",
+      "document": "mutation($input: CreateDelegatedWireGuardTokenInput!) {\n  createDelegatedWireGuardToken(input: $input) {\n    token\n  }\n}",
+      "source_path": "resource_wireguard.go",
+      "source_line": 129
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "deleteDelegatedWireGuardToken"
+      ],
+      "adapter": "DeleteDelegatedWireGuardToken",
+      "document": "mutation($input: DeleteDelegatedWireGuardTokenInput!) {\n  deleteDelegatedWireGuardToken(input: $input) {\n    token\n  }\n}",
+      "source_path": "resource_wireguard.go",
+      "source_line": 151
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "organization"
+      ],
+      "adapter": "GetDelegatedWireGuardTokens",
+      "document": "query($slug: String!) {\n  organization(slug: $slug) {\n    delegatedWireGuardTokens {\n      nodes {\n        name\n      }\n    }\n  }\n}",
+      "source_path": "resource_wireguard.go",
+      "source_line": 181
+    },
+    {
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "nearestRegion"
+      ],
+      "adapter": "ClosestWireguardGatewayRegion",
+      "document": "query {\n\t\t\tnearestRegion(wireguardGateway: true) {\n\t\t\t\tcode\n\t\t\t\tname\n\t\t\t\tgatewayAvailable\n\t\t\t\tdeprecated\n\t\t\t}\n\t\t}",
+      "source_path": "resource_wireguard.go",
+      "source_line": 204
+    },
+    {
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "validateWireGuardPeers"
+      ],
+      "adapter": "ValidateWireGuardPeers",
+      "document": "mutation($input: ValidateWireGuardPeersInput!) {\n  validateWireGuardPeers(input: $input) {\n\t\tinvalidPeerIps\n\t}\n}",
+      "source_path": "resource_wireguard.go",
+      "source_line": 225
+    }
+  ]
+}

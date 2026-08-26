@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "digest"
+require "net/http"
+require "uri"
+
+url = URI("https://docs.machines.dev/openapi.json")
+response = Net::HTTP.get_response(url)
+abort "OpenAPI fetch failed: HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+
+snapshot = File.binread(File.expand_path("../contracts/machines/openapi.json", __dir__))
+expected = Digest::SHA256.hexdigest(snapshot)
+actual = Digest::SHA256.hexdigest(response.body)
+abort "upstream OpenAPI drift: committed=#{expected} upstream=#{actual}" unless expected == actual
+
+puts "OpenAPI upstream matches committed snapshot: sha256=#{actual} " \
+     "etag=#{response['etag'].inspect} last-modified=#{response['last-modified'].inspect}"

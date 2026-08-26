@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Ruby ${{ matrix.ruby }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.2", "3.3", "3.4", "4.0.6"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - run: bundle exec rake api:check
+      - run: bundle exec rspec
+      - run: bundle exec rubocop
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0.6"
+          bundler-cache: true
+      - run: bundle exec rake build
+      - run: mkdir -p /tmp/fly-io-gem-smoke
+      - name: Install and require the packaged gem
+        run: |
+          gem install --local pkg/*.gem --install-dir /tmp/fly-io-gem-smoke --no-document --ignore-dependencies
+          runtime_gem_path="$(bundle exec ruby -e 'puts Gem.path.join(":")')"
+          GEM_HOME=/tmp/fly-io-gem-smoke GEM_PATH="/tmp/fly-io-gem-smoke:${runtime_gem_path}" \
+            ruby -e 'require "fly_io"; abort unless FlyIO::OperationRegistry.operations.size == 108'
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0.6"
+          bundler-cache: true
+      - run: bundle exec bundle-audit check --update

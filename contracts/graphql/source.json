@@ -1,0 +1,29 @@
+{
+  "surface": "control_plane_graphql",
+  "endpoint": "https://api.fly.io/graphql",
+  "stability": "internal_unstable_no_guarantees",
+  "retrieved_at": "2026-08-26T21:00:00Z",
+  "flyctl": {
+    "repository": "https://github.com/superfly/flyctl",
+    "revision": "1f906765dee8e973f6d1dd8fff65b58212e7b425",
+    "schema_sha256": "2f1a1d0f2f8940277e5e14002c78cb4f6404b3ea1ce9d0999d4d3b65c52f9480",
+    "named_documents_sha256": "719f4a1935185992b5880a0b8eb8544c38d2310995693bf0733d512bfbad5ae0",
+    "inventory_sha256": "ecd9db4fddfcce99b0c490dc9339e5cd9b6561df7f09af1ed61fc6e63240b14c",
+    "named_operations": 27,
+    "ad_hoc_operations": 2
+  },
+  "fly_go": {
+    "repository": "https://github.com/superfly/fly-go",
+    "version": "v0.9.8",
+    "revision": "858ec691152ab3faa0b0a0438726bda8144d8734",
+    "inventory_sha256": "5c9a2a9e0f72833c4938c90d4946bf3c4cb0ea85247d66e4d01dfc58a883caec",
+    "documents": 85,
+    "unique_root_fields": 52
+  },
+  "official_examples": {
+    "docs_revision": "1e8cac5f0fd7a82e66e3b01ece3a10a8ecb2b7e3",
+    "inventory_sha256": "63514fdf60fa87151df1ce7ee0999c1ddaa257edfd9576908c971dc91ea706fe",
+    "operations": 3
+  },
+  "warning": "The flyctl schema is manually copied from Fly's internal web repository and is implementation evidence, not an authoritative public contract."
+}

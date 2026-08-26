@@ -1,0 +1,75 @@
+{
+  "retrieved_at": "2026-08-26",
+  "docs_repository": "https://github.com/superfly/docs",
+  "docs_revision": "1e8cac5f0fd7a82e66e3b01ece3a10a8ecb2b7e3",
+  "endpoint": "https://api.fly.io/graphql",
+  "stability": "internal_unstable_public_endpoint",
+  "examples": [
+    {
+      "id": "allocate_shared_ipv4",
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "allocateIpAddress"
+      ],
+      "document": "mutation($input: AllocateIPAddressInput!) { allocateIpAddress(input: $input) { app { sharedIpAddress } } }",
+      "variables": {
+        "input": {
+          "appId": "${APP_NAME}",
+          "type": "shared_v4",
+          "region": ""
+        }
+      },
+      "source_url": "https://fly.io/docs/mcp/deploy-with/machines-api",
+      "source_path": "mcp/deploy-with/machines-api.html.md",
+      "source_sha256": "8c45f1fbcc0e17035567e2784b3200eb9862f110f20a5bfb959e4e66534e9cf4",
+      "source_lines": [
+        80,
+        95
+      ]
+    },
+    {
+      "id": "allocate_ipv6",
+      "operation_type": "mutation",
+      "operation_name": null,
+      "root_fields": [
+        "allocateIpAddress"
+      ],
+      "document": "mutation($input: AllocateIPAddressInput!) { allocateIpAddress(input: $input) { ipAddress { id address type region createdAt } } }",
+      "variables": {
+        "input": {
+          "appId": "${APP_NAME}",
+          "type": "v6",
+          "region": ""
+        }
+      },
+      "source_url": "https://fly.io/docs/mcp/deploy-with-machines-api",
+      "source_path": "mcp/deploy-with/machines-api.html.md",
+      "source_sha256": "8c45f1fbcc0e17035567e2784b3200eb9862f110f20a5bfb959e4e66534e9cf4",
+      "source_lines": [
+        97,
+        112
+      ]
+    },
+    {
+      "id": "list_releases_with_images",
+      "operation_type": "query",
+      "operation_name": null,
+      "root_fields": [
+        "app"
+      ],
+      "document": "query($appName: String!, $limit: Int!) { app(name: $appName) { releases: releasesUnprocessed(first: $limit) { nodes { id version description reason status imageRef stable user { id email name } createdAt } } } }",
+      "variables": {
+        "appName": "my-app-name",
+        "limit": 25
+      },
+      "source_url": "https://fly.io/docs/blueprints/using-the-fly-docker-registry",
+      "source_path": "blueprints/using-the-fly-docker-registry.html.md",
+      "source_sha256": "46938dcbd0b9ef52e01b475a9bfbd5d6aea98110892ecd106d962800882aeae1",
+      "source_lines": [
+        108,
+        117
+      ]
+    }
+  ]
+}
