@@ -4,6 +4,12 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) and S
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-08-27
+
+### Added
+
+- Optional custom-network selection when destroying an app.
+
 ## [0.1.0] - 2026-08-26
 
 ### Added

@@ -45,6 +45,13 @@ client.machines.start(app_name: "my-app", machine_id: machine.id)
 client.machines.wait(app_name: "my-app", machine_id: machine.id, state: "started", timeout: 60)
 ```
 
+When destroying an app, pass its selected custom private network to delete the attachment along with the app. Omit
+`network:` for apps on the default network:
+
+```ruby
+client.apps.destroy(app_name: "my-app", network: "customer-network")
+```
+
 Resource methods return `FlyIO::Response`. `response.body` is coerced to the documented `FlyIO::Models::*` class (or
 an array/primitive where the contract says so), while response methods delegate to a model for concise code such as
 `machine.id`. Models keep unknown fields and preserve exact wire keys for forward compatibility.

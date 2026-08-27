@@ -16,14 +16,14 @@ module FlyIO
 
       private
 
-      def invoke(operation, arguments)
+      def invoke(operation, arguments, extra_query: {})
         arguments = arguments.dup
         body = arguments.delete(:body) { FlyIO::UNSET }
         extra_headers = arguments.delete(:headers) || {}
         retry_unsafe = arguments.delete(:retry_unsafe)
         request_timeout = arguments.delete(:request_timeout)
         path_params = {}
-        query = {}
+        query = extra_query.dup
         operation_headers = {}
 
         operation.parameters.each do |parameter|

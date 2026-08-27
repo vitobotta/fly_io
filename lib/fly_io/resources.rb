@@ -2,6 +2,16 @@
 
 module FlyIO
   module Resources
+    class Apps < Base
+      def destroy(network: nil, **arguments)
+        operation = OperationRegistry.fetch("Apps_delete")
+        SchemaValidator.validate!({"type" => "string"}, network, location: "network") unless network.nil?
+        extra_query = network.nil? ? {} : {"network" => network}
+
+        invoke(operation, arguments, extra_query: extra_query)
+      end
+    end
+
     module_function
 
     def install!

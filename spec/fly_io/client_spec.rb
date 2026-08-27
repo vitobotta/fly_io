@@ -38,6 +38,32 @@ RSpec.describe FlyIO::Client do
     end
   end
 
+  it "includes a selected network when destroying an app" do
+    request = stub_request(
+      :delete,
+      "https://api.machines.dev/v1/apps/demo?network=customer%20%2F%20%C3%BC"
+    ).to_return(status: 202)
+
+    response = client.apps.destroy(app_name: "demo", network: "customer / ü")
+
+    expect(request).to have_been_requested.once
+    expect(response.status).to eq(202)
+  end
+
+  it "does not add a network query when none is selected" do
+    request = stub_request(:delete, "https://api.machines.dev/v1/apps/demo").to_return(status: 202)
+
+    client.apps.destroy(app_name: "demo")
+
+    expect(request).to have_been_requested.once
+  end
+
+  it "validates a selected network before deleting an app" do
+    expect { client.apps.destroy(app_name: "demo", network: 123) }
+      .to raise_error(FlyIO::ArgumentError, /network must be string/)
+    expect(WebMock).not_to have_requested(:delete, /api\.machines\.dev/)
+  end
+
   it "executes the one-to-one operation ID escape hatch and handles the upstream duplicate explicitly" do
     stub_request(:get, "https://api.machines.dev/v1/apps/demo").to_return(
       status: 200, headers: {"Content-Type" => "application/json"}, body: '{"name":"demo"}'
