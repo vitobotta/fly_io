@@ -7,7 +7,7 @@ module FlyIO
     module_function
 
     def schemas
-      @schemas ||= JSON.parse(File.read(File.expand_path("generated/schemas.json", __dir__))).freeze
+      @schemas ||= JSON.parse(File.read(File.expand_path("generated/schemas.json", __dir__), encoding: "UTF-8")).freeze
     end
 
     def install_model_constants!
